@@ -2,16 +2,18 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { MainPage, TabsTextContentPage } from '../pages/main/main.component';
+import { TrainerPage } from '../pages/trainer/trainer.component';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { Http } from "@angular/http";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 @NgModule({
-  
+
   declarations: [
     MyApp,
     MainPage,
+    TrainerPage,
     TabsTextContentPage
   ],
 
@@ -29,6 +31,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     MainPage,
+    TrainerPage,
     TabsTextContentPage
   ],
 

@@ -6,6 +6,7 @@ import { TranslateService } from 'ng2-translate';
 import { AlertController } from 'ionic-angular';
 
 import { MainPage } from '../pages/main/main.component';
+import { TrainerPage } from '../pages/trainer/trainer.component';
 
 @Component({
   templateUrl: 'app.component.html'
@@ -85,5 +86,14 @@ export class MyApp {
     });
     alert.present();
   }
+
+  /**
+   * @name openTrainer
+   * @description open the Trainer Screen
+   */
+  openTrainer() {
+    this.nav.setRoot(TrainerPage);
+  }
+
 
 }

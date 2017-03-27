@@ -4,6 +4,7 @@
   "MENU-MAIN": "Main Screen",
   "MENU-SETTINGS": "Settings",
   "MENU-TUNNER": "Tunner",
-  "MAIN-TITLE":"Main Screen",
-  "PLAYER-TITLE":"Trainer Screen"
+  "MENU-TRAINER": "Trainer",
+  "MAIN-TITLE": "Main Screen",
+  "TRAINER-TITLE": "Trainer Screen"
 }
