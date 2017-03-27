@@ -1,3 +1,9 @@
 {
-  "HELLO": "hello"
+  "HELLO": "hello",
+  "MENU": "Menu",
+  "MENU-MAIN": "Main Screen",
+  "MENU-SETTINGS": "Settings",
+  "MENU-TUNNER": "Tunner",
+  "MAIN-TITLE":"Main Screen",
+  "PLAYER-TITLE":"Trainer Screen"
 }

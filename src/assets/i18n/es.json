@@ -1,3 +1,9 @@
 {
-  "HELLO": "hola"
+  "HELLO": "hola",
+  "MENU": "Menu",
+  "MENU-MAIN": "Pantalla Principal",
+  "MENU-SETTINGS": "Configuración",
+  "MENU-TUNNER": "Afinador",
+  "MAIN-TITLE": "Pantalla Principal",
+  "PLAYER-TITLE":"Reproductor"
 }
