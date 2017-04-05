@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { Player } from '../../player/player';
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Player, PlayerListener } from '../../player/player';
+import { Composition } from '../../player/composition';
 import { PlayerService } from '../../player/player.service';
-import { Observable } from 'rxjs';
 declare var verovio: any;
 
 
@@ -16,13 +16,22 @@ declare var verovio: any;
  * @name PlayerPage
  * @description Page to play a backing track
  */
-export class TrainerPage {
+export class TrainerPage implements OnInit, PlayerListener {
     svgContent: SafeHtml;
 
     constructor(private player: Player, private _sanitizer: DomSanitizer) {
-        let obs = player.getBackingTrackSVG();
-        obs.then((data) => {
-            this.svgContent = this._sanitizer.bypassSecurityTrustHtml(data);
-        });
+        let comp = new Composition(); //temporal
+        player.init({ listener: this, composition: comp });
+    }
+
+    ngOnInit(): void {
+    }
+
+    svgLoaded(svg: string): void {
+        this.svgContent = this._sanitizer.bypassSecurityTrustHtml(svg);
+    }
+
+    playerInitialized() {
+        this.player.play(120);
     }
 }
