@@ -1,7 +1,10 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { MainPage, TabsTextContentPage } from '../pages/main/main.component';
+import { MainPage } from '../pages/main/main.component';
+import { SearchPage } from '../pages/main/search/search.component';
+import { DownloadedPage } from '../pages/main/downloaded/downloaded.component';
+import { RecentPage } from '../pages/main/recent/recent.component';
 import { TrainerPage } from '../pages/trainer/trainer.component';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { Http } from "@angular/http";
@@ -14,7 +17,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     MainPage,
     TrainerPage,
-    TabsTextContentPage
+    SearchPage, DownloadedPage, RecentPage
   ],
 
   imports: [
@@ -32,7 +35,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     MainPage,
     TrainerPage,
-    TabsTextContentPage
+    SearchPage, DownloadedPage, RecentPage
   ],
 
   providers: [

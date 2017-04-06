@@ -1,4 +1,33 @@
 <ion-content>
-    filter by instrument
-    filter by author
+
+    <template ngFor let-composition [ngForOf]="compositions" let-i="index">
+        <ion-card>
+            <ion-card-content>
+                <ion-card-title>{{composition.name}}</ion-card-title>
+                <p>{{composition.author}}</p>
+            </ion-card-content>
+
+            <ion-row no-padding>
+                <ion-col>
+                    <button ion-button clear small color="danger" icon-left>
+          <ion-icon name='star'></ion-icon>
+          Favorite
+        </button>
+                </ion-col>
+                <ion-col text-center>
+                    <button ion-button clear small color="danger" icon-left>
+          <ion-icon name='musical-notes'></ion-icon>
+          Listen
+        </button>
+                </ion-col>
+                <ion-col text-right>
+                    <button ion-button clear small color="danger" icon-left>
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+                </ion-col>
+            </ion-row>
+
+        </ion-card>
+    </template>
 </ion-content>
