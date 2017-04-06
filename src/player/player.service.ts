@@ -17,7 +17,7 @@ export class PlayerService {
      */
     public downloadBackingTrack(): Observable<string> {
         return this.http
-            .get('assets/data/mozart-andante-in-c-major-flutesolo.xml')
+            .get('assets/data/mozart-andante-in-c-major-flutesolo5.xml')
             .map((r: Response) => {
                 return r.text();
             })
@@ -34,7 +34,7 @@ export class PlayerService {
      */
     public downloadBackingTrackMidi(): Observable<ArrayBuffer> {
         var basicOptions: RequestOptionsArgs = {
-            url: 'assets/data/mozart-andante-in-c-major-1.mid',
+            url: 'assets/data/mozart-andante-in-c-major.mid',
             method: RequestMethod.Get,
             search: null,
             headers: null,

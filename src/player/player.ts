@@ -3,7 +3,7 @@ import { extend } from '../util/Util';
 import { PlayerService } from './player.service';
 import { Observable } from 'rxjs';
 import { Player as MidiPlayer } from 'midi-player-js';
-import { decode } from '../util/Util';
+import { decode, inArray } from '../util/Util';
 import { Composition } from './composition';
 import * as Soundfont from 'soundfont-player';
 declare var verovio: any;
@@ -32,6 +32,7 @@ export class Player {
     private player;
     private ac = new AudioContext;
     private piano: any = null;
+    private startTime: number = 0;
 
     constructor(private service: PlayerService) {
         ///we create the verovio toolkit
@@ -117,7 +118,7 @@ export class Player {
         return new Promise<string>(resolve => {
             Soundfont.instrument(this.ac, 'acoustic_grand_piano').then(function (piano) {
                 self.piano = piano;
-                piano.play('C4');
+                //piano.play('C4');
                 resolve();
             });
 
@@ -170,7 +171,7 @@ export class Player {
         var border = 20;
         var zoom = this.options.zoom;
         var pageHeight = 60000; //SETTED TO THE MAXIMUM//$(self.options.frontDiv).height() - border;
-        var pageWidth = document.documentElement.clientWidth - border;
+        var pageWidth = document.documentElement.clientWidth * 2 - border;
         //////////////////////////////////////////////////////////////
         /* Adjust the height and width according to the window size */
         //////////////////////////////////////////////////////////////
@@ -187,6 +188,7 @@ export class Player {
             pageWidth: pageWidth,
             border: border,
             scale: zoom,
+            font: 'Gootville',
             spacingSystem: spacingSystem,
             adjustPageHeight: 1,
             ignoreLayout: 1
@@ -217,48 +219,66 @@ export class Player {
      */
     public play(bpm: number) {
         //it is necessary to render to midi in order to get elements at time (.getElementsAtTime)
-        //var base64midi = this.vrvToolkit.renderToMidi();
+        var base64midi = this.vrvToolkit.renderToMidi();
+
         //var abmidi = decode(base64midi);
         //this.player.loadArrayBuffer(abmidi);
         this.player.loadArrayBuffer(this.options.midiData);
         this.player.play();
+        this.startTime = new Date().getTime();
     }
 
+
     private midiUpdate(event) {
-        var time = event.delta;
-        var vrvTime = Math.max(0, 2 * time - 800);
-        var elementsattime = this.vrvToolkit.getElementsAtTime(vrvTime);
 
         if (event.name == 'Note on') {
-            this.piano.play(event.noteName, this.ac.currentTime, { gain: event.velocity / 100 });
-        }
+            if (event.track > 2) {
+                this.piano.play(event.noteName, this.ac.currentTime, { gain: event.velocity / 100 });
+            } else {
 
-        if (elementsattime.page > 0) {
-            if (elementsattime.page != this.options.page) {
-                //let page = elementsattime.page;
-                //load_page();
-            }
-            if ((elementsattime.notes.length > 0) && (this.ids != elementsattime.notes)) {
-                this.ids.forEach(function (noteid) {
-                    /*
-                    if ($.inArray(noteid, elementsattime.notes) == -1) {
-                        $("#" + noteid).attr("fill", "#000");
-                        $("#" + noteid).attr("stroke", "#000");
-                        //$("#" + noteid ).removeClassSVG("highlighted");
+                //we calculate the time of this tick
+                let tick = event.tick;
+                let division = this.player.division;
+                let tempo = this.player.tempo;
+                let time = tick / division / tempo * 60000;
+                time = time + 400; //why is this needed??
+                //console.log(time);
+                //let time = this.ac.currentTime * 1000;
+
+                //we make a little correction because of bug? of verovio ()
+                let bmp: number = 76;
+                let verovioDefaultBpm = 120;
+                let correction = (bmp / verovioDefaultBpm);
+                let newTime = correction * time;
+                newTime = newTime - (355 * correction);
+                var vrvTime = Math.max(0, newTime);
+
+                //var vrvTime = Math.max(0, 2 * duration - 800);
+                var elementsattime = this.vrvToolkit.getElementsAtTime(vrvTime);
+
+                if (elementsattime.page > 0) {
+                    if (elementsattime.page != this.options.page) {
+                        //let page = elementsattime.page;
+                        //load_page();
                     }
-                    */
-                });
-                this.ids = elementsattime.notes;
-                this.ids.forEach(function (noteid) {
-                    /*
-                    if ($.inArray(noteid, elementsattime.notes) != -1) {
-                        //console.log(noteid);
-                        $("#" + noteid).attr("fill", "#c00");
-                        $("#" + noteid).attr("stroke", "#c00");;
-                        //$("#" + noteid ).addClassSVG("highlighted");
+                    if ((elementsattime.notes.length > 0) && (this.ids != elementsattime.notes)) {
+                        this.ids.forEach(function (noteid) {
+                            if (inArray(noteid, elementsattime.notes) == -1) {
+                                let element: HTMLElement = document.getElementById(noteid);
+                                element.setAttribute("fill", "#000");
+                                element.setAttribute("stroke", "#000");
+                            }
+                        });
+                        this.ids = elementsattime.notes;
+                        this.ids.forEach(function (noteid) {
+                            if (inArray(noteid, elementsattime.notes) != -1) {
+                                let element: HTMLElement = document.getElementById(noteid);
+                                element.setAttribute("fill", "#c00");
+                                element.setAttribute("stroke", "#c00");
+                            }
+                        });
                     }
-                    */
-                });
+                }
             }
         }
 
@@ -277,7 +297,7 @@ export class Options {
     /* the back midi data once loaded */
     public midiData: ArrayBuffer = null;
     /* zoom aplied */
-    public zoom: number = 100;
+    public zoom: number = 50;
     /* page we want to see initially */
     public page: number = 1;
     /** the player listener */

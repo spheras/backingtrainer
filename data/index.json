@@ -1,0 +1,19 @@
+{
+    "compositions": [
+        {
+            "id": "001",
+            "publicname": "Andante in C Major (KV315)",
+            "publicauthor": "Wolfgang Amadeus Mozart",
+            "publicdescription": "",
+            "publicwikipediaLink": "https://en.wikipedia.org/wiki/Andante_in_C_for_Flute_and_Orchestra_(Mozart)",
+            "publiclevel": 2,
+            "publicmidiURL": "mozart-andante-in-c-major.mid",
+            "publicscoreURL": "mozart-andante-in-c-major-flutesolo5.xml",
+            "publicfrontInstrument": "Flute",
+            "publicbackInstruments": [
+                "Piano"
+            ],
+            "publicversion": 1
+        }
+    ]
+}

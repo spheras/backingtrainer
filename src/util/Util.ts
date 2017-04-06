@@ -11,6 +11,24 @@ export function extend<T, U>(first: T, second: U): T & U {
     return result;
 }
 
+export function inArray(elem, array, i?: number) {
+    var len;
+    if (array) {
+        if (array.indexOf) {
+            return array.indexOf.call(array, elem, i);
+        }
+        len = array.length;
+        i = i ? i < 0 ? Math.max(0, len + i) : i : 0;
+        for (; i < len; i++) {
+            // Skip accessing in sparse arrays
+            if (i in array && array[i] === elem) {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
 /*
  * base64-arraybuffer
  * https://github.com/niklasvh/base64-arraybuffer

@@ -6,5 +6,8 @@
   "MENU-TUNNER": "Tunner",
   "MENU-TRAINER": "Trainer",
   "MAIN-TITLE": "Main Screen",
+  "MAIN-RECENT":"Recent",
+  "MAIN-DOWNLOADED":"Downloaded",
+  "MAIN-SEARCH":"Search",
   "TRAINER-TITLE": "Trainer Screen"
 }
