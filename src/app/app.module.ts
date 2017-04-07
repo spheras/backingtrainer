@@ -10,6 +10,7 @@ import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-tra
 import { Http } from "@angular/http";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
 
@@ -22,6 +23,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
   imports: [
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),

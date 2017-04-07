@@ -6,8 +6,15 @@
   "MENU-TUNNER": "Tunner",
   "MENU-TRAINER": "Trainer",
   "MAIN-TITLE": "Main Screen",
-  "MAIN-RECENT":"Recent",
-  "MAIN-DOWNLOADED":"Downloaded",
-  "MAIN-SEARCH":"Search",
+  "MAIN-RECENT": "Recent",
+  "MAIN-DOWNLOADED": "Downloaded",
+  "MAIN-SEARCH": "Search",
+  "RECENT-TITLE": "Recent Trainings",
+  "DOWNLOADED-TITLE": "Downloaded Trainings",
+  "SEARCH-TITLE": "Search Trainings",
+  "SEARCH-PLAY":"Listen",
+  "SEARCH-STOP":"Stop",
+  "SEARCH-DOWNLOAD":"Download",
+  "SEARCH-DOWNLOADED":"Already Downloaded!",
   "TRAINER-TITLE": "Trainer Screen"
 }

@@ -44,4 +44,14 @@ export class Composition {
      * the version of this composition
      */
     public version: number;
+
+
+    /**
+     * flag to indicate if the composition is being played or not
+     */
+    public flagPlaying: boolean = false;
+    /**
+     * flag to indicate if the composition have been downloaded
+     */
+    public flagDownloaded:boolean=false;
 }

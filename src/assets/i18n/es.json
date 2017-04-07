@@ -9,5 +9,12 @@
   "MAIN-RECENT":"Recientes",
   "MAIN-DOWNLOADED":"Descargadas",
   "MAIN-SEARCH":"Buscar",
+  "RECENT-TITLE": "Entrenamientos Recientes",
+  "DOWNLOADED-TITLE": "Entrenamientos Descargados",
+  "SEARCH-TITLE": "Buscar Entrenamientos",
+  "SEARCH-PLAY":"Escuchar",
+  "SEARCH-STOP":"Parar",
+  "SEARCH-DOWNLOAD":"Descargar",
+  "SEARCH-DOWNLOADED":"¡Ya ha sido descargada!",
   "TRAINER-TITLE":"Reproductor"
 }

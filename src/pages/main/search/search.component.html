@@ -1,30 +1,44 @@
-<ion-content>
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{'SEARCH-TITLE' | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
 
-    <template ngFor let-composition [ngForOf]="compositions" let-i="index">
-        <ion-card>
-            <ion-card-content>
-                <ion-card-title>{{composition.name}}</ion-card-title>
-                <p>{{composition.author}}</p>
+<ion-content padding>
+
+    <ion-searchbar (ionInput)="filterCompositions($event.target.value)"></ion-searchbar>
+
+    <template ngFor let-composition [ngForOf]="filteredComp" let-i="index">
+        <ion-card [color]="composition.flagDownloaded?'ok':'secondary'">
+            <img class="instrument-icon" src="assets/icon/instruments/{{composition.frontInstrument.toLowerCase()}}.svg" />
+            <ion-card-content class="composition-title">
+                <ion-card-title color="dark">{{composition.name}}</ion-card-title>
+                <p color="dark">{{composition.author}}</p>
             </ion-card-content>
 
             <ion-row no-padding>
                 <ion-col>
-                    <button ion-button clear small color="danger" icon-left>
-          <ion-icon name='star'></ion-icon>
-          Favorite
-        </button>
+                    <button *ngIf="!composition.flagPlaying" ion-button clear small color="light" icon-left (click)="playMidi(i)">
+                        <ion-icon name='musical-notes'></ion-icon>
+                        {{'SEARCH-PLAY' | translate}}
+                    </button>
+                    <button *ngIf="composition.flagPlaying" ion-button clear small color="light" icon-left (click)="stopMidi(i)">
+                        <ion-icon name='pause'></ion-icon>
+                        {{'SEARCH-STOP' | translate}}
+                    </button>
                 </ion-col>
                 <ion-col text-center>
-                    <button ion-button clear small color="danger" icon-left>
-          <ion-icon name='musical-notes'></ion-icon>
-          Listen
-        </button>
-                </ion-col>
-                <ion-col text-right>
-                    <button ion-button clear small color="danger" icon-left>
-          <ion-icon name='share-alt'></ion-icon>
-          Share
-        </button>
+                    <div *ngIf="composition.flagDownloaded">
+                        {{'SEARCH-DOWNLOADED' | translate}}
+                    </div>
+                    <button *ngIf="!composition.flagDownloaded" ion-button clear small color="light" icon-left (click)="downloadComposition(i)">
+                        <ion-icon name="cloud-download"></ion-icon>
+                        {{'SEARCH-DOWNLOAD' | translate}}
+                    </button>
+
                 </ion-col>
             </ion-row>
 

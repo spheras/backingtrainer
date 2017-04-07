@@ -27,14 +27,9 @@ export class PlayerService {
             });
     }
 
-    /**
-     * @name downloadBackingTrackMidi
-     * @description download from the server a backing track
-     * @return {Resource[]} the list
-     */
-    public downloadBackingTrackMidi(): Observable<ArrayBuffer> {
+    public downloadMidi(url: string): Observable<ArrayBuffer> {
         var basicOptions: RequestOptionsArgs = {
-            url: 'assets/data/mozart-andante-in-c-major.mid',
+            url: url,
             method: RequestMethod.Get,
             search: null,
             headers: null,
@@ -52,6 +47,15 @@ export class PlayerService {
                 console.error(error);
                 throw error;
             });
+    }
+
+    /**
+     * @name downloadBackingTrackMidi
+     * @description download from the server a backing track
+     * @return {Resource[]} the list
+     */
+    public downloadBackingTrackMidi(): Observable<ArrayBuffer> {
+        return this.downloadMidi('assets/data/mozart-andante-in-c-major.mid');
     }
 
 
