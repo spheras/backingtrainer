@@ -53,7 +53,7 @@ export class SearchService {
     }
 
     public downloadScore(comp: Composition): Observable<string> {
-        let url = comp.scoreURL;
+        let url = "assets/data/" + comp.scoreURL;
         return this.http
             .get(url)
             .map((r: Response) => {

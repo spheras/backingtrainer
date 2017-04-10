@@ -11,13 +11,14 @@ export class PlayerService {
 
 
     /**
-     * @name downloadBackingTrack
-     * @description download from the server a backing track
+     * @name downloadScore
+     * @description download from the server a score
      * @return {Resource[]} the list
      */
-    public downloadBackingTrack(): Observable<string> {
+    public downloadScore(): Observable<string> {
         return this.http
-            .get('assets/data/mozart-andante-in-c-major-flutesolo5.xml')
+            //.get('assets/data/mozart-andante-in-c-major-flutesolo5.xml')
+            .get('assets/data/Rosalina\'s_Comet_Observatory-solo.xml')
             .map((r: Response) => {
                 return r.text();
             })
@@ -55,7 +56,9 @@ export class PlayerService {
      * @return {Resource[]} the list
      */
     public downloadBackingTrackMidi(): Observable<ArrayBuffer> {
-        return this.downloadMidi('assets/data/mozart-andante-in-c-major.mid');
+        //return this.downloadMidi('assets/data/mozart-andante-in-c-major.mid');
+        return this.downloadMidi('assets/data/Rosalina\'s_Comet_Observatory.mid');
+
     }
 
 
