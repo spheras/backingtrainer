@@ -199,7 +199,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
 
                 let indexBox: number = this.converter.timeLineMap[this.currentNote];
                 let figure: FigureBox = this.converter.figureBoxes[indexBox];
-                while (figure.type != FigureBox.TYPE_NOTE) {
+                while (figure.type != FigureBox.TYPE_NOTE || figure.ligato) {
                     this.currentNote++;
                     indexBox = this.converter.timeLineMap[this.currentNote];
                     figure = this.converter.figureBoxes[indexBox];

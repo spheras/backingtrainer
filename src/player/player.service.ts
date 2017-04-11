@@ -17,8 +17,10 @@ export class PlayerService {
      */
     public downloadScore(): Observable<string> {
         return this.http
-            //.get('assets/data/mozart-andante-in-c-major-flutesolo5.xml')
-            .get('assets/data/Rosalina\'s_Comet_Observatory-solo.xml')
+            .get('assets/data/mozart-andante-in-c-major-flutesolo5.xml')
+            //.get('assets/data/Rosalina\'s_Comet_Observatory-solo.xml')
+            //.get('assets/data/test.xml')
+            //.get('assets/data/Flauta para Hugo_v9.xml')
             .map((r: Response) => {
                 return r.text();
             })
@@ -56,8 +58,10 @@ export class PlayerService {
      * @return {Resource[]} the list
      */
     public downloadBackingTrackMidi(): Observable<ArrayBuffer> {
-        //return this.downloadMidi('assets/data/mozart-andante-in-c-major.mid');
-        return this.downloadMidi('assets/data/Rosalina\'s_Comet_Observatory.mid');
+        //return this.downloadMidi('assets/data/test.mid');
+        return this.downloadMidi('assets/data/mozart-andante-in-c-major-2.mid');
+        //return this.downloadMidi('assets/data/Rosalina\'s_Comet_Observatory.mid');
+        //return this.downloadMidi('assets/data/Flauta para Hugo_v9.mid');
 
     }
 

@@ -67,6 +67,7 @@ export class MidiPlayer {
         return new Promise<void>(resolve => {
             if (self.piano == null) {
                 Soundfont.instrument(this.ac, 'acoustic_grand_piano').then(function (piano) {
+                    piano.play(3, 0, 0);
                     self.piano = piano;
                     resolve();
                 });

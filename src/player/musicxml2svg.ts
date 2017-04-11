@@ -20,6 +20,7 @@ declare class Abc {
 export class MusicXML2SVG {
     /**set of const used by abc2svg library */
     private static ABC2SVG_TYPE_BAR: number = 0;
+    private static ABC2SVG_TYPE_GRACE: number = 4;
     private static ABC2SVG_TYPE_METER: number = 6;
     private static ABC2SVG_TYPE_NOTE: number = 8;
     private static ABC2SVG_TYPE_REST: number = 10;
@@ -54,6 +55,13 @@ export class MusicXML2SVG {
      */
     private abc2svg: Abc = null;
 
+    /** list of ligatos recovered, just for internal adjustements */
+    private ligatos: boolean[] = [];
+
+    /** list of abc graces found */
+    private graces: string[] = [];
+    private indexGrace: number = 0;
+
     /**
      * @constructor
      * @param {string} musicXML the musicxml string to be rendered
@@ -71,6 +79,24 @@ export class MusicXML2SVG {
         this.barlines = 0;
         this.errorMessages = [];
         this.figureBoxes = [];
+        this.ligatos = [];
+        this.graces = [];
+        this.indexGrace = 0;
+    }
+
+    /**
+     * @name analyseGraces
+     * @description analyse the graces obtained by the abc code
+     */
+    private analyseGraces(abcCode: string) {
+        let index: number = -1;
+        index = abcCode.indexOf("{");
+        while (index >= 0) {
+            let indexTo: number = abcCode.indexOf("}", index + 1);
+            let str: string = abcCode.substr(index + 1, indexTo - index - 1);
+            this.graces.push(str);
+            index = abcCode.indexOf("{", indexTo);
+        }
     }
 
     /**
@@ -82,6 +108,8 @@ export class MusicXML2SVG {
     public renderScore(width: number): string {
         this.reset();
         var inforesult = vertaal(this.musicXML, this.options);
+        console.log(inforesult[0]);
+        this.analyseGraces(inforesult[0]);
         let self = this;
 
         /*See: http://moinejf.free.fr/js/interface-1.xhtml*/
@@ -171,20 +199,26 @@ export class MusicXML2SVG {
      * @see http://moinejf.free.fr/js/interface-1.xhtml
      */
     private annoStart(type: string, startOffset: number, stopOffset: number, x: number, y: number, w: number, h: number) {
-        //console.log(type)
-        if (type == 'note' || type == 'rest') {
+        console.log(type)
+        if (this.figureBoxes.length == 33) {
+            console.log("ahora");
+        }
+        if (type == 'note' || type == 'rest' || type == 'grace') {
 
             let bbox = new FigureBox();
             bbox.barline = this.barlines;
-            bbox.type = (type == 'note' ? FigureBox.TYPE_NOTE : FigureBox.TYPE_REST);
+            bbox.type = (type == 'note' || type == 'grace' ? FigureBox.TYPE_NOTE : FigureBox.TYPE_REST);
             bbox.x = this.abc2svg.sx(x).toFixed(2);
             bbox.y = this.abc2svg.sy(y).toFixed(2);
             bbox.w = w;
             bbox.h = h;
             bbox.offsetStart = startOffset;
             bbox.offsetStop = stopOffset;
+            bbox.ligato = this.ligatos[this.figureBoxes.length];
 
             this.figureBoxes.push(bbox);
+        } else {
+            console.log(type);
         }
     }
 
@@ -199,29 +233,153 @@ export class MusicXML2SVG {
      * @see http://moinejf.free.fr/js/interface-1.xhtml
      */
     private timeLine(tsFirst: any, voice_tb: any[], music_types: string[], info: any) {
-        //vamos a hacer un mapa
+        //let's do a timeline
         let map: number[] = [];
         let startReps = [];
         let index: number = 0;
+        let indexFirstEndings = [];
+        let indexSecondEndings = [];
+        let indexSegno = -1;
+        let indexFine = -1;
+        let indexToCoda = -1;
+        let flagLastLigato = false;
 
         for (var ts = tsFirst; ts; ts = ts.ts_next) {
             switch (ts.type) {
+                case MusicXML2SVG.ABC2SVG_TYPE_GRACE:
                 case MusicXML2SVG.ABC2SVG_TYPE_NOTE:
                 case MusicXML2SVG.ABC2SVG_TYPE_REST:
                     map.push(index);
+
+                    if (ts.type == MusicXML2SVG.ABC2SVG_TYPE_GRACE) {
+                        this.ligatos.push(flagLastLigato);
+                        let gracestr = this.graces[this.indexGrace];
+                        this.indexGrace++;
+                        let notes = gracestr.length - gracestr.replace(/[A-G]/g, '').length;
+                        notes = notes + gracestr.length - gracestr.replace(/[a-g]/g, '').length;
+                        for (var igrace = 0; igrace < notes-1; igrace++) {
+                            index++;
+                            map.push(index);
+                            this.ligatos.push(flagLastLigato);
+                        }
+                    }
+
+                    //we need to save the ligato info to link after with the svg figure boxes generated
+                    if (ts.notes) {
+                        this.ligatos.push(flagLastLigato);
+                        var ti1 = ts.notes[0].ti1;
+                        if (ti1 == 3) {
+                            //ligato!
+                            flagLastLigato = true;
+                        } else {
+                            flagLastLigato = false;
+                        }
+                    }
+
+
+                    //lets see if we found a segno annotation
+                    if (ts.a_dd && ts.a_dd.length > 0) {
+                        for (var idd = 0; idd < ts.a_dd.length; idd++) {
+                            var dd = ts.a_dd[idd];
+                            if (dd.glyph === 'sgno') {
+                                //segno
+                                indexSegno = index;
+                            } else {
+                                console.log(dd.glyph);
+                            }
+                        }
+                    }
+
                     index++;
                     break;
                 case MusicXML2SVG.ABC2SVG_TYPE_BAR:
+                    if (ts.text) {
+                        if (ts.text.trim() === '1') {
+                            //first ending
+                            indexFirstEndings.push(index);
+                        } else if (ts.text.trim() === '2') {
+                            //second ending
+                            indexSecondEndings.push(index);
+                        }
+                    }
+
+                    if (ts.a_gch && ts.a_gch.length > 0) {
+                        for (var ig = 0; ig < ts.a_gch.length; ig++) {
+                            var gch = ts.a_gch[ig];
+                            let text = gch.text.toLowerCase();
+
+                            if (text === "fine") {
+                                //we found a fine annotation
+                                indexFine = index;
+                                continue;
+                            }
+                            if (text === "to coda") {
+                                //we found a go to coda annotation
+                                indexToCoda = index;
+                                continue;
+                            }
+
+
+                            let start = 0;
+                            let end = index;
+                            let repeat = false;
+                            if (text.startsWith("d.s.") || text.startsWith("d.c.")) {
+                                //da segno or da capo, al fine or al coda
+
+                                //we have a segno (da segno to...)?
+                                if (indexSegno > -1 && text.startsWith("d.s.")) {
+                                    start = indexSegno;
+                                }
+                                //we have a fine (...to fine)
+                                if (indexFine > -1) {
+                                    end = indexFine;
+                                } else if (indexToCoda > -1) {
+                                    //to coda!
+                                    end = indexToCoda;
+                                }
+
+                                repeat = true;
+                            }
+
+                            //lets create the repeat timeline                            
+                            if (repeat) {
+                                for (var irep = start; irep < end; irep++) {
+                                    //we need to check first endings.. after a repetition we should pass again through first endings
+                                    for (var ifirst = 0; ifirst < indexFirstEndings.length; ifirst++) {
+                                        var firstEnd = indexFirstEndings[ifirst];
+                                        if (firstEnd == irep) {
+                                            irep = indexSecondEndings[ifirst];
+                                            break;
+                                        } else if (firstEnd > irep) {
+                                            break;
+                                        }
+                                    }
+                                    map.push(irep);
+                                }
+                            }
+                        }
+                    }
+
+
                     if (ts.bar_type === '|:') {
                         //start a repetition
                         startReps.push(index);
-                    } else if (ts.bar_type === ':|') {
+                    } else if (ts.bar_type === '::' || ts.bar_type === ':|') {
                         //now we repeat from the start to the end
                         let indexStartRep = startReps[startReps.length - 1];
-                        for (var i = indexStartRep; i < index; i++) {
+                        let toIndex = index;
+                        if (indexFirstEndings.length == indexSecondEndings.length && ts.text && ts.text.trim() === '2') {
+                            toIndex = indexFirstEndings[indexFirstEndings.length - 1];
+                        }
+                        for (var i = indexStartRep; i < toIndex; i++) {
                             map.push(i);
                         }
                         startReps = startReps.slice(0, startReps.length - 1);
+
+                        if (ts.bar_type === '::') {
+                            //start a repetition
+                            startReps.push(index);
+                        }
                     }
                     break;
             }
@@ -269,6 +427,9 @@ export class FigureBox {
     public type: number = FigureBox.TYPE_NOTE;
     /** the bar line where it is being rendered */
     public barline: number = 0;
+
+    /** indicates if its a ligato */
+    public ligato: boolean = false;
 
     /** startOffset offset of the music element in the ABC source */
     public offsetStart: number = 0;
