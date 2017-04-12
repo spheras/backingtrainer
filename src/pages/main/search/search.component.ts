@@ -19,7 +19,24 @@ export class SearchPage {
         this.service.getServerIndex().subscribe((compositions) => {
             this.compositions = compositions;
             this.filteredComp = this.compositions;
+            this.checkDownloaded();
         });
+    }
+
+    /**
+     * @name checkDownloaded
+     * @description check the flag downloaded for those compositions already downloaded
+     */
+    private checkDownloaded() {
+        this.dao.getCompositions().then((downloaded) => {
+            for (let i = 0; i < downloaded.length; i++) {
+                for (let j = 0; j < this.compositions.length; j++) {
+                    if (downloaded[i].id == this.compositions[j].id) {
+                        this.compositions[j].flagDownloaded = true;
+                    }
+                }
+            }
+        })
     }
 
 

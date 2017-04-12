@@ -16,6 +16,7 @@
   "SEARCH-PLAY":"Escuchar",
   "SEARCH-STOP":"Parar",
   "SEARCH-DOWNLOAD":"Descargar",
-  "SEARCH-DOWNLOADED":"¡Ya ha sido descargada!",
+  "SEARCH-DOWNLOADED":"Descargada!",
+  "DOWNLOADED-REMOVE":"Eliminar",
   "TRAINER-TITLE":"Reproductor"
 }

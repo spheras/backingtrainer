@@ -40,7 +40,7 @@
                             {{'SEARCH-TRAIN' | translate}}
                         </button>
                         <button *ngIf="composition.flagDownloaded" ion-button clear color="ok" class="action" icon-left>
-                            <ion-icon name="cloud-download"></ion-icon>
+                            <ion-icon name="checkmark"></ion-icon>
                             {{'SEARCH-DOWNLOADED' | translate}}
                         </button>
                         <button *ngIf="!composition.flagDownloaded" ion-button clear icon-left class="action" (click)="downloadComposition(i)">

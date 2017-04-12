@@ -16,6 +16,7 @@
   "SEARCH-PLAY":"Listen",
   "SEARCH-STOP":"Stop",
   "SEARCH-DOWNLOAD":"Download",
-  "SEARCH-DOWNLOADED":"Already Downloaded!",
+  "SEARCH-DOWNLOADED":"Downloaded!",
+  "DOWNLOADED-REMOVE":"Remove",
   "TRAINER-TITLE": "Trainer Screen"
 }
