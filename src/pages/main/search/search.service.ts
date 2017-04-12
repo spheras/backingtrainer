@@ -7,6 +7,8 @@ import { encode } from '../../../util/Util';
 @Injectable()
 export class SearchService {
 
+    private dataUrl = 'https://raw.githubusercontent.com/spheras/backingtrainer/master/data';
+
     constructor(private http: Http) { }
 
 
@@ -17,7 +19,7 @@ export class SearchService {
      */
     public getServerIndex(): Observable<Composition[]> {
         return this.http
-            .get('https://raw.githubusercontent.com/spheras/backingtrainer/master/data/index.json')
+            .get(this.dataUrl + '/index.json')
             .map((r: Response) => {
                 return <Composition[]>r.json();
             })
@@ -28,7 +30,7 @@ export class SearchService {
     }
 
     public downloadMidiB64(comp: Composition): Observable<string> {
-        let url = comp.midiURL;
+        let url = this.dataUrl + '/[' + comp.id + ']-' + comp.midiURL;
         var basicOptions: RequestOptionsArgs = {
             url: url,
             method: RequestMethod.Get,
@@ -53,7 +55,7 @@ export class SearchService {
     }
 
     public downloadScore(comp: Composition): Observable<string> {
-        let url = "assets/data/" + comp.scoreURL;
+        let url = this.dataUrl + '/[' + comp.id + ']-' + comp.scoreURL;
         return this.http
             .get(url)
             .map((r: Response) => {

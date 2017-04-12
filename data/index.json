@@ -1,5 +1,18 @@
 [
     {
+        "id": "000",
+        "name": "Test",
+        "author": "spheras",
+        "description": "This is a small test for backingtrainer app",
+        "wikipediaLink": "",
+        "level": 1,
+        "midiURL": "test.mid",
+        "scoreURL": "test.xml",
+        "frontInstrument": "Flute",
+        "backInstruments": [],
+        "version": 0
+    },
+    {
         "id": "001",
         "name": "Andante in C Major (KV315)",
         "author": "Wolfgang Amadeus Mozart",
@@ -7,7 +20,7 @@
         "wikipediaLink": "https://en.wikipedia.org/wiki/Andante_in_C_for_Flute_and_Orchestra_(Mozart)",
         "level": 2,
         "midiURL": "mozart-andante-in-c-major.mid",
-        "scoreURL": "mozart-andante-in-c-major-flutesolo5.xml",
+        "scoreURL": "mozart-andante-in-c-major-flutesolo.xml",
         "frontInstrument": "Flute",
         "backInstruments": [
             "Piano"
@@ -38,19 +51,6 @@
         "level": 1,
         "midiURL": "Flauta para Hugo_v9.mid",
         "scoreURL": "Flauta para Hugo_v9.xml",
-        "frontInstrument": "Flute",
-        "backInstruments": [],
-        "version": 1
-    },
-    {
-        "id": "004",
-        "name": "Test",
-        "author": "José Amuedo",
-        "description": "This is a small test for backingtrainer app",
-        "wikipediaLink": "",
-        "level": 1,
-        "midiURL": "test.mid",
-        "scoreURL": "test.xml",
         "frontInstrument": "Flute",
         "backInstruments": [],
         "version": 1

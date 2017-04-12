@@ -5,7 +5,22 @@
     padding: 4px;
 }
 
-.card-content-md.composition-title
+.item{
+    padding-left:8px !important;
+}
+.thumbnail
 {
-     padding: 0px 16px 13px 16px !important;
+     left: 0px !important;
+     margin:0px !important;
+}
+
+.thumbnail-col{
+    max-width: 90px;
+
+}
+
+.action{
+    text-transform: none;
+    padding-right: 15px;
+    padding-left: 0px;
 }

@@ -1,5 +1,9 @@
 export class Composition {
     /**
+     * id of the composition
+     */
+    public id: string
+    /**
      * name of the composition
      */
     public name: string;
@@ -25,10 +29,12 @@ export class Composition {
      * this is the url to obtain the midi file
      */
     public midiURL: string;
+    public midiB64Data: string;
     /**
      * this is the url to obtain the soloist score file (mei format? musicxml format?)
      */
     public scoreURL: string;
+    public scoreXMLData: string;
 
 
     /**
@@ -53,5 +59,5 @@ export class Composition {
     /**
      * flag to indicate if the composition have been downloaded
      */
-    public flagDownloaded:boolean=false;
+    public flagDownloaded: boolean = false;
 }
