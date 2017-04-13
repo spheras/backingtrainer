@@ -3,7 +3,7 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from 'ng2-translate';
-import { AlertController } from 'ionic-angular';
+import { LoadingController, AlertController, NavController } from 'ionic-angular';
 
 import { MainPage } from '../pages/main/main.component';
 import { TrainerPage } from '../pages/trainer/trainer.component';

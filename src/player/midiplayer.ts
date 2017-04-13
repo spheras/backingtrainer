@@ -78,28 +78,13 @@ export class MidiPlayer {
     }
 
     /**
-     * @name loadMidiData
-     * @description load the backingtrack midi file
-     * @param <string> url the url to obtain the midi file
-     * @return <Promise<string>> the promise of the midi data in b64 format
-     */
-    private loadMidiData(url: string): Promise<ArrayBuffer> {
-        let obs = this.service.downloadMidi(url);
-        return new Promise<ArrayBuffer>(resolve => {
-            obs.subscribe((data: ArrayBuffer) => {
-                resolve(data);
-            });
-        });
-    }
-
-    /**
      * @name play
      * @description play the music, start the show!
-     * @param {string} url the url to load the midi binary
+     * @param {Composition} comp the composition info to load the midi info
      */
-    public play(url: string) {
+    public play(comp: Composition) {
         this.loadSoundFont().then(() => {
-            this.loadMidiData(url).then((data) => {
+            this.service.getMidi(comp).then((data) => {
                 this.playMidiData(120, data);
             });
         });

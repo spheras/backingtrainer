@@ -4,7 +4,8 @@ import { Composition } from '../../../player/composition';
 import { MidiPlayer } from '../../../player/midiplayer';
 import { PlayerService } from '../../../player/player.service';
 import { DAO } from '../../../dao/dao';
-import { LoadingController, AlertController } from 'ionic-angular';
+import { ModalController, LoadingController, AlertController, NavController } from 'ionic-angular';
+import { TrainerPage } from '../../trainer/trainer.component';
 
 @Component({
     templateUrl: './downloaded.component.html',
@@ -15,10 +16,18 @@ export class DownloadedPage {
     private compositions: Composition[] = [];
     private filteredComp: Composition[] = [];
 
-    constructor(public alertCtrl: AlertController, private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
+    constructor(private modalCtrl: ModalController, private navCtrl: NavController, private alertCtrl: AlertController, private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
+    }
+
+    ionViewDidEnter() {
         this.loadCompositions();
     }
 
+    /**
+     * @name loadCompositions
+     * @description load the compositions downloaded
+     * @return the promise to load them
+     */
     private loadCompositions(): Promise<void> {
         return new Promise<string>(resolve => {
             this.dao.getCompositions().then((compositions) => {
@@ -48,7 +57,7 @@ export class DownloadedPage {
         let comp = this.filteredComp[index];
         this.player.stop();
         comp.flagPlaying = true;
-        this.player.play("assets/data/" + comp.midiURL);
+        this.player.play(comp);
     }
 
     removeComposition(index: number) {
@@ -63,6 +72,16 @@ export class DownloadedPage {
                 loader.dismiss();
             });
         });
+    }
+
+    /**
+     * @name trainComposition
+     * @description train the selected composition
+     * @param {number} index the index of the composition selected
+     */
+    trainComposition(index: number) {
+        let comp = this.filteredComp[index];
+        this.modalCtrl.create(TrainerPage, comp).present();
     }
 
     /**

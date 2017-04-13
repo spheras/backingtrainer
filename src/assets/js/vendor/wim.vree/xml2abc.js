@@ -1404,6 +1404,8 @@ Parser.prototype.addMidiMap = function (ip, vvmap) {    // map abc voices to mid
     for (i = 0; i < xs.length; ++i) { vabc = xs [i][0]; midi = xs [i][1]; this.midiMap.push (midi); }
 }
 
+NUMERO_DE_BARS=0;
+
 Parser.prototype.parse = function (xmltree) {
     var $e = $(xmltree);            // xmltree should be a DOM-tree
     this.mkTitle ($e);
@@ -1447,7 +1449,19 @@ Parser.prototype.parse = function (xmltree) {
                 case 'print': lbrk = this.doPrint ($e); break;
                 }
             }
+
+            //cambio temporal
+            /*
+            lbrk=(NUMERO_DE_BARS%6)==0;
+            if(lbrk){
+                lbrk="$";
+            }else{
+                lbrk="";
+            }*/
+
             this.msc.addBar (lbrk, this.msr);
+            NUMERO_DE_BARS++;
+
             if (herhaal == 1) {
                 herhaalMaat = this.msr.ixm;
                 this.msr.ixm += 1;

@@ -1,69 +1,80 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Http, Response, Request, RequestOptions, RequestOptionsArgs, RequestMethod, ResponseContentType } from '@angular/http';
-import { encode } from '../util/Util';
+import { encode, decode } from '../util/Util';
 import 'rxjs/add/operator/catch';
+import { Composition } from './composition';
 
 @Injectable()
 export class PlayerService {
 
+    private dataUrl1 = 'https://raw.githubusercontent.com/spheras/backingtrainer/master/data';
+
     constructor(private http: Http) { }
 
-
     /**
-     * @name downloadScore
-     * @description download from the server a score
-     * @return {Resource[]} the list
+     * @name getScore
+     * @description return the score xml string corresponding to the composition. It can be retrieved directly from memory or downloading from server.
+     * @param {Composition} comp the composition info to obtain the score xml data
+     * @return Promise to get the String
      */
-    public downloadScore(): Observable<string> {
-        return this.http
-            .get('assets/data/mozart-andante-in-c-major-flutesolo5.xml')
-            //.get('assets/data/Rosalina\'s_Comet_Observatory-solo.xml')
-            //.get('assets/data/test.xml')
-            //.get('assets/data/Flauta para Hugo_v9.xml')
-            .map((r: Response) => {
-                return r.text();
-            })
-            .catch((error) => {
-                console.error(error);
-                throw error;
-            });
-    }
-
-    public downloadMidi(url: string): Observable<ArrayBuffer> {
-        var basicOptions: RequestOptionsArgs = {
-            url: url,
-            method: RequestMethod.Get,
-            search: null,
-            headers: null,
-            body: null,
-            withCredentials: false,
-            responseType: ResponseContentType.ArrayBuffer
-        };
-        var reqOptions = new RequestOptions(basicOptions);
-        var req = new Request(reqOptions);
-        return this.http.request(req)
-            .map((r: Response) => {
-                return r.arrayBuffer();
-            })
-            .catch((error) => {
-                console.error(error);
-                throw error;
-            });
+    public getScore(comp: Composition): Promise<string> {
+        return new Promise<string>((resolve) => {
+            if (comp.scoreXMLData != null) {
+                resolve(comp.scoreXMLData);
+            } else {
+                let url = this.dataUrl1 + '/[' + comp.id + ']-' + comp.scoreURL;
+                this.http
+                    .get(url)
+                    .map((r: Response) => {
+                        return r.text();
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        throw error;
+                    }).subscribe((data: string) => {
+                        resolve(data);
+                    });
+            }
+        });
     }
 
     /**
-     * @name downloadBackingTrackMidi
-     * @description download from the server a backing track
-     * @return {Resource[]} the list
+     * @name getMidi
+     * @description return the midi ArrayBuffer data corresponding to the composition param. It can be retrieved directly from memory or downloading from server.
+     * @param {Composition} comp the composition info to obtain the midi arraybuffer data
+     * @return the promise to obtain the arraybuffer
      */
-    public downloadBackingTrackMidi(): Observable<ArrayBuffer> {
-        //return this.downloadMidi('assets/data/test.mid');
-        return this.downloadMidi('assets/data/mozart-andante-in-c-major-2.mid');
-        //return this.downloadMidi('assets/data/Rosalina\'s_Comet_Observatory.mid');
-        //return this.downloadMidi('assets/data/Flauta para Hugo_v9.mid');
-
+    public getMidi(comp: Composition): Promise<ArrayBuffer> {
+        return new Promise<ArrayBuffer>((resolve) => {
+            if (comp.midiB64Data != null) {
+                let buffer: ArrayBuffer = decode(comp.midiB64Data);
+                resolve(buffer);
+            } else {
+                let url = this.dataUrl1 + '/[' + comp.id + ']-' + comp.scoreURL;
+                var basicOptions: RequestOptionsArgs = {
+                    url: url,
+                    method: RequestMethod.Get,
+                    search: null,
+                    headers: null,
+                    body: null,
+                    withCredentials: false,
+                    responseType: ResponseContentType.ArrayBuffer
+                };
+                var reqOptions = new RequestOptions(basicOptions);
+                var req = new Request(reqOptions);
+                this.http.request(req)
+                    .map((r: Response) => {
+                        return r.arrayBuffer();
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        throw error;
+                    }).subscribe((response: ArrayBuffer) => {
+                        resolve(response);
+                    });
+            }
+        });
     }
-
 
 }

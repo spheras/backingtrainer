@@ -4,7 +4,8 @@ import { Composition } from '../../../player/composition';
 import { MidiPlayer } from '../../../player/midiplayer';
 import { PlayerService } from '../../../player/player.service';
 import { DAO } from '../../../dao/dao';
-import { LoadingController, AlertController } from 'ionic-angular';
+import { LoadingController, AlertController, ModalController } from 'ionic-angular';
+import { TrainerPage } from '../../trainer/trainer.component';
 
 @Component({
     templateUrl: './search.component.html',
@@ -15,7 +16,7 @@ export class SearchPage {
     private compositions: Composition[] = [];
     private filteredComp: Composition[] = [];
 
-    constructor(public alertCtrl: AlertController, private service: SearchService, private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
+    constructor(private modalCtrl: ModalController, public alertCtrl: AlertController, private service: SearchService, private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
         this.service.getServerIndex().subscribe((compositions) => {
             this.compositions = compositions;
             this.filteredComp = this.compositions;
@@ -39,6 +40,15 @@ export class SearchPage {
         })
     }
 
+    /**
+      * @name trainComposition
+      * @description train the selected composition
+      * @param {number} index the index of the composition selected
+      */
+    trainComposition(index: number) {
+        let comp = this.filteredComp[index];
+        this.modalCtrl.create(TrainerPage, comp).present();
+    }
 
     downloadComposition(index: number) {
         let comp = this.filteredComp[index];
@@ -96,7 +106,7 @@ export class SearchPage {
         let comp = this.filteredComp[index];
         this.player.stop();
         comp.flagPlaying = true;
-        this.player.play("assets/data/" + comp.midiURL);
+        this.player.play(comp);
     }
 
     /**

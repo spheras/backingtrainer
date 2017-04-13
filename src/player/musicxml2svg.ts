@@ -130,6 +130,9 @@ export class MusicXML2SVG {
             'imagesize': 'width="' + width + '"',
             'page_format': true
         }
+
+        //inforesult[0] = inforesult[0].replace(new RegExp("0.83", 'g'), "2.00");
+        //console.log(inforesult[0]);
         this.abc2svg = new Abc(user);
         this.abc2svg.tosvg('abc2svg', inforesult[0]);
         return this.svg;
@@ -257,7 +260,7 @@ export class MusicXML2SVG {
                         this.indexGrace++;
                         let notes = gracestr.length - gracestr.replace(/[A-G]/g, '').length;
                         notes = notes + gracestr.length - gracestr.replace(/[a-g]/g, '').length;
-                        for (var igrace = 0; igrace < notes-1; igrace++) {
+                        for (var igrace = 0; igrace < notes - 1; igrace++) {
                             index++;
                             map.push(index);
                             this.ligatos.push(flagLastLigato);
@@ -404,7 +407,7 @@ export class ConversionOptions {
     public m: number = 2;  //no midi, minimal midi, all midi output (0,1,2)
     public x: number = 0;  //no line breaks (1)
     public t: number = 1;  //clef dependent step value (1)
-    public p: any = 'f';   // page format: scale (1.0), width, left- and right margin in cm 
+    public p: string = '1.0,'+ Math.round((document.documentElement.clientWidth * 20)/640) +',0,0';   // page format: scale (1.0), width, left and right margin in cm
 }
 
 /**

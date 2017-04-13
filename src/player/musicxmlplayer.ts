@@ -66,7 +66,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
         return new Promise<string>(resolve => {
 
             //we load the front sheet and generate the SVG code
-            let promiseRender = this.loadAndRenderScore();
+            let promiseRender = this.loadAndRenderScore(this.options.composition);
             promiseRender.then((frontsvg: string) => {
                 //we got the svg
                 if (self.options.listener != null) {
@@ -77,7 +77,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                 self.listenResizeEvents();
 
                 //we load the midi data
-                let promiseMidi = self.loadMidiData();
+                let promiseMidi = self.loadMidiData(this.options.composition);
                 promiseMidi.then((midi => {
 
                     //finally, we load the soundfont(s?)
@@ -103,7 +103,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
 
         const $resizeEvent = Observable.fromEvent(window, 'resize')
             .map(() => {
-                return document.documentElement.clientWidth;
+                return document.documentElement.clientWidth - 20;
             })
             .debounceTime(200)
 
@@ -117,18 +117,19 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     }
 
     /**
-     * @name loadFrontSheet
-     * @description load and render the front sheet with verovio
+     * @name loadAndRenderScore
+     * @description load and render the front sheet
+     * @param {Composition} comp the composition info to render
      * @return <Promise<string>> a promise to be returned a svg
      */
-    private loadAndRenderScore(): Promise<string> {
+    private loadAndRenderScore(comp: Composition): Promise<string> {
         if (this.options.scoreData == null) {
 
-            let obs = this.service.downloadScore();
+            let obs = this.service.getScore(comp);
 
             let self = this;
             return new Promise<string>(resolve => {
-                obs.subscribe((data: string) => {
+                obs.then((data: string) => {
                     self.options.scoreData = $.parseXML(data);
                     let svg = self.renderScore();
                     resolve(svg);
@@ -152,19 +153,19 @@ export class MusicXMLPlayer implements MidiPlayerListener {
         // options by default
         let coptions = new ConversionOptions();
         this.converter = new MusicXML2SVG(this.options.scoreData, coptions);
-        let svg = this.converter.renderScore(document.documentElement.clientWidth);
+        let svg = this.converter.renderScore(document.documentElement.clientWidth - 40);
         return svg;
     }
 
     /**
      * @name loadMidiData
      * @description load the backingtrack midi file
-     * @return <Promise<string>> the promise of the midi data in b64 format
+     * @return <Promise<void>> the promise of the midi data
      */
-    private loadMidiData(): Promise<void> {
-        let obs = this.service.downloadBackingTrackMidi();
+    private loadMidiData(comp: Composition): Promise<void> {
+        let obs = this.service.getMidi(comp);
         return new Promise<string>(resolve => {
-            obs.subscribe((data: ArrayBuffer) => {
+            obs.then((data: ArrayBuffer) => {
                 this.options.midiData = data;
                 resolve();
             });
@@ -211,21 +212,33 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                         this.$wijzer.remove();
                     }
                     this.$wijzer = $(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
+                    this.$wijzer.attr({ "fill": "red", "fill-opacity": "0.5" });
                     $("svg > g").eq(this.currentBarline).prepend(this.$wijzer);
+
+
+                    var y = 0;
+                    var svgs = $("svg > g");
+                    //FIXME, calculate the absolute position not working, why!?
+                    for (var isvg = 0; isvg <= this.currentBarline; isvg++) {
+                        y = y + svgs[isvg].getBoundingClientRect().height;
+                    }
+                    $('.scroll-content').animate({ scrollTop: y - 100 }, 1000);
                 }
 
-                this.$wijzer.attr("x", "" + (figure.x)); //+ (info.x - info.w + 75.87));
-                this.$wijzer.attr("y", "" + (figure.y));//(info.y + info.h));// + 112.7));
-                this.$wijzer.attr("width", "" + figure.w);
-                this.$wijzer.attr("height", "" + figure.h);
-                this.$wijzer.attr("fill", "red");
-                this.$wijzer.attr("fill-opacity", "0.5");
+                this.$wijzer.attr({
+                    "x": "" + (figure.x),
+                    "y": "" + (figure.y),
+                    "width": "" + figure.w,
+                    "height": "" + figure.h
+                });
+
 
                 this.currentNote++;
             }
         }
 
     }
+
 }
 
 export class Options {
