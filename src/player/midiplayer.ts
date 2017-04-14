@@ -33,6 +33,8 @@ export class MidiPlayer {
     private player;
     private ac = new AudioContext;
     private piano: any = null;
+    /** indicates the muted Track, if any (>-1) */
+    private mutedTrack: number = -1;
 
     constructor(private service: PlayerService) {
         this.initMidiPlayer();
@@ -110,13 +112,32 @@ export class MidiPlayer {
     }
 
     /**
+     * @name muteTrack
+     * @description mute a Track
+     * @param {number} Track the Track to mute
+     */
+    public muteTrack(Track: number) {
+        this.mutedTrack = Track;
+    }
+
+    /**
+     * @name unmuteTracks
+     * @description unmute all Tracks
+     */
+    public unmuteTracks() {
+        this.mutedTrack = -1;
+    }
+
+    /**
      * @name midiUpdate
      * @description a new midi event has been produced
      * @param event the event produced
      */
     midiUpdate(event) {
         if (event.name == 'Note on') {
-            this.piano.play(event.noteName, this.ac.currentTime, { gain: event.velocity / 100 });
+            if (event.track != this.mutedTrack) {
+                this.piano.play(event.noteName, this.ac.currentTime, { gain: event.velocity / 100 });
+            }
         }
         if (this.listener && this.listener != null) {
             this.listener.midiUpdate(event);

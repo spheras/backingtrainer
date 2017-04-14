@@ -51,7 +51,7 @@ export class PlayerService {
                 let buffer: ArrayBuffer = decode(comp.midiB64Data);
                 resolve(buffer);
             } else {
-                let url = this.dataUrl1 + '/[' + comp.id + ']-' + comp.scoreURL;
+                let url = this.dataUrl1 + '/[' + comp.id + ']-' + comp.midiURL;
                 var basicOptions: RequestOptionsArgs = {
                     url: url,
                     method: RequestMethod.Get,

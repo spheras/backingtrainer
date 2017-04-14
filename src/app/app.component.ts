@@ -7,9 +7,12 @@ import { LoadingController, AlertController, NavController } from 'ionic-angular
 
 import { MainPage } from '../pages/main/main.component';
 import { TrainerPage } from '../pages/trainer/trainer.component';
+import { DAO } from '../dao/dao';
+import { Settings } from '../dao/settings';
 
 @Component({
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  providers: [DAO]
 })
 
 /**
@@ -20,13 +23,15 @@ import { TrainerPage } from '../pages/trainer/trainer.component';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
+  settings: Settings = new Settings();
+
   /**
    * To set the root page
    */
   rootPage: any = MainPage;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-    private translate: TranslateService, private alertCtrl: AlertController) {
+    private translate: TranslateService, private alertCtrl: AlertController, private dao: DAO) {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.initializeApp();
   }
@@ -36,6 +41,12 @@ export class MyApp {
    * @description initialize the application
    */
   private initializeApp() {
+    this.dao.getSettings().then((settings) => {
+      this.settings = settings;
+      this.dao.observeSettings().subscribe((settings) => {
+        this.settings = settings;
+      });
+    });
     this.initializeLocale();
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -51,49 +62,61 @@ export class MyApp {
     this.translate.use(userLang);
   }
 
-  /**
-   * @name openMain
-   * @description Open the Main Screen
-   */
-  openMain() {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(MainPage);
-  }
 
   /**
-   * @name openSettings
-   * @description Open the Settings Screen
+   * @name settingAnimation
+   * @description set the animation cursor property
+   * @param {boolean} value the value to set
    */
-  openSettings() {
-    let alert = this.alertCtrl.create({
-      title: 'TODO!',
-      subTitle: 'This section is pending!',
-      buttons: ['OK']
+  settingAnimation(value: boolean) {
+    this.dao.getSettings().then((settings) => {
+      this.settings.playerSettings.cursorAnimation = value;
+      settings.playerSettings.cursorAnimation = value;
+      this.dao.setSettings(settings);
     });
-    alert.present();
   }
 
+
   /**
-   * @name openTunner
-   * @description open the Tunner Screen
+   * @name settingCursor
+   * @description set the cursor property
+   * @param {boolean} value the value to set
    */
-  openTunner() {
-    let alert = this.alertCtrl.create({
-      title: 'TODO!',
-      subTitle: 'This section is pending!',
-      buttons: ['OK']
+  settingCursor(value: boolean) {
+    this.dao.getSettings().then((settings) => {
+      this.settings.playerSettings.cursor = value;
+      settings.playerSettings.cursor = value;
+      this.dao.setSettings(settings);
     });
-    alert.present();
   }
 
   /**
-   * @name openTrainer
-   * @description open the Trainer Screen
+   * @name settingPlaySoloist
+   * @description set the playSoloist property
+   * @param {boolean} value the value to set
    */
-  openTrainer() {
-    this.nav.setRoot(TrainerPage);
+  settingPlaySoloist(value: boolean) {
+    this.dao.getSettings().then((settings) => {
+      this.settings.playerSettings.playSoloist = value;
+      settings.playerSettings.playSoloist = value;
+      this.dao.setSettings(settings);
+    });
   }
+
+
+  /**
+   * @name settingSoundQuality
+   * @description set the soundquality property
+   * @param {boolean} value the value to set
+   */
+  settingSoundQuality(value: boolean) {
+    this.dao.getSettings().then((settings) => {
+      this.settings.playerSettings.highQualitySound = value;
+      settings.playerSettings.highQualitySound = value;
+      this.dao.setSettings(settings);
+    });
+  }
+
 
 
 }

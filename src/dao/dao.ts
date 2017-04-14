@@ -1,15 +1,73 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Composition } from '../player/composition';
+import { Settings } from './settings';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class DAO {
 
-    constructor(private storage: Storage) {
-    }
-
     /** cached compositions */
     private compositions: Composition[] = null;
+    /** cached settings */
+    public settingsCache: Settings = null;
+    /** settings observable */
+    private settingsSubject: Subject<Settings> = new Subject();
+
+
+    constructor(private storage: Storage) {
+        this.getSettings();
+    }
+
+    /**
+     * @name observeSettings
+     * @description observer pattern for the settings object
+     * @return {Subject<Settings>} the observable RxJs
+     */
+    public observeSettings(): Subject<Settings> {
+        return this.settingsSubject;
+    }
+
+    /**
+     * @name getSettings
+     * @description return the settings of the application
+     * @return {Promise<Settings>} the promise to return the settings
+     */
+    public getSettings(): Promise<Settings> {
+        return new Promise<Settings>(resolve => {
+            if (this.settingsCache == null) {
+                this.settingsCache = new Settings(); //temporal
+                this.storage.ready().then(() => {
+                    this.storage.get('settings').then((settings: Settings) => {
+                        if (settings == null) {
+                            settings = new Settings();
+                        }
+                        this.settingsCache = settings;
+                        resolve(settings);
+                    })
+                });
+            } else {
+                resolve(this.settingsCache);
+            }
+        });
+    }
+
+    /**
+     * @name setSettings
+     * @description set the settings for the application
+     * @return {Promise<void>} the promise to set the settings
+     */
+    public setSettings(settings: Settings): Promise<void> {
+        return new Promise<Settings>(resolve => {
+            this.storage.ready().then(() => {
+                this.storage.set('settings', settings).then((result: any) => {
+                    this.settingsCache = settings;
+                    this.settingsSubject.next(this.settingsCache);
+                    resolve();
+                })
+            });
+        });
+    }
 
     /**
      * @name getCompositions
@@ -23,8 +81,8 @@ export class DAO {
                     this.storage.get('compositions').then((compositions: Composition[]) => {
                         if (compositions == null) {
                             compositions = [];
-                            this.compositions = compositions;
                         }
+                        this.compositions = compositions;
                         resolve(compositions);
                     })
                 });

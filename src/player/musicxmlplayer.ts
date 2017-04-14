@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { MidiPlayer, MidiPlayerListener } from './midiplayer';
 import { decode, inArray } from '../util/Util';
 import { Composition } from './composition';
+import { DAO } from '../dao/dao';
+import { Settings } from '../dao/settings';
 import { MusicXML2SVG, FigureBox, ConversionOptions } from './musicxml2svg';
 import * as Soundfont from 'soundfont-player';
 //vertaal function is the xml2abc library function
@@ -46,9 +48,28 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     private midiPlayer: MidiPlayer = null;
     private converter: MusicXML2SVG = null;
 
-    constructor(private service: PlayerService) {
+    constructor(private service: PlayerService, private dao: DAO) {
         this.midiPlayer = new MidiPlayer(service);
         this.midiPlayer.setListener(this);
+        this.dao.getSettings().then((settings) => {
+            this.updateSettings(settings);
+        });
+        this.dao.observeSettings().subscribe((settings) => {
+            this.updateSettings(settings);
+        });
+    }
+
+    /**
+     * @name updateSettings
+     * @description  Updating the settings that affect to the player
+     * @param {Settings} settings the new settings
+     */
+    private updateSettings(settings: Settings) {
+        if (settings.playerSettings.playSoloist) {
+            this.midiPlayer.unmuteTracks();
+        } else {
+            this.midiPlayer.muteTrack(1);
+        }
     }
 
 
@@ -212,9 +233,8 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                         this.$wijzer.remove();
                     }
                     this.$wijzer = $(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
-                    this.$wijzer.attr({ "fill": "red", "fill-opacity": "0.5" });
+                    this.$wijzer.attr({ "fill": "#387ef5", "fill-opacity": (this.dao.settingsCache.playerSettings.cursor ? "0.5" : "0") });
                     $("svg > g").eq(this.currentBarline).prepend(this.$wijzer);
-
 
                     var y = 0;
                     var svgs = $("svg > g");
@@ -222,7 +242,11 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                     for (var isvg = 0; isvg <= this.currentBarline; isvg++) {
                         y = y + svgs[isvg].getBoundingClientRect().height;
                     }
-                    $('.scroll-content').animate({ scrollTop: y - 100 }, 1000);
+                    if (this.dao.settingsCache.playerSettings.cursorAnimation) {
+                        $('.scroll-content').animate({ scrollTop: y - 100 }, 1000);
+                    } else {
+                        $('.scroll-content').scrollTop(y - 100);
+                    }
                 }
 
                 this.$wijzer.attr({

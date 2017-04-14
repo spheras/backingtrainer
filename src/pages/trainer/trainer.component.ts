@@ -4,10 +4,14 @@ import { MusicXMLPlayer, PlayerListener } from '../../player/musicxmlplayer';
 import { Composition } from '../../player/composition';
 import { PlayerService } from '../../player/player.service';
 import { LoadingController, Loading, AlertController, NavController, NavParams } from 'ionic-angular';
+import { Insomnia } from '@ionic-native/insomnia';
+import { App, MenuController } from 'ionic-angular';
+import { DAO } from '../../dao/dao';
+import { Settings } from '../../dao/settings';
 
 @Component({
     templateUrl: 'trainer.component.html',
-    providers: [MusicXMLPlayer, PlayerService]
+    providers: [MusicXMLPlayer, PlayerService, Insomnia]
 })
 
 /**
@@ -20,11 +24,19 @@ export class TrainerPage implements PlayerListener {
     private composition: Composition = null;
     private loader: Loading = null;
 
-    constructor(private loadingCtrl: LoadingController, navParams: NavParams, private player: MusicXMLPlayer, private _sanitizer: DomSanitizer) {
+    constructor(app: App, menu: MenuController, private insomnia: Insomnia, private loadingCtrl: LoadingController,
+        navParams: NavParams, private player: MusicXMLPlayer, private _sanitizer: DomSanitizer, private dao: DAO) {
+        menu.enable(false, 'menu1');
+        menu.enable(true, 'menu-trainer');
         this.composition = navParams.data;
     }
 
+    ionViewDidLeave() {
+        this.insomnia.allowSleepAgain();
+    }
+
     ionViewDidEnter() {
+        this.insomnia.keepAwake();
         this.loader = this.loadingCtrl.create({
             content: "Please wait while creating score..."
         });

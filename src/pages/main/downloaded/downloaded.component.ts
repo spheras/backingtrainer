@@ -6,17 +6,18 @@ import { PlayerService } from '../../../player/player.service';
 import { DAO } from '../../../dao/dao';
 import { ModalController, LoadingController, AlertController, NavController } from 'ionic-angular';
 import { TrainerPage } from '../../trainer/trainer.component';
+import { App, MenuController } from 'ionic-angular';
 
 @Component({
     templateUrl: './downloaded.component.html',
-    providers: [MidiPlayer, PlayerService, DAO]
+    providers: [MidiPlayer, PlayerService]
 })
 export class DownloadedPage {
 
     private compositions: Composition[] = [];
     private filteredComp: Composition[] = [];
 
-    constructor(private modalCtrl: ModalController, private navCtrl: NavController, private alertCtrl: AlertController, private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
+    constructor(private app: App, menu: MenuController,private modalCtrl: ModalController, private navCtrl: NavController, private alertCtrl: AlertController, private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
     }
 
     ionViewDidEnter() {
@@ -81,7 +82,8 @@ export class DownloadedPage {
      */
     trainComposition(index: number) {
         let comp = this.filteredComp[index];
-        this.modalCtrl.create(TrainerPage, comp).present();
+        this.app.getRootNav().setRoot(TrainerPage,comp);
+        //this.modalCtrl.create(TrainerPage, comp).present();
     }
 
     /**
