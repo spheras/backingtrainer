@@ -72,6 +72,23 @@ export class MusicXMLPlayer implements MidiPlayerListener {
         }
     }
 
+    /**
+     * @name getTempo
+     * @description return the tempo of the midi loaded
+     * @return {number} the tempo (bpm)
+     */
+    public getTempo(): number {
+        return this.midiPlayer.getTempo();
+    }
+
+    /**
+      * @name setTempo
+      * @description set the tempo of the midi loaded
+      * @param {number} bpm beats per minute
+      */
+    public setTempo(bpm: number) {
+        this.midiPlayer.setTempo(bpm);
+    }
 
     /**
      * @name init
@@ -87,8 +104,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
         return new Promise<string>(resolve => {
 
             //we load the front sheet and generate the SVG code
-            let promiseRender = this.loadAndRenderScore(this.options.composition);
-            promiseRender.then((frontsvg: string) => {
+            this.loadAndRenderScore(this.options.composition).then((frontsvg: string) => {
                 //we got the svg
                 if (self.options.listener != null) {
                     self.options.listener.svgLoaded(frontsvg);
@@ -98,21 +114,28 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                 self.listenResizeEvents();
 
                 //we load the midi data
-                let promiseMidi = self.loadMidiData(this.options.composition);
-                promiseMidi.then((midi => {
-
+                self.loadMidiData(this.options.composition).then((midi => {
                     //finally, we load the soundfont(s?)
-                    let promiseSoundFont = self.midiPlayer.loadSoundFont();
-                    promiseSoundFont.then(() => {
-                        if (self.options.listener != null) {
-                            self.options.listener.playerInitialized();
-                        }
+                    self.midiPlayer.loadSoundFont().then(() => {
+                        this.findTempo().then((bpm) => {
+                            if (self.options.listener != null) {
+                                self.options.listener.playerInitialized();
+                            }
+                        });
                     });
                 }));
             });
         });
 
 
+    }
+
+    /**
+     * @name findTempo
+     * @description internal function to load the midi and find the tempo info
+     */
+    private findTempo(): Promise<number> {
+        return this.midiPlayer.findTempo();
     }
 
 
@@ -187,7 +210,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
         let obs = this.service.getMidi(comp);
         return new Promise<string>(resolve => {
             obs.then((data: ArrayBuffer) => {
-                this.options.midiData = data;
+                this.midiPlayer.loadMidiData(data);
                 resolve();
             });
         });
@@ -199,9 +222,39 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @param <number> bpm TODO the bpm to play
      */
     public play(bpm: number) {
-        this.midiPlayer.playMidiData(bpm, this.options.midiData);
+        this.midiPlayer.play(bpm);
     }
 
+    /**
+     * @name pause
+     * @description pause the music
+     */
+    public pause() {
+        this.midiPlayer.pause();
+    }
+
+    /**
+     * @name stop
+     * @description stop the music
+     */
+    public stop() {
+        this.currentBarline = 0;
+        this.currentNote = 0;
+        if (this.$wijzer != null) {
+            this.$wijzer.remove();
+            this.$wijzer = null;
+        }
+        this.midiPlayer.stop();
+        $('.scroll-content').animate({ scrollTop: 0 }, 1000);
+    }
+
+    /**
+     * @name resume
+     * @description resume the music
+     */
+    public resume() {
+        this.midiPlayer.resume();
+    }
 
     private currentBarline = 0;
     private currentNote = 0;
@@ -212,13 +265,12 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      */
     midiUpdate(event) {
         if (event.name == 'Note on') {
-            if (event.track > 1) {
-                //this.piano.play(event.noteName, this.ac.currentTime, { gain: event.velocity / 100 });
-            } else {
+            if (event.track == 1) {
                 if (event.velocity <= 0) {
                     return;
                 }
 
+                //first we get the figurebox to be highlighted
                 let indexBox: number = this.converter.timeLineMap[this.currentNote];
                 let figure: FigureBox = this.converter.figureBoxes[indexBox];
                 while (figure.type != FigureBox.TYPE_NOTE || figure.ligato) {
@@ -227,6 +279,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                     figure = this.converter.figureBoxes[indexBox];
                 }
 
+                //next we create the focus rectangle 
                 if (this.$wijzer == null || this.currentBarline != figure.barline) {
                     this.currentBarline = figure.barline;
                     if (this.$wijzer != null) {
@@ -235,20 +288,26 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                     this.$wijzer = $(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
                     this.$wijzer.attr({ "fill": "#387ef5", "fill-opacity": (this.dao.settingsCache.playerSettings.cursor ? "0.5" : "0") });
                     $("svg > g").eq(this.currentBarline).prepend(this.$wijzer);
+                }
 
+                //lets prepare next cursor
+                let nextFigure: FigureBox = this.getNextFigure(this.currentNote, 1);
+                if (nextFigure != null && this.currentBarline != nextFigure.barline) {
                     var y = 0;
                     var svgs = $("svg > g");
                     //FIXME, calculate the absolute position not working, why!?
-                    for (var isvg = 0; isvg <= this.currentBarline; isvg++) {
+                    for (var isvg = 0; isvg <= nextFigure.barline; isvg++) {
                         y = y + svgs[isvg].getBoundingClientRect().height;
                     }
+                    let svgHeight = svgs[figure.barline].getBoundingClientRect().height;
                     if (this.dao.settingsCache.playerSettings.cursorAnimation) {
-                        $('.scroll-content').animate({ scrollTop: y - 100 }, 1000);
+                        $('.scroll-content').animate({ scrollTop: y - svgHeight - 50 }, 200);
                     } else {
-                        $('.scroll-content').scrollTop(y - 100);
+                        $('.scroll-content').scrollTop(y - svgHeight - 50);
                     }
                 }
 
+                //we position correctly the focus rectangle
                 this.$wijzer.attr({
                     "x": "" + (figure.x),
                     "y": "" + (figure.y),
@@ -263,6 +322,35 @@ export class MusicXMLPlayer implements MidiPlayerListener {
 
     }
 
+    /**
+     * @name getNextFigure
+     * @description return the next figure to play
+     * @param {number} indexBox the indexBox to start searching
+     * @param {number} count the count to define 'next' figure
+     * @return {FigureBox} the figurebox found or null
+     */
+    private getNextFigure(currentNote: number, count: number): FigureBox {
+        let icount: number = 0;
+        currentNote++;
+        while (icount < count) {
+            if (currentNote >= this.converter.timeLineMap.length) {
+                return null;
+            }
+            let indexBox: number = this.converter.timeLineMap[currentNote];
+            let nextFigure: FigureBox = this.converter.figureBoxes[indexBox];
+            if (nextFigure.type == FigureBox.TYPE_NOTE && !nextFigure.ligato) {
+                icount++;
+            }
+            currentNote++;
+        }
+        if (count == icount) {
+            let indexBox: number = this.converter.timeLineMap[currentNote];
+            let nextFigure: FigureBox = this.converter.figureBoxes[indexBox];
+            return nextFigure;
+        } else {
+            return null;
+        }
+    }
 }
 
 export class Options {
@@ -274,8 +362,6 @@ export class Options {
     public flagPlayFront: boolean = true;
     /* the front sheet data once loaded */
     public scoreData: string = null;
-    /* the back midi data once loaded */
-    public midiData: ArrayBuffer = null;
     /* zoom aplied */
     public zoom: number = 50;
     /* page we want to see initially */

@@ -36,7 +36,6 @@ export class DAO {
     public getSettings(): Promise<Settings> {
         return new Promise<Settings>(resolve => {
             if (this.settingsCache == null) {
-                this.settingsCache = new Settings(); //temporal
                 this.storage.ready().then(() => {
                     this.storage.get('settings').then((settings: Settings) => {
                         if (settings == null) {

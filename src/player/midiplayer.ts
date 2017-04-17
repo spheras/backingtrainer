@@ -33,8 +33,12 @@ export class MidiPlayer {
     private player;
     private ac = new AudioContext;
     private piano: any = null;
+    //the preferred tempo, -1 not set
+    private bpm: number = -1;
     /** indicates the muted Track, if any (>-1) */
     private mutedTrack: number = -1;
+    /** the midi data arraybuffer chache */
+    private midiDataArrayBuffer: ArrayBuffer = null;
 
     constructor(private service: PlayerService) {
         this.initMidiPlayer();
@@ -46,6 +50,80 @@ export class MidiPlayer {
      */
     public setListener(listener: MidiPlayerListener) {
         this.listener = listener;
+    }
+
+    /**
+     * @name getTempo
+     * @description return the tempo of the midi loaded
+     * @return {number} the tempo (bpm)
+     */
+    public getTempo(): number {
+        return this.player.tempo;
+    }
+
+    /**
+     * @name load
+     * @description load the midi data from the composition info
+     * @param {Composition} comp the composition info to load the midi info
+     * @return {Promise<void>} the promise to load the composition
+     */
+    public load(comp: Composition): Promise<void> {
+        return new Promise<void>((resolve) => {
+            this.loadSoundFont().then(() => {
+                this.service.getMidi(comp).then((data) => {
+                    this.loadMidiData(data);
+                    resolve();
+                });
+            });
+        });
+    }
+
+    /**
+     * @name loadMidiData
+     * @description load the midi data
+     * @param {ArrayBuffer} data the midi data as an arraybuffer
+     */
+    public loadMidiData(data: ArrayBuffer) {
+        this.midiDataArrayBuffer = data;
+    }
+
+
+
+    /**
+     * @name findTempo
+     * @description internal function to load the midi and find the tempo info
+     */
+    public findTempo(): Promise<number> {
+        return new Promise<number>((resolve) => {
+            let self = this;
+            let player = new InternalMidiPlayer(function (event) {
+                if (event.name == 'Set Tempo') {
+                    self.player.tempo = event.data;
+                    player.stop();
+                    resolve(event.data);
+                }
+            });
+            player.stop();
+            player.loadArrayBuffer(this.midiDataArrayBuffer);
+            player.play();
+        });
+    }
+
+
+    /**
+     * @name setTempo
+     * @description set the tempo of the midi loaded
+     * @param {number} bpm beats per minute
+     */
+    public setTempo(bpm: number) {
+        if (this.player.isPlaying()) {
+            this.player.pause();
+            this.player.tempo = bpm;
+            this.player.play(bpm);
+        } else {
+            this.bpm = bpm;
+            this.player.tempo = bpm;
+        }
     }
 
     /**
@@ -82,14 +160,9 @@ export class MidiPlayer {
     /**
      * @name play
      * @description play the music, start the show!
-     * @param {Composition} comp the composition info to load the midi info
      */
-    public play(comp: Composition) {
-        this.loadSoundFont().then(() => {
-            this.service.getMidi(comp).then((data) => {
-                this.playMidiData(120, data);
-            });
-        });
+    public play(bpm: number) {
+        this.playMidiData(bpm, this.midiDataArrayBuffer);
     }
 
     /**
@@ -109,6 +182,22 @@ export class MidiPlayer {
      */
     public stop() {
         this.player.stop();
+    }
+
+    /**
+     * @name pause
+     * @description pause the current playing
+     */
+    public pause() {
+        this.player.pause();
+    }
+
+    /**
+     * @name resume
+     * @description resume the current playing
+     */
+    public resume() {
+        this.player.play();
     }
 
     /**
@@ -134,6 +223,11 @@ export class MidiPlayer {
      * @param event the event produced
      */
     midiUpdate(event) {
+        if (event.name == 'Set Tempo') {
+            if (this.bpm > 0) {
+                this.setTempo(this.bpm);
+            }
+        }
         if (event.name == 'Note on') {
             if (event.track != this.mutedTrack) {
                 this.piano.play(event.noteName, this.ac.currentTime, { gain: event.velocity / 100 });

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,6 +36,8 @@ export class MyApp {
     this.initializeApp();
   }
 
+
+
   /**
    * @name initializeApp
    * @description initialize the application
@@ -61,7 +63,6 @@ export class MyApp {
     this.translate.setDefaultLang('en');
     this.translate.use(userLang);
   }
-
 
   /**
    * @name settingAnimation

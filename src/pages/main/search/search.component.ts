@@ -108,7 +108,9 @@ export class SearchPage {
         let comp = this.filteredComp[index];
         this.player.stop();
         comp.flagPlaying = true;
-        this.player.play(comp);
+        this.player.load(comp).then(() => {
+            this.player.play(120);
+        });
     }
 
     /**

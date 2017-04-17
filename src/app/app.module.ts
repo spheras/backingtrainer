@@ -11,6 +11,7 @@ import { Http } from "@angular/http";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
+import { KnobModule } from 'ng2-knob';
 
 @NgModule({
 
@@ -22,6 +23,7 @@ import { IonicStorageModule } from '@ionic/storage';
   ],
 
   imports: [
+    KnobModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
@@ -36,7 +38,7 @@ import { IonicStorageModule } from '@ionic/storage';
   entryComponents: [
     MyApp,
     MainPage,
-    TrainerPage,
+    TrainerPage, 
     SearchPage, DownloadedPage, RecentPage
   ],
 

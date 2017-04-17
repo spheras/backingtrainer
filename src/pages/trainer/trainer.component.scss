@@ -5,3 +5,39 @@
     left: 0px;
    top:0px;
 }
+
+
+    .container-knob{
+        overflow: hidden;
+        width: 125px;
+        margin: 0px;
+        height: 35px;
+        padding: 0px;
+        border: 0px;
+    }
+    .container-knob .info{
+        font-family: monospace;
+        text-align: center;
+        font-size: 17px;
+        color: white;
+        margin-top: 8px;
+    }
+    knob{
+        background-size:contain;
+        width:35px;
+        height:35px;
+        display:block;
+        float:left;
+    }
+    knob.skin3{
+        background:url('/assets/skins/skin1_back.svg');
+        background-size: contain;    
+        width:35px;
+        height:35px;
+    }
+    knob.skin3 /deep/ .knob{
+        background:url('/assets/skins/skin1_front.svg');
+        background-size: contain;    
+        width:35px;
+        height:35px;
+    }

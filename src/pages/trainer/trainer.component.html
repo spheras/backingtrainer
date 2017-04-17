@@ -3,7 +3,24 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>{{'TRAINER-TITLE' | translate}}</ion-title>
+
+        <div class="container-knob">
+            <knob class="skin3" #myknob3 [min]="20" [max]="300" [value]="60" [startDegree]="5" [endDegree]="355" (change)="setTempo($event)"></knob>
+            <div class="info">{{myknob3.meterValue}} bpm</div>
+        </div>
+
+        <ion-buttons end>
+            <button *ngIf="playing==0 || playing==2" ion-button (click)="play();">
+                <ion-icon name="ios-play"></ion-icon>
+            </button>
+            <button *ngIf="playing==1" ion-button (click)="pause();">
+                <ion-icon name="ios-pause"></ion-icon>
+            </button>
+            <button *ngIf="playing==1" ion-button (click)="stop();">
+                <ion-icon name="ios-square" color="danger"></ion-icon>
+            </button>
+        </ion-buttons>
+
     </ion-navbar>
 </ion-header>
 

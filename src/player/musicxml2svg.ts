@@ -108,7 +108,7 @@ export class MusicXML2SVG {
     public renderScore(width: number): string {
         this.reset();
         var inforesult = vertaal(this.musicXML, this.options);
-        console.log(inforesult[0]);
+        //console.log(inforesult[0]);
         this.analyseGraces(inforesult[0]);
         let self = this;
 
@@ -202,10 +202,7 @@ export class MusicXML2SVG {
      * @see http://moinejf.free.fr/js/interface-1.xhtml
      */
     private annoStart(type: string, startOffset: number, stopOffset: number, x: number, y: number, w: number, h: number) {
-        console.log(type)
-        if (this.figureBoxes.length == 33) {
-            console.log("ahora");
-        }
+        //console.log(type)
         if (type == 'note' || type == 'rest' || type == 'grace') {
 
             let bbox = new FigureBox();
@@ -221,7 +218,7 @@ export class MusicXML2SVG {
 
             this.figureBoxes.push(bbox);
         } else {
-            console.log(type);
+            //console.log(type);
         }
     }
 
@@ -288,7 +285,7 @@ export class MusicXML2SVG {
                                 //segno
                                 indexSegno = index;
                             } else {
-                                console.log(dd.glyph);
+                                //console.log(dd.glyph);
                             }
                         }
                     }

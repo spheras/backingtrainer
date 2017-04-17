@@ -26,19 +26,19 @@
     <ion-list>
       <ion-item>
         <ion-label>Animación al desplazar cursor (this will require a good performance of your device)</ion-label>
-        <ion-toggle [ngModel]="settings.playerSettings.cursorAnimation" (ionChange)="settingAnimation($event.checked)"></ion-toggle>
+        <ion-toggle color="primary" [ngModel]="settings.playerSettings.cursorAnimation" (ngModelChange)="settingAnimation($event)"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Cursor</ion-label>
-        <ion-toggle [ngModel]="settings.playerSettings.cursor" (ionChange)="settingCursor($event.checked)"></ion-toggle>
+        <ion-toggle color="bright" [ngModel]="settings.playerSettings.cursor" (ngModelChange)="settingCursor($event)"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>High Quality Sound (this will require a good performance of your device)</ion-label>
-        <ion-toggle [ngModel]="settings.playerSettings.highQualitySound" (ionChange)="settingSoundQuality($event.checked)"></ion-toggle>
+        <ion-toggle color="royal" [ngModel]="settings.playerSettings.highQualitySound" (ngModelChange)="settingSoundQuality($event)"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Play Soloist Voice</ion-label>
-        <ion-toggle [ngModel]="settings.playerSettings.playSoloist" (ionChange)="settingPlaySoloist($event.checked)"></ion-toggle>
+        <ion-toggle color="subtle" [ngModel]="settings.playerSettings.playSoloist" (ngModelChange)="settingPlaySoloist($event)"></ion-toggle>
       </ion-item>
     </ion-list>
   </ion-content>
