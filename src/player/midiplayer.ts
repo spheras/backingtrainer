@@ -4,6 +4,7 @@ import { PlayerService } from './player.service';
 import { Observable } from 'rxjs';
 import { Player as InternalMidiPlayer } from 'midi-player-js';
 import { decode, inArray } from '../util/Util';
+import { Platform } from 'ionic-angular';
 import { Composition } from './composition';
 import * as Soundfont from 'soundfont-player';
 
@@ -31,8 +32,11 @@ export class MidiPlayer {
     /** the event listener of this player */
     private listener: MidiPlayerListener
     private player;
-    private ac = new AudioContext;
-    private piano: any = null;
+
+    /** we have static fields to avoid creating again these object, which have a huge cost */
+    public static audioContext: AudioContext = new AudioContext;
+    public static piano: any = null;
+
     //the preferred tempo, -1 not set
     private bpm: number = -1;
     /** indicates the muted Track, if any (>-1) */
@@ -40,7 +44,7 @@ export class MidiPlayer {
     /** the midi data arraybuffer chache */
     private midiDataArrayBuffer: ArrayBuffer = null;
 
-    constructor(private service: PlayerService) {
+    constructor(private service: PlayerService, private platform: Platform) {
         this.initMidiPlayer();
     }
 
@@ -145,12 +149,14 @@ export class MidiPlayer {
     public loadSoundFont(): Promise<void> {
         let self = this;
         return new Promise<void>(resolve => {
-            if (self.piano == null) {
-                Soundfont.instrument(this.ac, 'acoustic_grand_piano').then(function (piano) {
-                    piano.play(3, 0, 0);
-                    self.piano = piano;
-                    resolve();
-                });
+            if (MidiPlayer.piano == null) {
+                Soundfont.instrument(MidiPlayer.audioContext, '../'
+                    + (this.platform.is("android") ? 'www/' : '') //TODO need to investigate more 
+                    + 'assets/soundfonts/high/acoustic_grand_piano-mp3.js').then(function (piano) {
+                        piano.play(3, 0, 0);
+                        MidiPlayer.piano = piano;
+                        resolve();
+                    });
             } else {
                 resolve();
             }
@@ -230,7 +236,7 @@ export class MidiPlayer {
         }
         if (event.name == 'Note on') {
             if (event.track != this.mutedTrack) {
-                this.piano.play(event.noteName, this.ac.currentTime, { gain: event.velocity / 100 });
+                MidiPlayer.piano.play(event.noteName, MidiPlayer.audioContext.currentTime, { gain: event.velocity / 100 });
             }
         }
         if (this.listener && this.listener != null) {

@@ -30,13 +30,13 @@
         float:left;
     }
     knob.skin3{
-        background:url('/assets/skins/skin1_back.svg');
+        background:url('../assets/skins/skin1_back.svg');
         background-size: contain;    
         width:35px;
         height:35px;
     }
     knob.skin3 /deep/ .knob{
-        background:url('/assets/skins/skin1_front.svg');
+        background:url('../assets/skins/skin1_front.svg');
         background-size: contain;    
         width:35px;
         height:35px;

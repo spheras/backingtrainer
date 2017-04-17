@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
 import { extend } from '../util/Util';
 import { PlayerService } from './player.service';
 import { Observable } from 'rxjs';
@@ -48,8 +49,8 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     private midiPlayer: MidiPlayer = null;
     private converter: MusicXML2SVG = null;
 
-    constructor(private service: PlayerService, private dao: DAO) {
-        this.midiPlayer = new MidiPlayer(service);
+    constructor(private service: PlayerService, private dao: DAO, private platform: Platform) {
+        this.midiPlayer = new MidiPlayer(service, platform);
         this.midiPlayer.setListener(this);
         this.dao.getSettings().then((settings) => {
             this.updateSettings(settings);

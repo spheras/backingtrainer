@@ -6,7 +6,7 @@ import { PlayerService } from '../../../player/player.service';
 import { DAO } from '../../../dao/dao';
 import { LoadingController, AlertController, ModalController } from 'ionic-angular';
 import { TrainerPage } from '../../trainer/trainer.component';
-import { App, MenuController } from 'ionic-angular';
+import { App, MenuController, NavOptions } from 'ionic-angular';
 
 @Component({
     templateUrl: './search.component.html',
@@ -17,12 +17,27 @@ export class SearchPage {
     private compositions: Composition[] = [];
     private filteredComp: Composition[] = [];
 
-    constructor(private app: App, private modalCtrl: ModalController, public alertCtrl: AlertController, private service: SearchService, private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
+    constructor(private app: App, private menu: MenuController, private modalCtrl: ModalController, public alertCtrl: AlertController, private service: SearchService, private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
         this.service.getServerIndex().subscribe((compositions) => {
             this.compositions = compositions;
             this.filteredComp = this.compositions;
             this.checkDownloaded();
         });
+    }
+
+    ionViewCanEnter(){
+        console.log("canenter");
+    }
+    ionViewDidEnter() {
+        console.log("didenter");
+    }
+
+    ionViewWillEnter() {
+        console.log("willenter");
+    }
+
+    ionViewWillLeave() {
+        console.log("willleave");
     }
 
     /**
@@ -48,7 +63,10 @@ export class SearchPage {
       */
     trainComposition(index: number) {
         let comp = this.filteredComp[index];
-        this.app.getRootNav().setRoot(TrainerPage, comp);
+        this.app.getRootNav().push(TrainerPage, comp, null, function () {
+            console.log('done');
+        });
+        //this.app.getRootNav().setRoot(TrainerPage, comp);
         //this.modalCtrl.create(TrainerPage, comp).present();
     }
 

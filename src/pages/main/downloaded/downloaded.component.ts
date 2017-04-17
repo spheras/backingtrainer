@@ -17,7 +17,15 @@ export class DownloadedPage {
     private compositions: Composition[] = [];
     private filteredComp: Composition[] = [];
 
-    constructor(private app: App, menu: MenuController, private modalCtrl: ModalController, private navCtrl: NavController, private alertCtrl: AlertController, private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
+    constructor(private app: App, private menu: MenuController, private modalCtrl: ModalController,
+        private navCtrl: NavController, private alertCtrl: AlertController, private player: MidiPlayer,
+        private dao: DAO, private loadingCtrl: LoadingController) {
+    }
+
+    public enableMenus(){
+    }
+
+    public disableMenus(){
     }
 
     ionViewDidEnter() {
@@ -84,7 +92,8 @@ export class DownloadedPage {
      */
     trainComposition(index: number) {
         let comp = this.filteredComp[index];
-        this.app.getRootNav().setRoot(TrainerPage, comp);
+        this.app.getRootNav().push(TrainerPage, comp);
+        //this.app.getRootNav().setRoot(TrainerPage, comp);
         //this.modalCtrl.create(TrainerPage, comp).present();
     }
 

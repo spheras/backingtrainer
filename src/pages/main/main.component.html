@@ -1,4 +1,4 @@
-    <ion-tabs  color="primary">
+    <ion-tabs  color="primary" tabsHighlight="true" tabsPlacement="bottom" (ionChange)="change($event)">
         <ion-tab tabIcon="flame" tabTitle=" {{ 'MAIN-RECENT' | translate }}" [root]="tab1"></ion-tab>
         <ion-tab tabIcon="cloud-download" tabTitle=" {{ 'MAIN-DOWNLOADED' | translate }}" [root]="tab2"></ion-tab>
         <ion-tab tabIcon="search" tabTitle=" {{ 'MAIN-SEARCH' | translate }}" [root]="tab3"></ion-tab>
