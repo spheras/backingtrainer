@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ApplicationRef } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MusicXMLPlayer, PlayerListener } from '../../player/musicxmlplayer';
 import { Composition } from '../../player/composition';
@@ -22,16 +22,17 @@ import { KnobComponent } from 'ng2-knob';
  */
 export class TrainerPage implements PlayerListener {
     svgContent: SafeHtml;
+    tempo:number=0;
     private composition: Composition = null;
     private loader: Loading = null;
     private playing: number = 0;
+
+
     @ViewChild('myknob3') knob: KnobComponent;
 
-    bpm: number = 120;
 
-    constructor(app: App, private menu: MenuController, private insomnia: Insomnia, private loadingCtrl: LoadingController, private nav: NavController,
-        navParams: NavParams, private player: MusicXMLPlayer, private _sanitizer: DomSanitizer, private dao: DAO, public platform: Platform) {
-        let self = this;
+    constructor(private app: App, private appref: ApplicationRef, private menu: MenuController, private insomnia: Insomnia, private loadingCtrl: LoadingController, private nav: NavController,
+        navParams: NavParams,private player: MusicXMLPlayer, private _sanitizer: DomSanitizer, private dao: DAO, public platform: Platform) {
         this.composition = navParams.data;
     }
 
@@ -42,7 +43,6 @@ export class TrainerPage implements PlayerListener {
     public disableMenus() {
         this.menu.enable(false, 'menu-trainer');
     }
-
 
     ionViewDidLeave() {
         this.player.stop();
@@ -72,12 +72,24 @@ export class TrainerPage implements PlayerListener {
       * @param {number} bpm beats per minute
       */
     setTempo(bpm: number) {
+        this.tempo=bpm;
+        //----------------------------------------
+        //don't know why this is needed in android
+        this.appref.tick();
+        //----------------------------------------
+
         this.player.setTempo(bpm);
     }
 
     playerInitialized() {
-        this.bpm = this.player.getTempo();
-        this.knob.setInitialValue(this.bpm);
+        let bpm = this.player.getTempo();
+        this.tempo=bpm;
+        //----------------------------------------
+        //don't know why this is needed in android
+        this.appref.tick();
+        //----------------------------------------
+        
+        this.knob.setInitialValue(bpm);
         this.loader.dismiss();
     }
 

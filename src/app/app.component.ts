@@ -43,6 +43,13 @@ export class MyApp {
    * @description initialize the application
    */
   private initializeApp() {
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+    });
+    
     this.dao.getSettings().then((settings) => {
       this.settings = settings;
       this.dao.observeSettings().subscribe((settings) => {
@@ -50,12 +57,6 @@ export class MyApp {
       });
     });
     this.initializeLocale();
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
   }
 
   private initializeLocale() {

@@ -152,7 +152,7 @@ export class MidiPlayer {
             if (MidiPlayer.piano == null) {
                 Soundfont.instrument(MidiPlayer.audioContext, '../'
                     + (this.platform.is("android") ? 'www/' : '') //TODO need to investigate more 
-                    + 'assets/soundfonts/high/acoustic_grand_piano-mp3.js').then(function (piano) {
+                    + 'assets/soundfonts/low/acoustic_grand_piano-mp3.js').then(function (piano) {
                         piano.play(3, 0, 0);
                         MidiPlayer.piano = piano;
                         resolve();
