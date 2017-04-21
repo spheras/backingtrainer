@@ -1,3 +1,4 @@
+
 export function extend<T, U>(first: T, second: U): T & U {
     let result = <T & U>{};
     for (let id in first) {

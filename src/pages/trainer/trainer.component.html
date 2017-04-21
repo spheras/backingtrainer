@@ -16,7 +16,7 @@
             <button *ngIf="playing==1" ion-button (click)="pause();">
                 <ion-icon name="ios-pause"></ion-icon>
             </button>
-            <button *ngIf="playing==1" ion-button (click)="stop();">
+            <button *ngIf="playing==1 || playing==2" ion-button (click)="stop();">
                 <ion-icon name="ios-square" color="danger"></ion-icon>
             </button>
         </ion-buttons>
@@ -26,5 +26,9 @@
 
 
 <ion-content no-padding>
+    <div *ngIf="prepare>-1" id="prepare">
+        <span class="text" *ngIf="prepare==0">{{'TRAINER-PREPARE' | translate}}</span>
+        <span class="number" *ngIf="prepare>0">{{prepare}}</span>
+    </div>
     <div id="svg" [innerHTML]="svgContent"></div>
 </ion-content>

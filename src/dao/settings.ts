@@ -21,4 +21,9 @@ export class PlayerSettings {
      * indicates if the soloist voice should be played during the training or not
      */
     public playSoloist:boolean=false;
+
+    /**
+     * Indicates if we need a double preparation before starting playing the music
+     */
+    public doublePreparation:boolean=false;
 }

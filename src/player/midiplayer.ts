@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { extend } from '../util/Util';
 import { PlayerService } from './player.service';
-import { Observable } from 'rxjs';
-import { Player as InternalMidiPlayer } from 'midi-player-js';
-import { decode, inArray } from '../util/Util';
+import { Player as InternalMidiPlayer } from './midiplayerjs/player';//midi-player-js';
 import { Platform } from 'ionic-angular';
 import { Composition } from './composition';
 import * as Soundfont from 'soundfont-player';
@@ -31,11 +28,14 @@ export interface MidiPlayerListener {
 export class MidiPlayer {
     /** the event listener of this player */
     private listener: MidiPlayerListener
-    private player;
+    private player: InternalMidiPlayer;
 
     /** we have static fields to avoid creating again these object, which have a huge cost */
-    public static audioContext: AudioContext = new AudioContext;
+    public static audioContext: AudioContext = new AudioContext();
     public static piano: any = null;
+    /** indicates if we should load the low soundfonts low quality (true) or high quality (false) */
+    private static lowQuality: boolean = true;
+
 
     //the preferred tempo, -1 not set
     private bpm: number = -1;
@@ -43,6 +43,7 @@ export class MidiPlayer {
     private mutedTrack: number = -1;
     /** the midi data arraybuffer chache */
     private midiDataArrayBuffer: ArrayBuffer = null;
+
 
     constructor(private service: PlayerService, private platform: Platform) {
         this.initMidiPlayer();
@@ -91,7 +92,14 @@ export class MidiPlayer {
         this.midiDataArrayBuffer = data;
     }
 
-
+    /**
+     * @name isLowQuality
+     * @description return if we are loading low quality or high quality sounds
+     * @return {boolean} true->low quality, false->high quality
+     */
+    public static isLowQuality(): boolean {
+        return MidiPlayer.lowQuality;
+    }
 
     /**
      * @name findTempo
@@ -123,7 +131,8 @@ export class MidiPlayer {
         if (this.player.isPlaying()) {
             this.player.pause();
             this.player.tempo = bpm;
-            this.player.play(bpm);
+            this.player.setForcedTempo(bpm);
+            this.player.play();
         } else {
             this.bpm = bpm;
             this.player.tempo = bpm;
@@ -142,20 +151,57 @@ export class MidiPlayer {
     }
 
     /**
+     * @name setQuality
+     * @description set the quality of the soundfont loaded
+     * @param {boolean} low indicates if we want the low quality soundfont (false -> high quality)
+     * @return {Promise<void>} the promise to load the X quality soundfont
+     */
+    public setQuality(low: boolean): Promise<void> {
+        return new Promise<void>(resolve => {
+            if (MidiPlayer.lowQuality != low) {
+                MidiPlayer.lowQuality = low;
+                //we need to reload
+                let flagPlaying: boolean = false;
+                if (this.player.isPlaying()) {
+                    flagPlaying = true;
+                    this.pause();
+                }
+                MidiPlayer.piano = null;
+                this.loadSoundFont().then(() => {
+                    if (flagPlaying) {
+                        this.player.play();
+                    }
+                    resolve();
+                });
+
+            } else {
+                resolve();
+            }
+        });
+    }
+
+    /**
      * @name loadSoundFont
      * @description load the soundfont to play midi files
      * @return the promise to load the soundfont
      */
     public loadSoundFont(): Promise<void> {
-        let self = this;
         return new Promise<void>(resolve => {
             if (MidiPlayer.piano == null) {
                 Soundfont.instrument(MidiPlayer.audioContext, '../'
-                    + (this.platform.is("android") ? 'www/' : '') //TODO need to investigate more 
-                    + 'assets/soundfonts/low/acoustic_grand_piano-mp3.js').then(function (piano) {
+                    + 'www/' //TODO needed by android and electron (happens this with IOS?)
+                    + 'assets/soundfonts/' + (MidiPlayer.lowQuality ? 'low' : 'high') + '/acoustic_grand_piano-mp3.js').then(function (piano) {
                         piano.play(3, 0, 0);
                         MidiPlayer.piano = piano;
                         resolve();
+                    }).catch((reason: any) => {
+                        //force no android or electron www folder?
+                        Soundfont.instrument(MidiPlayer.audioContext, '../'
+                            + 'assets/soundfonts/' + (MidiPlayer.lowQuality ? 'low' : 'high') + '/acoustic_grand_piano-mp3.js').then(function (piano) {
+                                piano.play(3, 0, 0);
+                                MidiPlayer.piano = piano;
+                                resolve();
+                            });
                     });
             } else {
                 resolve();
@@ -223,24 +269,22 @@ export class MidiPlayer {
         this.mutedTrack = -1;
     }
 
+
     /**
      * @name midiUpdate
      * @description a new midi event has been produced
      * @param event the event produced
      */
     midiUpdate(event) {
-        if (event.name == 'Set Tempo') {
-            if (this.bpm > 0) {
-                this.setTempo(this.bpm);
-            }
-        }
         if (event.name == 'Note on') {
             if (event.track != this.mutedTrack) {
                 MidiPlayer.piano.play(event.noteName, MidiPlayer.audioContext.currentTime, { gain: event.velocity / 100 });
             }
         }
+
         if (this.listener && this.listener != null) {
             this.listener.midiUpdate(event);
         }
+
     }
 }

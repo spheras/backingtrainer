@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RecentPage } from './recent/recent.component';
 import { DownloadedPage } from './downloaded/downloaded.component';
 import { SearchPage } from './search/search.component';
+import { InfoPage } from './info/info.component';
 import { Tab } from 'ionic-angular';
 
 @Component({
@@ -9,6 +10,7 @@ import { Tab } from 'ionic-angular';
 })
 
 export class MainPage {
+    tab0: typeof InfoPage = InfoPage;
     tab1: typeof RecentPage = RecentPage;
     tab2: typeof DownloadedPage = DownloadedPage;
     tab3: typeof SearchPage = SearchPage;

@@ -9,6 +9,8 @@ export class DAO {
 
     /** cached compositions */
     private compositions: Composition[] = null;
+    /** recent compositions */
+    private recents: Composition[] = null;
     /** cached settings */
     public settingsCache: Settings = null;
     /** settings observable */
@@ -57,13 +59,96 @@ export class DAO {
      * @return {Promise<void>} the promise to set the settings
      */
     public setSettings(settings: Settings): Promise<void> {
-        return new Promise<Settings>(resolve => {
+        return new Promise<void>(resolve => {
             this.storage.ready().then(() => {
                 this.storage.set('settings', settings).then((result: any) => {
                     this.settingsCache = settings;
                     this.settingsSubject.next(this.settingsCache);
                     resolve();
                 })
+            });
+        });
+    }
+
+    /**
+     * @name getRecents
+     * @description return all the recents compositions
+     * @return {Promise<Composition[]>} the promise to return all the recent compositions saved
+     */
+    public getRecents(): Promise<Composition[]> {
+        return new Promise<Composition[]>(resolve => {
+            if (this.recents == null) {
+                this.storage.ready().then(() => {
+                    this.storage.get('recents').then((compositions: Composition[]) => {
+                        if (compositions == null) {
+                            compositions = [];
+                        }
+                        this.recents = compositions;
+                        resolve(compositions);
+                    })
+                });
+            } else {
+                resolve(this.recents);
+            }
+        });
+    }
+
+    /**
+     * @name setRecents
+     * @description set the recent compositions to the db (this method doesn't add, only set)
+     * @param {Composition[]} comps the compositions to set
+     * @return the promise to set the recent compositions
+     */
+    public setRecents(comps: Composition[]): Promise<void> {
+        return new Promise<void>(resolve => {
+            this.storage.ready().then(() => {
+                this.storage.set('recents', comps).then((result: any) => {
+                    this.recents = comps;
+                    resolve();
+                })
+            });
+        });
+    }
+
+    /**
+     * @name addRecent
+     * @description add a recent composition to the list of recent compositions
+     * @param {Composition} comp the composition to add to recent compositions
+     * @return {Promise<void>} the promise to add a recent composition to the list of compositions
+     */
+    public addRecent(comp: Composition): Promise<void> {
+        return new Promise<void>((resolve) => {
+            this.getRecents().then((comps) => {
+                if (comps.length > 10) {
+                    comps.splice(comps.length - 1, 1);
+                }
+                comps.splice(0, 0, comp);
+                this.setRecents(comps).then(() => {
+                    resolve();
+                });
+            });
+        });
+    }
+
+
+    /**
+     * @name removeRecent
+     * @description remove a certain recent composition from the database
+     * @param {string} the id of the recent composition to be removed
+     * @return the promise to remove the recent composition
+     */
+    public removeRecent(id: string): Promise<void> {
+        return new Promise<void>(resolve => {
+            this.getRecents().then((comps) => {
+                for (let i = 0; i < comps.length; i++) {
+                    if (comps[i].id == id) {
+                        comps.splice(i, 1);
+                        break;
+                    }
+                }
+                this.setRecents(comps).then(() => {
+                    resolve();
+                });
             });
         });
     }
@@ -98,7 +183,7 @@ export class DAO {
      * @return {Promise<void>} the promise to save the composition
      */
     public saveComposition(composition: Composition): Promise<void> {
-        return new Promise<Composition[]>(resolve => {
+        return new Promise<void>(resolve => {
             this.getCompositions().then((comps) => {
                 comps.push(composition);
                 this.setCompositions(comps).then(() => {
@@ -115,7 +200,7 @@ export class DAO {
      * @return the promise to set the compositions
      */
     public setCompositions(comps: Composition[]): Promise<void> {
-        return new Promise<Composition[]>(resolve => {
+        return new Promise<void>(resolve => {
             this.storage.ready().then(() => {
                 this.storage.set('compositions', comps).then((result: any) => {
                     this.compositions = comps;
@@ -132,7 +217,7 @@ export class DAO {
      * @return the promise to remove the composition
      */
     public removeComposition(id: string): Promise<void> {
-        return new Promise<Composition[]>(resolve => {
+        return new Promise<void>(resolve => {
             this.getCompositions().then((comps) => {
                 for (let i = 0; i < comps.length; i++) {
                     if (comps[i].id == id) {

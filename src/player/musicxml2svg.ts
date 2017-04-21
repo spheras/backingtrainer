@@ -21,11 +21,15 @@ export class MusicXML2SVG {
     /**set of const used by abc2svg library */
     private static ABC2SVG_TYPE_BAR: number = 0;
     private static ABC2SVG_TYPE_GRACE: number = 4;
+    /*
     private static ABC2SVG_TYPE_METER: number = 6;
+    */
     private static ABC2SVG_TYPE_NOTE: number = 8;
     private static ABC2SVG_TYPE_REST: number = 10;
+    /*
     private static ABC2SVG_TYPE_TEMPO: number = 14;
     private static ABC2SVG_TYPE_BASE_LEN: number = 1536;
+    */
 
     /**
      * The generated svg
@@ -49,6 +53,12 @@ export class MusicXML2SVG {
      * Timeline Map which is able to say what figureboxes must be played in sequence
      */
     public timeLineMap: number[] = [];
+
+    /**
+     * numerator and denominator of the meter signature
+     */
+    public numerator:number;
+    public denominator:number;
 
     /**
      * the abc2svg library with user config
@@ -243,6 +253,11 @@ export class MusicXML2SVG {
         let indexFine = -1;
         let indexToCoda = -1;
         let flagLastLigato = false;
+        
+        //getting the meter signature (numerator/denominator)
+        let meterSignature:string[]=info.M.split("/");
+        this.numerator=parseInt(meterSignature[0]);
+        this.denominator=parseInt(meterSignature[1]);
 
         for (var ts = tsFirst; ts; ts = ts.ts_next) {
             switch (ts.type) {

@@ -12,7 +12,7 @@
     <ion-searchbar (ionInput)="filterCompositions($event.target.value)"></ion-searchbar>
 
     <ion-list>
-        <template ngFor let-composition [ngForOf]="filteredComp" let-i="index">
+        <ng-template ngFor let-composition [ngForOf]="filteredComp" let-i="index">
             <ion-item class="item">
                 <ion-row nowrap>
                     <ion-col no-padding class="thumbnail-col">
@@ -20,7 +20,7 @@
                             <img class="instrument-icon" src="assets/icon/instruments/{{composition.frontInstrument.toLowerCase()}}.svg">
                         </ion-thumbnail>
                     </ion-col>
-                    <ion-col>
+                    <ion-col text-wrap>
                         <h2><strong><a target="_blank" href="{{composition.wikipediaLink}}">{{composition.name}}</a></strong></h2>
                         <h3>{{composition.author}}</h3>
                         <p><strong>Level:{{composition.level}}</strong>{{(composition.description.length>0?' | ' + composition.description:'')}}</p>
@@ -49,7 +49,7 @@
                         </button>
                 </ion-row>
             </ion-item>
-        </template>
+        </ng-template>
     </ion-list>
 
 </ion-content>

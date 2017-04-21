@@ -1,0 +1,40 @@
+  .slide1{
+    img{
+        width: 100%  !important;
+        max-width: 512px  !important;
+    }      
+  }
+
+  img{
+    max-width: 200px;
+  }
+
+  .container{
+      max-width: 500px;
+      margin:0 auto;
+  }
+
+  .slide-image {
+    max-height: 50% !important;
+    max-width: 30% !important;
+    margin: 18px 0;
+  }
+
+  b {
+    font-weight: 500;
+  }
+
+  p {
+    padding: 0 40px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #60646B;
+
+    b {
+      color: #000000;
+    }
+  }
+
+  p.alert{
+      color:#902790;
+  }

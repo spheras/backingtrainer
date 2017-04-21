@@ -1,0 +1,6 @@
+this midi player is based 99.9% in grimmdude MidiPlayerJS
+https://github.com/grimmdude/MidiPlayerJS
+
+just a few differences:
+- new property to force a bpm (ignoring the tempo readed from midi file)
+- minor translation to typescript

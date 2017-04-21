@@ -35,6 +35,13 @@
   </ion-header>
   <ion-content>
     <ion-list>
+      <ion-item text-wrap (click)="tune()">
+        <ion-label>
+          <strong>{{ 'MENU-TRAINER-TUNE-TITLE' | translate }}</strong>
+          <h5>{{ 'MENU-TRAINER-TUNE-DESC' | translate }}</h5>
+        </ion-label>
+        <ion-icon name="microphone" item-right color="royal" (click)="tune()"></ion-icon>
+      </ion-item>
       <ion-item text-wrap>
         <ion-label>
           <strong>{{ 'MENU-TRAINER-ANIMATION-TITLE' | translate }}</strong>
@@ -62,6 +69,13 @@
           <h5>{{ 'MENU-TRAINER-SOLOIST-DESC' | translate }}</h5>
         </ion-label>
         <ion-toggle color="subtle" [ngModel]="settings.playerSettings.playSoloist" (ngModelChange)="settingPlaySoloist($event)"></ion-toggle>
+      </ion-item>
+      <ion-item text-wrap>
+        <ion-label>
+          <strong>{{ 'MENU-TRAINER-DOUBLEPREPARATION-TITLE' | translate }}</strong>
+          <h5>{{ 'MENU-TRAINER-DOUBLEPREPARATION-DESC' | translate }}</h5>
+        </ion-label>
+        <ion-toggle color="danger" [ngModel]="settings.playerSettings.doublePreparation" (ngModelChange)="settingDoublePreparation($event)"></ion-toggle>
       </ion-item>
     </ion-list>
   </ion-content>

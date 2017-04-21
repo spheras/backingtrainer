@@ -1,12 +1,12 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from 'ng2-translate';
-import { LoadingController, AlertController, NavController } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
 
 import { MainPage } from '../pages/main/main.component';
-import { TrainerPage } from '../pages/trainer/trainer.component';
+import { TunerPage } from '../pages/tuner/tuner.component';
 import { DAO } from '../dao/dao';
 import { Settings } from '../dao/settings';
 
@@ -30,8 +30,8 @@ export class MyApp {
    */
   rootPage: any = MainPage;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-    private translate: TranslateService, private alertCtrl: AlertController, private dao: DAO) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private menuCtrl: MenuController,
+    private translate: TranslateService, private dao: DAO, private modalCtrl: ModalController) {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.initializeApp();
   }
@@ -49,7 +49,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-    
+
     this.dao.getSettings().then((settings) => {
       this.settings = settings;
       this.dao.observeSettings().subscribe((settings) => {
@@ -119,6 +119,26 @@ export class MyApp {
     });
   }
 
+  /**
+   * @name tune
+   * @description show the tune page
+   */
+  tune() {
+    this.menuCtrl.close();
+    this.modalCtrl.create(TunerPage).present();
+  }
 
+  /**
+   * @name settingDoublePreparation
+   * @description set the double preparation property
+   * @param {boolean} value the value to set
+   */
+  settingDoublePreparation(value: boolean) {
+    this.dao.getSettings().then((settings) => {
+      this.settings.playerSettings.doublePreparation = value;
+      settings.playerSettings.doublePreparation = value;
+      this.dao.setSettings(settings);
+    });
+  }
 
 }

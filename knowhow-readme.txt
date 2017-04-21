@@ -1,6 +1,36 @@
 
-launch in android
+create platforms:
 ·················
+ionic platform add browser
+ionic platform add android
+
+add plugins:
+···········
+ionic plugin add https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git
+ionic plugin add cordova-plugin-crosswalk-webview
+
+debug browser:
+·············
+ionic serve
+
+debug electron:
+··············
+npm run electron
+
+compile electron:
+················
+npm run electron-dist-linux-x64
+
+compile browser:
+···············
+ionic build browser --prod --release
+
+compile android:
+···············
+ionic build android --prod --release
+
+deploy & debug in android:
+·························
 ionic run android
 
 

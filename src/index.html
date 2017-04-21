@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
   <meta charset="UTF-8">
   <title>Ionic App</title>
@@ -27,7 +26,6 @@
   <link href="build/main.css" rel="stylesheet">
 
 </head>
-
 <body>
 
   <!-- Ionic's root component and where the app will load -->
@@ -39,6 +37,10 @@
   <!-- The bundle js is generated during the build process -->
   <script src="build/main.js"></script>
 
+
+  <!-- Insert this line above script imports to allow electron external js dependencies -->
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
   <!-- http://wim.vree.org/js/, library to convert xml to abc code -->
   <!-- http://moinejf.free.fr/js/, library to convert abc code to SVG -->
   <!-- them have a dependency on jquery -->
@@ -46,6 +48,8 @@
   <script src="assets/js/vendor/wim.vree/xml2abc.js"></script>
   <script src="assets/js/vendor/moinejf/abc2svg-1.js"></script>
 
+  <!-- Insert this line after script imports to allow electron external js dependencies -->
+  <script>if (window.module) module = window.module;</script>
 
 </body>
 

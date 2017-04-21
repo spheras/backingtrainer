@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, LoadingController } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate';
 import { extend } from '../util/Util';
 import { PlayerService } from './player.service';
-import { Observable } from 'rxjs';
 import { MidiPlayer, MidiPlayerListener } from './midiplayer';
-import { decode, inArray } from '../util/Util';
 import { Composition } from './composition';
 import { DAO } from '../dao/dao';
 import { Settings } from '../dao/settings';
 import { MusicXML2SVG, FigureBox, ConversionOptions } from './musicxml2svg';
-import * as Soundfont from 'soundfont-player';
 //vertaal function is the xml2abc library function
 declare var vertaal: Function;
 declare var $: any;
@@ -33,6 +31,12 @@ export interface PlayerListener {
      * @description the player has been initialized
      */
     playerInitialized(): void;
+
+    /**
+     * @name endOfSong
+     * @description the player has ended the song
+     */
+    endOfSong(): void;
 }
 
 /**
@@ -46,10 +50,13 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * Options of the player
      */
     private options: Options = new Options();
+    /** the midi player */
     private midiPlayer: MidiPlayer = null;
+    /** the musicxml to svg converter */
     private converter: MusicXML2SVG = null;
 
-    constructor(private service: PlayerService, private dao: DAO, private platform: Platform) {
+    constructor(private service: PlayerService, private dao: DAO, private platform: Platform,
+        private loadingCtrl: LoadingController, private translate: TranslateService) {
         this.midiPlayer = new MidiPlayer(service, platform);
         this.midiPlayer.setListener(this);
         this.dao.getSettings().then((settings) => {
@@ -61,15 +68,35 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     }
 
     /**
+     * @name getMeterSignatureNumerator
+     * @description return the meter signature numerator of the score
+     * @return {number} the numerator (num/dem)
+     */
+    public getMeterSignatureNumerator(): number {
+        return this.converter.numerator;
+    }
+
+    /**
      * @name updateSettings
      * @description  Updating the settings that affect to the player
      * @param {Settings} settings the new settings
      */
     private updateSettings(settings: Settings) {
+        //checking if we have changed the play soloist paremeter
         if (settings.playerSettings.playSoloist) {
             this.midiPlayer.unmuteTracks();
         } else {
             this.midiPlayer.muteTrack(1);
+        }
+
+        //checking if we have changed the sound quality config
+        if (MidiPlayer.isLowQuality() == settings.playerSettings.highQualitySound) {
+            let loader = this.loadingCtrl.create({
+                content: this.translate.instant("TRAINER-WAIT-AUDIO")
+            });
+            this.midiPlayer.setQuality(!settings.playerSettings.highQualitySound).then(() => {
+                loader.dismiss();
+            });
         }
     }
 
@@ -145,7 +172,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @description we listen the resize events to render again
      */
     private listenResizeEvents() {
-
+/*
         const $resizeEvent = Observable.fromEvent(window, 'resize')
             .map(() => {
                 return document.documentElement.clientWidth - 20;
@@ -157,8 +184,10 @@ export class MusicXMLPlayer implements MidiPlayerListener {
             let svg = self.renderScore();
             if (self.options.listener != null) {
                 self.options.listener.svgLoaded(svg);
+                self.options.listener.playerInitialized();
             }
         });
+        */
     }
 
     /**
@@ -209,7 +238,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      */
     private loadMidiData(comp: Composition): Promise<void> {
         let obs = this.service.getMidi(comp);
-        return new Promise<string>(resolve => {
+        return new Promise<void>(resolve => {
             obs.then((data: ArrayBuffer) => {
                 this.midiPlayer.loadMidiData(data);
                 resolve();
@@ -265,7 +294,13 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @override
      */
     midiUpdate(event) {
-        if (event.name == 'Note on') {
+        if (event.name == 'End of Track') {
+            //finish?
+            if (this.options.listener != null) {
+                this.options.listener.endOfSong();
+            }
+            return;
+        } else if (event.name == 'Note on') {
             if (event.track == 1) {
                 if (event.velocity <= 0) {
                     return;

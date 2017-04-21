@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-navbar class="force-back-button" color="primary">
+        <ion-title>{{'TUNER-TITLE' | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <div class="container">
+        <h2>{{'TUNER-ATTENTION' | translate}}</h2>
+        <p>{{'TUNER-ATTENTION-DESC' | translate}}</p>
+
+        <div class="base">
+            <div [class.correct]="data.detuneAmount<10" class="note">{{data.note}}</div>
+            <div class="knob" [style.transform]="difference"></div>
+        </div>
+
+        <h3>{{'TUNER-SENSITIVITY' | translate}}</h3>
+        <ion-range min="1" max="10" step="1" pin="true" snaps="true" [(ngModel)]="sensitivity" color="danger" (ionChange)="change($event)">
+            <ion-icon range-left small color="danger" name="pulse"></ion-icon>
+            <ion-icon range-right color="danger" name="pulse"></ion-icon>
+        </ion-range>
+        <button class="oscillator" ion-button icon-left round color="epoque" (click)="listen()">
+            <ion-icon *ngIf="!pd.isPlaying" name="volume-up"></ion-icon>
+            <ion-icon *ngIf="pd.isPlaying" name="volume-off"></ion-icon>
+            {{(!pd.isPlaying?'TUNER-LISTEN':'TUNER-STOP') | translate}}
+        </button>
+    </div>
+</ion-content>

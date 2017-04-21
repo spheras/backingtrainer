@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, ApplicationRef } from '@angular/core';
+import { Component, ViewChild, ApplicationRef } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MusicXMLPlayer, PlayerListener } from '../../player/musicxmlplayer';
 import { Composition } from '../../player/composition';
 import { PlayerService } from '../../player/player.service';
-import { LoadingController, Loading, AlertController, NavController, NavParams } from 'ionic-angular';
+import { LoadingController, Loading, NavParams } from 'ionic-angular';
+import { TranslateService } from 'ng2-translate';
 import { Insomnia } from '@ionic-native/insomnia';
-import { App, MenuController, Platform } from 'ionic-angular';
+import { MenuController } from 'ionic-angular';
 import { DAO } from '../../dao/dao';
-import { Settings } from '../../dao/settings';
 import { KnobComponent } from 'ng2-knob';
 
 @Component({
@@ -22,17 +22,21 @@ import { KnobComponent } from 'ng2-knob';
  */
 export class TrainerPage implements PlayerListener {
     svgContent: SafeHtml;
-    tempo:number=0;
+    tempo: number = 0;
+
+    prepare: number = -1;
+
     private composition: Composition = null;
     private loader: Loading = null;
     private playing: number = 0;
 
-
     @ViewChild('myknob3') knob: KnobComponent;
 
+    constructor(private appref: ApplicationRef, private menu: MenuController, private insomnia: Insomnia,
+        navParams: NavParams, private player: MusicXMLPlayer, private _sanitizer: DomSanitizer, private dao: DAO,
+        private loadingCtrl: LoadingController, private translate: TranslateService) {
 
-    constructor(private app: App, private appref: ApplicationRef, private menu: MenuController, private insomnia: Insomnia, private loadingCtrl: LoadingController, private nav: NavController,
-        navParams: NavParams,private player: MusicXMLPlayer, private _sanitizer: DomSanitizer, private dao: DAO, public platform: Platform) {
+        //we get from the params the composition we want to train
         this.composition = navParams.data;
     }
 
@@ -45,25 +49,71 @@ export class TrainerPage implements PlayerListener {
     }
 
     ionViewDidLeave() {
+        //stopping the player
         this.player.stop();
+        //allowing to sleep again the device
         this.insomnia.allowSleepAgain();
+        //disabling my menus
         this.disableMenus();
-        this.nav.getPrevious().willEnter.emit();
+        //this.nav.getPrevious().willEnter.emit();
     }
 
     ionViewDidEnter() {
+        //enabling my menus
         this.enableMenus();
+        //we can't go to sleep now
         this.insomnia.keepAwake();
+
+        //lets start loading
         this.loader = this.loadingCtrl.create({
-            content: "Please wait while creating score..."
+            content: this.translate.instant("TRAINER-WAIT-SCORE")
         });
         this.loader.present();
 
         this.player.init({ listener: this, composition: this.composition });
     }
 
+    /**
+     * @name svgLoaded
+     * @description The SVG has been generated
+     * @param {string} svg the svg created
+     * @override
+     */
     svgLoaded(svg: string): void {
         this.svgContent = this._sanitizer.bypassSecurityTrustHtml(svg);
+
+        this.loader.dismiss();
+        this.loader = this.loadingCtrl.create({
+            content: this.translate.instant("TRAINER-WAIT-AUDIO")
+        });
+        this.loader.present();
+    }
+
+
+    /**
+     * @name playerInitialized
+     * @description the player has been initialized
+     * @override
+     */
+    playerInitialized() {
+        let bpm = this.player.getTempo();
+        this.tempo = bpm;
+        //----------------------------------------
+        //don't know why this is needed in android
+        this.appref.tick();
+        //----------------------------------------
+
+        this.knob.setInitialValue(bpm);
+        this.loader.dismiss();
+    }
+
+    /**
+     * @name endOfSong
+     * @description the player has finished
+     * @override
+     */
+    endOfSong() {
+        this.stop();
     }
 
     /**
@@ -72,7 +122,7 @@ export class TrainerPage implements PlayerListener {
       * @param {number} bpm beats per minute
       */
     setTempo(bpm: number) {
-        this.tempo=bpm;
+        this.tempo = bpm;
         //----------------------------------------
         //don't know why this is needed in android
         this.appref.tick();
@@ -80,19 +130,6 @@ export class TrainerPage implements PlayerListener {
 
         this.player.setTempo(bpm);
     }
-
-    playerInitialized() {
-        let bpm = this.player.getTempo();
-        this.tempo=bpm;
-        //----------------------------------------
-        //don't know why this is needed in android
-        this.appref.tick();
-        //----------------------------------------
-        
-        this.knob.setInitialValue(bpm);
-        this.loader.dismiss();
-    }
-
 
     /**
      * @name play
@@ -102,8 +139,10 @@ export class TrainerPage implements PlayerListener {
         if (this.playing == 2) {
             this.resume();
         } else {
-            this.playing = 1;
-            this.player.play(120);
+            this.showPrepare().then(() => {
+                this.playing = 1;
+                this.player.play(120);
+            });
         }
     }
 
@@ -130,8 +169,48 @@ export class TrainerPage implements PlayerListener {
      * @description resume the music
      */
     resume() {
-        this.playing = 1;
-        this.player.resume();
+        this.showPrepare().then(() => {
+            this.playing = 1;
+            this.player.resume();
+        });
+    }
+
+    /**
+     * @name showPrepare
+     * @description show the prepare screen, before starting the music
+     * @return {Promise<void>} resolve when all the preparation has been finished 
+     */
+    private showPrepare(): Promise<void> {
+        return new Promise<void>((resolve) => {
+            let numerator = this.player.getMeterSignatureNumerator();
+            let bpm = this.player.getTempo(); //bpm
+            let time: number = 60000 / bpm;
+
+            this.prepare = 0;
+            let self = this;
+            this.dao.getSettings().then((settings) => {
+                let double: boolean = settings.playerSettings.doublePreparation;
+                let cycle = 0;
+
+                let show = function () {
+                    self.prepare++;
+
+                    if (self.prepare > numerator && double && cycle < 1) {
+                        cycle++;
+                        self.prepare = 1;
+                        setTimeout(show, time);
+                    } else if (self.prepare <= numerator) {
+                        setTimeout(show, time);
+                    } else {
+                        self.prepare = -1;
+                        resolve();
+                    }
+                };
+
+                setTimeout(show, 1000);
+
+            });
+        });
     }
 
 }

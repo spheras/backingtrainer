@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { SearchService } from './search.service';
 import { Composition } from '../../../player/composition';
 import { MidiPlayer } from '../../../player/midiplayer';
 import { PlayerService } from '../../../player/player.service';
 import { DAO } from '../../../dao/dao';
-import { ModalController, LoadingController, AlertController, NavController } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
 import { TrainerPage } from '../../trainer/trainer.component';
-import { App, MenuController } from 'ionic-angular';
+import { App } from 'ionic-angular';
 
 @Component({
     templateUrl: './downloaded.component.html',
@@ -17,15 +16,14 @@ export class DownloadedPage {
     private compositions: Composition[] = [];
     private filteredComp: Composition[] = [];
 
-    constructor(private app: App, private menu: MenuController, private modalCtrl: ModalController,
-        private navCtrl: NavController, private alertCtrl: AlertController, private player: MidiPlayer,
+    constructor(private app: App, private player: MidiPlayer,
         private dao: DAO, private loadingCtrl: LoadingController) {
     }
 
-    public enableMenus(){
+    public enableMenus() {
     }
 
-    public disableMenus(){
+    public disableMenus() {
     }
 
     ionViewDidEnter() {
@@ -38,7 +36,7 @@ export class DownloadedPage {
      * @return the promise to load them
      */
     private loadCompositions(): Promise<void> {
-        return new Promise<string>(resolve => {
+        return new Promise<void>(resolve => {
             this.dao.getCompositions().then((compositions) => {
                 this.compositions = compositions;
                 this.filteredComp = this.compositions;
@@ -92,6 +90,7 @@ export class DownloadedPage {
      */
     trainComposition(index: number) {
         let comp = this.filteredComp[index];
+        this.dao.addRecent(comp);
         this.app.getRootNav().push(TrainerPage, comp);
         //this.app.getRootNav().setRoot(TrainerPage, comp);
         //this.modalCtrl.create(TrainerPage, comp).present();
