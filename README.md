@@ -1,7 +1,7 @@
 # backingtrainer
 Train with your favourite soloist instrument thru backing tracks
+Alpha release ready! check this:
 
-![proposed logo](https://raw.githubusercontent.com/spheras/backingtrainer/master/etc/logo.png)
+https://spheras.github.io/backingtrainer/
 
 
-UNDER CONSTRUCTION!

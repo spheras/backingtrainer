@@ -201,6 +201,13 @@ export class MidiPlayer {
                                 piano.play(3, 0, 0);
                                 MidiPlayer.piano = piano;
                                 resolve();
+                            }).catch((reason: any) => {
+                                //URGENT! fix these!!
+                                Soundfont.instrument(MidiPlayer.audioContext, 'assets/soundfonts/' + (MidiPlayer.lowQuality ? 'low' : 'high') + '/acoustic_grand_piano-mp3.js').then(function (piano) {
+                                        piano.play(3, 0, 0);
+                                        MidiPlayer.piano = piano;
+                                        resolve();
+                                    })
                             });
                     });
             } else {
