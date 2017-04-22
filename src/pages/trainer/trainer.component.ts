@@ -9,6 +9,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { MenuController } from 'ionic-angular';
 import { DAO } from '../../dao/dao';
 import { KnobComponent } from 'ng2-knob';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     templateUrl: 'trainer.component.html',
@@ -26,9 +27,14 @@ export class TrainerPage implements PlayerListener {
 
     prepare: number = -1;
 
+    private STATE_STOP = 0;
+    private STATE_PLAYING = 1;
+    private STATE_PAUSED = 2;
+
     private composition: Composition = null;
     private loader: Loading = null;
-    private playing: number = 0;
+    private state: number = 0;
+    private flagRendering: boolean = false;
 
     @ViewChild('myknob1') knob: KnobComponent;
 
@@ -58,6 +64,35 @@ export class TrainerPage implements PlayerListener {
         //this.nav.getPrevious().willEnter.emit();
     }
 
+    /**
+     * @name listenResizeEvents
+     * @description we listen the resize events to render again
+     */
+    private listenResizeEvents() {
+        const $resizeEvent = Observable.fromEvent(window, 'resize').debounceTime(200);
+
+        let self = this;
+        $resizeEvent.subscribe(data => {
+            if (!this.flagRendering) {
+                this.flagRendering = true;
+                if (this.state == this.STATE_PLAYING) {
+                    self.pause();
+                }
+
+                this.loader = this.loadingCtrl.create({
+                    content: this.translate.instant("TRAINER-WAIT-SCORE")
+                });
+                this.loader.present().then((value) => {
+                    this.player.loadAndRenderScore(this.composition).then((svg) => {
+                        this.svgContent = this._sanitizer.bypassSecurityTrustHtml(svg);
+                        this.flagRendering = false;
+                        this.loader.dismiss();
+                    });
+                });
+            }
+        });
+    }
+
     ionViewDidEnter() {
         //enabling my menus
         this.enableMenus();
@@ -68,9 +103,12 @@ export class TrainerPage implements PlayerListener {
         this.loader = this.loadingCtrl.create({
             content: this.translate.instant("TRAINER-WAIT-SCORE")
         });
-        this.loader.present();
+        this.loader.present().then((value) => {
+            this.flagRendering = true;
 
-        this.player.init({ listener: this, composition: this.composition });
+            this.listenResizeEvents();
+            this.player.init({ listener: this, composition: this.composition });
+        });
     }
 
     /**
@@ -105,6 +143,7 @@ export class TrainerPage implements PlayerListener {
 
         this.knob.setInitialValue(bpm);
         this.loader.dismiss();
+        this.flagRendering = false;
     }
 
     /**
@@ -136,11 +175,11 @@ export class TrainerPage implements PlayerListener {
      * @description play or resume the music
      */
     play() {
-        if (this.playing == 2) {
+        if (this.state == this.STATE_PAUSED) {
             this.resume();
-        } else {
+        } else if (this.state = this.STATE_STOP) {
             this.showPrepare().then(() => {
-                this.playing = 1;
+                this.state = 1;
                 this.player.play(120);
             });
         }
@@ -151,8 +190,10 @@ export class TrainerPage implements PlayerListener {
      * @description pause the music
      */
     pause() {
-        this.playing = 2;
-        this.player.pause();
+        if (this.state == this.STATE_PLAYING) {
+            this.state = this.STATE_PAUSED;
+            this.player.pause();
+        }
     }
 
     /**
@@ -160,8 +201,10 @@ export class TrainerPage implements PlayerListener {
      * @description stop the music
      */
     stop() {
-        this.playing = 0;
-        this.player.stop();
+        if (this.state == this.STATE_PAUSED || this.state == this.STATE_PLAYING) {
+            this.state = this.STATE_STOP;
+            this.player.stop();
+        }
     }
 
     /**
@@ -170,7 +213,7 @@ export class TrainerPage implements PlayerListener {
      */
     resume() {
         this.showPrepare().then(() => {
-            this.playing = 1;
+            this.state = this.STATE_PLAYING;
             this.player.resume();
         });
     }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Request, RequestOptions, RequestOptionsArgs, RequestMethod, ResponseContentType } from '@angular/http';
 import { decode } from '../util/Util';
-import 'rxjs/add/operator/catch';
 import { Composition } from './composition';
 
 @Injectable()

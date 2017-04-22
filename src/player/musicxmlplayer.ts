@@ -138,9 +138,6 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                     self.options.listener.svgLoaded(frontsvg);
                 }
 
-                //start listening resize events
-                self.listenResizeEvents();
-
                 //we load the midi data
                 self.loadMidiData(this.options.composition).then((midi => {
                     //finally, we load the soundfont(s?)
@@ -168,35 +165,12 @@ export class MusicXMLPlayer implements MidiPlayerListener {
 
 
     /**
-     * @name listenResizeEvents
-     * @description we listen the resize events to render again
-     */
-    private listenResizeEvents() {
-        /*
-                const $resizeEvent = Observable.fromEvent(window, 'resize')
-                    .map(() => {
-                        return document.documentElement.clientWidth - 20;
-                    })
-                    .debounceTime(200)
-        
-                let self = this;
-                $resizeEvent.subscribe(data => {
-                    let svg = self.renderScore();
-                    if (self.options.listener != null) {
-                        self.options.listener.svgLoaded(svg);
-                        self.options.listener.playerInitialized();
-                    }
-                });
-                */
-    }
-
-    /**
      * @name loadAndRenderScore
      * @description load and render the front sheet
      * @param {Composition} comp the composition info to render
      * @return <Promise<string>> a promise to be returned a svg
      */
-    private loadAndRenderScore(comp: Composition): Promise<string> {
+    public loadAndRenderScore(comp: Composition): Promise<string> {
         if (this.options.scoreData == null) {
 
             let obs = this.service.getScore(comp);
