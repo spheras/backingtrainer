@@ -30,7 +30,7 @@ export class TrainerPage implements PlayerListener {
     private loader: Loading = null;
     private playing: number = 0;
 
-    @ViewChild('myknob3') knob: KnobComponent;
+    @ViewChild('myknob1') knob: KnobComponent;
 
     constructor(private appref: ApplicationRef, private menu: MenuController, private insomnia: Insomnia,
         navParams: NavParams, private player: MusicXMLPlayer, private _sanitizer: DomSanitizer, private dao: DAO,

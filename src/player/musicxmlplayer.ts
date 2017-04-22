@@ -172,22 +172,22 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @description we listen the resize events to render again
      */
     private listenResizeEvents() {
-/*
-        const $resizeEvent = Observable.fromEvent(window, 'resize')
-            .map(() => {
-                return document.documentElement.clientWidth - 20;
-            })
-            .debounceTime(200)
-
-        let self = this;
-        $resizeEvent.subscribe(data => {
-            let svg = self.renderScore();
-            if (self.options.listener != null) {
-                self.options.listener.svgLoaded(svg);
-                self.options.listener.playerInitialized();
-            }
-        });
-        */
+        /*
+                const $resizeEvent = Observable.fromEvent(window, 'resize')
+                    .map(() => {
+                        return document.documentElement.clientWidth - 20;
+                    })
+                    .debounceTime(200)
+        
+                let self = this;
+                $resizeEvent.subscribe(data => {
+                    let svg = self.renderScore();
+                    if (self.options.listener != null) {
+                        self.options.listener.svgLoaded(svg);
+                        self.options.listener.playerInitialized();
+                    }
+                });
+                */
     }
 
     /**
@@ -226,6 +226,9 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     private renderScore(): string {
         // options by default
         let coptions = new ConversionOptions();
+        if (document.documentElement.clientWidth > 1024) {
+            coptions.p = 'f';
+        }
         this.converter = new MusicXML2SVG(this.options.scoreData, coptions);
         let svg = this.converter.renderScore(document.documentElement.clientWidth - 40);
         return svg;

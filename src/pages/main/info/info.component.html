@@ -25,6 +25,9 @@
                 <img src="assets/icon/info-logo.png" class="slide-image" />
                 <h2 class="slide-title">{{'INFO-SLIDE1-TITLE' | translate}}</h2>
                 <div [innerHtml]="'INFO-SLIDE1-BODY' | translate"></div>
+                <button ion-button round color="epoque" (click)="showCredits()">
+                    {{'INFO-CREDITS' | translate}}
+                </button>
             </div>
         </ion-slide>
 
@@ -67,5 +70,6 @@
                 <div [innerHtml]="'INFO-SLIDE5-BODY' | translate"></div>
             </div>
         </ion-slide>
+
     </ion-slides>
 </ion-content>

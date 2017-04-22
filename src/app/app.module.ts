@@ -10,6 +10,7 @@ import { RecentPage } from '../pages/main/recent/recent.component';
 import { InfoPage } from '../pages/main/info/info.component';
 import { TunerPage } from '../pages/tuner/tuner.component';
 import { TrainerPage } from '../pages/trainer/trainer.component';
+import { CreditsPage } from '../pages/credits/credits.component';
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { Http } from "@angular/http";
@@ -26,6 +27,7 @@ import { KnobModule } from 'ng2-knob';
     TrainerPage,
     TunerPage,
     InfoPage,
+    CreditsPage,
     SearchPage, DownloadedPage, RecentPage
   ],
 
@@ -49,6 +51,7 @@ import { KnobModule } from 'ng2-knob';
     TrainerPage,
     InfoPage,
     TunerPage,
+    CreditsPage,
     SearchPage, DownloadedPage, RecentPage
   ],
 

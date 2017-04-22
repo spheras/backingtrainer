@@ -80,7 +80,8 @@ export class PitchDetect {
 
     private getUserMedia(dictionary, callback) {
         try {
-            navigator.getUserMedia = navigator.getUserMedia;
+            var n = <any>navigator;
+            n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia || n.msGetUserMedia;
             navigator.getUserMedia(dictionary, callback, this.error);
         } catch (e) {
             console.error('getUserMedia threw exception :' + e);

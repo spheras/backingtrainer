@@ -42,7 +42,9 @@
   "TUNER-SENSITIVITY":"Sensibilidad",
   "TUNER-LISTEN":"Escuchar A4 (La)",
   "TUNER-STOP":"Parar",
+  "CREDITS-TITLE":"Creditos",
 
+  "INFO-CREDITS":"Creditos",
   "INFO-SLIDE1-TITLE":"¡Bienvenido a BackingTrainer!",
   "INFO-SLIDE1-BODY":"<p><strong>BackingTrainer</strong> es un desarrollo de <a href=\"https://github.com/spheras/backingtrainer\" target=\"_blank\">código abierto</a> (licencia <a target=\"_blank\" href=\"http://www.gnu.org/licenses/gpl-3.0.txt\">GPLv3</a>) y totalmente gratuito para la práctica de instrumentos solistas mediante una partitura y un acompañamiento.</p><p class=\"alert\"><strong>¡Recuerda!</strong> Necesitamos tu ayuda para poder ir aumentando poco a poco el repositorio de partituras disponibles.</p>",
   "INFO-SLIDE2-TITLE":"¡Atención, versión Alfa!",

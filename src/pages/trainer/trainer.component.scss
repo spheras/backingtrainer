@@ -56,13 +56,13 @@
         display:block;
         float:left;
     }
-    knob.skin3{
+    knob.skin1{
         background:url('../assets/skins/skin1_back.svg');
         background-size: contain;    
         width:35px;
         height:35px;
     }
-    knob.skin3 /deep/ .knob{
+    knob.skin1 /deep/ .knob{
         background:url('../assets/skins/skin1_front.svg');
         background-size: contain;    
         width:35px;
