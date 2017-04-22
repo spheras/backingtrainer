@@ -42,8 +42,9 @@
   "TUNER-SENSITIVITY":"Sensitivity",
   "TUNER-LISTEN":"Listen A4",
   "TUNER-STOP":"Stop",
+  "CREDITS-TITLE":"Credits",
 
-
+  "INFO-CREDITS":"Credits",
   "INFO-SLIDE1-TITLE":"Welcome to BackingTrainer!",
   "INFO-SLIDE1-BODY":"<p><strong>BackingTrainer</strong> is an <a href=\"https://github.com/spheras/backingtrainer\" target=\"_blank\">open source</a> development (<a target=\"_blank\" href=\"http://www.gnu.org/licenses/gpl-3.0.txt\">GPLv3</a> license) and totally free cost to the practice of soloist instruments through a score and a backing track.</p><p class=\"alert\"><strong>¡Remember!</strong> We need your help to improve the score repository.</p>",
   "INFO-SLIDE2-TITLE":"Attention!, this is an alpha version",
