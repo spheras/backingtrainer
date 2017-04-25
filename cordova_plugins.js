@@ -73,6 +73,7 @@ module.exports.metadata =
 {
     "cordova-opentok-android-permissions": "1.0.0",
     "cordova-plugin-console": "1.0.5",
+    "cordova-plugin-crosswalk-webview": "2.3.0",
     "cordova-plugin-device": "1.1.4",
     "cordova-plugin-insomnia": "4.3.0",
     "cordova-plugin-splashscreen": "4.0.2",
