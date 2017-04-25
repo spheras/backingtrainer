@@ -5,28 +5,42 @@
         </button>
         <ion-title>{{'SEARCH-TITLE' | translate}}</ion-title>
     </ion-navbar>
+
+    <ion-toolbar no-border-top color="primary">
+        <ion-segment [(ngModel)]="type" color="light">
+            <ion-segment-button value="compositions">
+                Compositions
+            </ion-segment-button>
+            <ion-segment-button value="collections">
+                Collections
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [ngSwitch]="type">
 
     <ion-searchbar (ionInput)="filterCompositions($event.target.value)"></ion-searchbar>
 
-    <ion-list>
-        <ng-template ngFor let-composition [ngForOf]="filteredComp" let-i="index">
-            <ion-item class="item">
-                <ion-row nowrap>
-                    <ion-col no-padding class="thumbnail-col">
-                        <ion-thumbnail class="thumbnail" item-left>
-                            <img class="instrument-icon" src="assets/icon/instruments/{{composition.frontInstrument.toLowerCase()}}.svg">
-                        </ion-thumbnail>
-                    </ion-col>
-                    <ion-col text-wrap>
-                        <h2><strong><a target="_blank" href="{{composition.wikipediaLink}}">{{composition.name}}</a></strong></h2>
-                        <h3>{{composition.author}}</h3>
-                        <p><strong>Level:{{composition.level}}</strong>{{(composition.description.length>0?' | ' + composition.description:'')}}</p>
-                    </ion-col>
-                </ion-row>
-                <ion-row align-items-start>
+    <div *ngSwitchCase="'compositions'">
+
+        <ion-list>
+            <ng-template ngFor let-composition [ngForOf]="filteredComp" let-i="index">
+                <ion-item class="item">
+                    <ion-row nowrap>
+                        <ion-col no-padding class="thumbnail-col">
+                            <ion-thumbnail class="thumbnail" item-left>
+                                <img class="instrument-icon" src="assets/icon/instruments/{{composition.frontInstrument.name.toLowerCase()}}.svg">
+                            </ion-thumbnail>
+                        </ion-col>
+                        <ion-col text-wrap>
+                            <h2><strong><a target="_blank" href="{{composition.wikipediaLink}}">{{composition.name}}</a></strong></h2>
+                            <h3>{{composition.author}}</h3>
+                            <p><strong>{{'SEARCH-LEVEL' | translate}}:{{composition.level}}</strong>{{(composition.description.length>0?'
+                                | ' + composition.description:'')}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row align-items-start>
                         <button *ngIf="!composition.flagPlaying" ion-button clear icon-left class="action" (click)="playMidi(i)">
                             <ion-icon name='headset'></ion-icon>
                             {{'SEARCH-PLAY' | translate}}
@@ -47,9 +61,80 @@
                             <ion-icon name="cloud-download"></ion-icon>
                             {{'SEARCH-DOWNLOAD' | translate}}
                         </button>
-                </ion-row>
-            </ion-item>
-        </ng-template>
-    </ion-list>
+                    </ion-row>
+                </ion-item>
+            </ng-template>
+        </ion-list>
+    </div>
+
+    <div *ngSwitchCase="'collections'">
+        <ion-list>
+
+            <ng-template ngFor let-collection [ngForOf]="filteredCollections" let-j="index">
+                <ion-item class="item" (click)="expandCollection(j)" [class.expanded]="collection.flagExpanded">
+                    <ion-row nowrap>
+
+                        <ion-icon *ngIf="!collection.flagExpanded" class="composition-add" name='add-circle'></ion-icon>
+                        <ion-icon *ngIf="collection.flagExpanded" class="composition-add" name='remove-circle'></ion-icon>
+
+                        <ion-col no-padding class="thumbnail-col">
+                            <ion-thumbnail class="thumbnail" item-left>
+                                <img class="instrument-icon composition" src="assets/icon/instruments/{{collection.instrument.toLowerCase()}}.svg">
+                            </ion-thumbnail>
+                        </ion-col>
+                        <ion-col text-wrap>
+                            <h2><strong>{{collection.name}}</strong></h2>
+                            <h3>{{collection.author}}</h3>
+                            <p><strong>{{'SEARCH-LEVEL' | translate}}:{{collection.level}}</strong>{{(collection.description.length>0?'
+                                | ' + collection.description:'')}}</p>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-list>
+                        <ng-template ngFor let-composition [ngForOf]="collection.compositions" let-i="index">
+                            <ion-item class="item subitem">
+                                <ion-row nowrap>
+                                    <ion-col no-padding class="thumbnail-col">
+                                        <ion-thumbnail class="thumbnail" item-left>
+                                            <img class="instrument-icon" src="assets/icon/instruments/{{composition.frontInstrument.name.toLowerCase()}}.svg">
+                                        </ion-thumbnail>
+                                    </ion-col>
+                                    <ion-col text-wrap>
+                                        <h2><strong><a target="_blank" href="{{composition.wikipediaLink}}">{{composition.name}}</a></strong></h2>
+                                        <h3>{{composition.author}}</h3>
+                                        <p><strong>{{'SEARCH-LEVEL' | translate}}:{{composition.level}}</strong>{{(composition.description.length>0?'
+                                            | ' + composition.description:'')}}</p>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row align-items-start>
+                                    <button *ngIf="!composition.flagPlaying" ion-button clear icon-left class="action" (click)="playMidi(i,j)">
+                                    <ion-icon name='headset'></ion-icon>
+                                    {{'SEARCH-PLAY' | translate}}
+                                </button>
+                                    <button *ngIf="composition.flagPlaying" ion-button clear icon-left class="action" (click)="stopMidi(i,j)">
+                                    <ion-icon name='pause'></ion-icon>
+                                    {{'SEARCH-STOP' | translate}}
+                                </button>
+                                    <button ion-button clear icon-left class="action" (click)="trainComposition(i,j)">
+                                    <ion-icon name="musical-notes"></ion-icon>
+                                    {{'SEARCH-TRAIN' | translate}}
+                                </button>
+                                    <button *ngIf="composition.flagDownloaded" ion-button clear color="ok" class="action" icon-left>
+                                    <ion-icon name="checkmark"></ion-icon>
+                                    {{'SEARCH-DOWNLOADED' | translate}}
+                                </button>
+                                    <button *ngIf="!composition.flagDownloaded" ion-button clear icon-left class="action" (click)="downloadComposition(i,j)">
+                                    <ion-icon name="cloud-download"></ion-icon>
+                                    {{'SEARCH-DOWNLOAD' | translate}}
+                                </button>
+                                </ion-row>
+                            </ion-item>
+                        </ng-template>
+                    </ion-list>
+                </ion-item>
+            </ng-template>
+
+        </ion-list>
+    </div>
 
 </ion-content>

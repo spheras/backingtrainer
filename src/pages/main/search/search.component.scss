@@ -1,12 +1,24 @@
 .instrument-icon {
-    background: #FAFAFA;
+    background: #f9f1ee;
     border-radius: 22px;
-    border: 1px dashed #CACACA;
+    border: 1px solid #FFFFFF;
     padding: 4px;
+    box-shadow: 0px 0px 4px #ff0f04 inset;
+}
+
+.instrument-icon.composition{
+    background: #f1f6ff;
+    border-radius: 22px;
+    border: 1px solid #FFFFFF;
+    padding: 4px;
+    box-shadow: 0px 0px 4px rgb(4, 97, 255) inset;
 }
 
 .item{
     padding-left:8px !important;
+}
+.item.subitem{
+    background: #efefef;
 }
 .thumbnail
 {
@@ -27,4 +39,31 @@ p{
     text-transform: none;
     padding-right: 15px;
     padding-left: 0px;
+}
+
+ion-item.expanded ion-list{
+    display: block;
+}
+
+ion-item ion-list{
+    display: none;
+}
+
+ion-item:active ion-icon.composition-add{
+    background: #8A8A8A;
+    color:white;
+}
+ion-icon.composition-add{
+    width: 23px;
+    background: #EFEFEF;
+    margin-right: 6px;
+    padding: 3px;
+    color: #888888;
+}
+
+ion-icon.composition-add:before{
+    top: 60px;
+    margin-left: 1px;
+    position: absolute;
+    margin-top: -10px;
 }

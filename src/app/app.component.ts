@@ -107,14 +107,14 @@ export class MyApp {
 
 
   /**
-   * @name settingSoundQuality
-   * @description set the soundquality property
+   * @name settingPlayBack
+   * @description set the playBack property
    * @param {boolean} value the value to set
    */
-  settingSoundQuality(value: boolean) {
+  settingPlayBack(value: boolean) {
     this.dao.getSettings().then((settings) => {
-      this.settings.playerSettings.highQualitySound = value;
-      settings.playerSettings.highQualitySound = value;
+      this.settings.playerSettings.playBack = value;
+      settings.playerSettings.playBack = value;
       this.dao.setSettings(settings);
     });
   }
@@ -140,5 +140,20 @@ export class MyApp {
       this.dao.setSettings(settings);
     });
   }
+
+  /**
+   * @name settingMetronome
+   * @description set the metrnome property
+   * @param {boolean} value the value to set
+   */
+  settingMetronome(value: boolean) {
+    this.dao.getSettings().then((settings) => {
+      this.settings.playerSettings.metronome = value;
+      settings.playerSettings.metronome = value;
+      this.dao.setSettings(settings);
+    });
+  }
+
+  
 
 }

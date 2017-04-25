@@ -7,6 +7,7 @@ import { Composition } from './composition';
 export class PlayerService {
 
     private dataUrl1 = 'https://raw.githubusercontent.com/spheras/backingtrainer/master/data';
+    //private dataUrl1 = 'assets/data';
 
     constructor(private http: Http) { }
 

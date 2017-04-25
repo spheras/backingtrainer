@@ -10,7 +10,7 @@ export class Player {
 	private sampleRate: number = 5; // milliseconds
 	private startTime: number = 0;
 	private buffer = null;
-	private division;
+	public division;
 	private format;
 	private setIntervalId = null;
 	private tracks = [];
@@ -189,6 +189,7 @@ export class Player {
 		if (!this.inLoop) {
 			this.inLoop = true;
 			this.tick = this.getCurrentTick();
+			//console.log("tick:"+this.tick);
 
 			this.tracks.forEach(function (track) {
 				// Handle next event

@@ -17,6 +17,12 @@ export interface MidiPlayerListener {
      * @param <object> event the midi event produced
      */
     midiUpdate(event);
+
+    /**
+     * @name finished
+     * @description the song was finished
+     */
+    endOfSong();
 }
 
 /**
@@ -32,20 +38,25 @@ export class MidiPlayer {
 
     /** we have static fields to avoid creating again these object, which have a huge cost */
     public static audioContext: AudioContext = new AudioContext();
-    public static piano: any = null;
-    /** indicates if we should load the low soundfonts low quality (true) or high quality (false) */
-    private static lowQuality: boolean = true;
+    public static soundfonts: any = {};
 
 
     //the preferred tempo, -1 not set
     private bpm: number = -1;
     /** indicates the muted Track, if any (>-1) */
-    private mutedTrack: number = -1;
+    private mutedTracks: number[] = [];
     /** the midi data arraybuffer chache */
     private midiDataArrayBuffer: ArrayBuffer = null;
+    /** circular sound pool */
+    private soundpool: CircularSoundPool;
+    /** last metronome tick */
+    private lastTick = 0;
+    /** to activate or deactivate metronome */
+    private metronome: boolean = false;
 
 
     constructor(private service: PlayerService, private platform: Platform) {
+        this.soundpool = new CircularSoundPool();
         this.initMidiPlayer();
     }
 
@@ -67,6 +78,15 @@ export class MidiPlayer {
     }
 
     /**
+     * @name setMetronome
+     * @description activate or deactivate the metronome
+     * @param {boolean} activate true if you want to hear the metronome
+     */
+    public setMetronome(activate: boolean) {
+        this.metronome = activate;
+    }
+
+    /**
      * @name load
      * @description load the midi data from the composition info
      * @param {Composition} comp the composition info to load the midi info
@@ -74,7 +94,7 @@ export class MidiPlayer {
      */
     public load(comp: Composition): Promise<void> {
         return new Promise<void>((resolve) => {
-            this.loadSoundFont().then(() => {
+            this.loadSoundFonts(comp).then(() => {
                 this.service.getMidi(comp).then((data) => {
                     this.loadMidiData(data);
                     resolve();
@@ -90,15 +110,6 @@ export class MidiPlayer {
      */
     public loadMidiData(data: ArrayBuffer) {
         this.midiDataArrayBuffer = data;
-    }
-
-    /**
-     * @name isLowQuality
-     * @description return if we are loading low quality or high quality sounds
-     * @return {boolean} true->low quality, false->high quality
-     */
-    public static isLowQuality(): boolean {
-        return MidiPlayer.lowQuality;
     }
 
     /**
@@ -148,32 +159,46 @@ export class MidiPlayer {
         this.player = new InternalMidiPlayer(function (event) {
             self.midiUpdate(event);
         });
+        this.player.on('endOfFile', function () {
+            self.stop();
+            if (self.listener && self.listener != null) {
+                self.listener.endOfSong();
+            }
+        });
+        this.player.on('playing', function (event) {
+            if (self.player.isPlaying()) {
+                let division = self.player.division;
+                let tempo = self.player.tempo; //bpm
+                let tempoBySec = tempo / 60; //bps
+                //let currentTick=Math.round(((new Date()).getTime() - this.startTime) / 1000 * (this.division * (this.tempo / 60))) + this.startTick;
+                let tick = event.tick;
+                let diff = tick - self.lastTick;
+                if (self.lastTick == 0 || diff >= 479) {
+                    self.lastTick = self.lastTick + 479;
+                    //console.log("tick");
+                    if (self.metronome) {
+                        self.soundpool.play({ noteName: "A0", track: 0, velocity: 100 });
+                    }
+                }
+            }
+        })
     }
 
     /**
-     * @name setQuality
-     * @description set the quality of the soundfont loaded
-     * @param {boolean} low indicates if we want the low quality soundfont (false -> high quality)
-     * @return {Promise<void>} the promise to load the X quality soundfont
+     * @name loadSoundFont
+     * @description load a soundfont from binary js descriptor
+     * @param {string} name the name of the instrument to load
+     * @return {Promise<void>} the promise to load the instrument
      */
-    public setQuality(low: boolean): Promise<void> {
+    private loadSoundFont(name: string): Promise<void> {
         return new Promise<void>(resolve => {
-            if (MidiPlayer.lowQuality != low) {
-                MidiPlayer.lowQuality = low;
-                //we need to reload
-                let flagPlaying: boolean = false;
-                if (this.player.isPlaying()) {
-                    flagPlaying = true;
-                    this.pause();
-                }
-                MidiPlayer.piano = null;
-                this.loadSoundFont().then(() => {
-                    if (flagPlaying) {
-                        this.player.play();
-                    }
-                    resolve();
-                });
-
+            if (name != null && (!MidiPlayer.soundfonts[name] || MidiPlayer.soundfonts[name] == null)) {
+                MidiPlayer.soundfonts[name] = "loading";
+                let url: string = this.getInsrumentUrl(name);
+                Soundfont.instrument(MidiPlayer.audioContext, url).then(function (instrument) {
+                    MidiPlayer.soundfonts[name] = instrument;
+                    resolve(instrument);
+                })
             } else {
                 resolve();
             }
@@ -181,38 +206,49 @@ export class MidiPlayer {
     }
 
     /**
+     * @name getInstrumentsByTrack
+     * @description get the instruments by track needed for this composition
+     * @param {Composition} composition
+     * @return {string[]} the list of instruments needed by track (index of the array)
+     */
+    private getInstrumentsByTrack(composition: Composition): string[] {
+        //ensuring space in the array
+        let safe = function (object, index: number) {
+            while (object.length <= index) {
+                object.push(null);
+            }
+        }
+        let result = [];
+        let frontName = composition.frontInstrument.name.toLowerCase().trim();
+        safe(result, composition.frontInstrument.track);
+        result[composition.frontInstrument.track] = frontName;
+        for (let i = 0; i < composition.backInstruments.length; i++) {
+            let backName = composition.backInstruments[i].name.toLowerCase().trim();
+            let track = composition.backInstruments[i].track;
+            safe(result, track);
+            result[track] = backName;
+        }
+        result[0] = "metronome";
+        return result;
+    }
+
+    /**
      * @name loadSoundFont
      * @description load the soundfont to play midi files
      * @return the promise to load the soundfont
      */
-    public loadSoundFont(): Promise<void> {
+    public loadSoundFonts(composition: Composition): Promise<void> {
         return new Promise<void>(resolve => {
-            if (MidiPlayer.piano == null) {
-                Soundfont.instrument(MidiPlayer.audioContext, '../'
-                    + 'www/' //TODO needed by android and electron (happens this with IOS?)
-                    + 'assets/soundfonts/' + (MidiPlayer.lowQuality ? 'low' : 'high') + '/acoustic_grand_piano-mp3.js').then(function (piano) {
-                        piano.play(3, 0, 0);
-                        MidiPlayer.piano = piano;
-                        resolve();
-                    }).catch((reason: any) => {
-                        //force no android or electron www folder?
-                        Soundfont.instrument(MidiPlayer.audioContext, '../'
-                            + 'assets/soundfonts/' + (MidiPlayer.lowQuality ? 'low' : 'high') + '/acoustic_grand_piano-mp3.js').then(function (piano) {
-                                piano.play(3, 0, 0);
-                                MidiPlayer.piano = piano;
-                                resolve();
-                            }).catch((reason: any) => {
-                                //URGENT! fix these!!
-                                Soundfont.instrument(MidiPlayer.audioContext, 'assets/soundfonts/' + (MidiPlayer.lowQuality ? 'low' : 'high') + '/acoustic_grand_piano-mp3.js').then(function (piano) {
-                                        piano.play(3, 0, 0);
-                                        MidiPlayer.piano = piano;
-                                        resolve();
-                                    })
-                            });
-                    });
-            } else {
-                resolve();
+            let instrumentsByTrack: string[] = this.getInstrumentsByTrack(composition);
+
+            let promises: Promise<void>[] = [];
+            for (let i = 0; i < instrumentsByTrack.length; i++) {
+                promises.push(this.loadSoundFont(instrumentsByTrack[i]));
             }
+            Promise.all(promises).then(() => {
+                this.soundpool.init(instrumentsByTrack);
+                resolve();
+            })
         });
     }
 
@@ -240,7 +276,9 @@ export class MidiPlayer {
      * @description stop the current playing
      */
     public stop() {
+        this.lastTick = 0;
         this.player.stop();
+        this.soundpool.stop();
     }
 
     /**
@@ -262,10 +300,25 @@ export class MidiPlayer {
     /**
      * @name muteTrack
      * @description mute a Track
-     * @param {number} Track the Track to mute
+     * @param {number} track the Track to mute
      */
-    public muteTrack(Track: number) {
-        this.mutedTrack = Track;
+    public muteTrack(track: number) {
+        this.mutedTracks.push(track);
+    }
+
+    /**
+     * @name unmuteTrack
+     * @description unmute a certain track
+     * @param {number} the track to unmute
+     */
+    public unmuteTrack(track: number) {
+        let result: number[] = [];
+        for (let i = 0; i < this.mutedTracks.length; i++) {
+            if (this.mutedTracks[i] != track) {
+                result.push(this.mutedTracks[i]);
+            }
+        }
+        this.mutedTracks = result;
     }
 
     /**
@@ -273,7 +326,22 @@ export class MidiPlayer {
      * @description unmute all Tracks
      */
     public unmuteTracks() {
-        this.mutedTrack = -1;
+        this.mutedTracks = [];
+    }
+
+    /**
+     * @name isMuted
+     * @description check if a certain track is muted or not
+     * @param {number} track the track to chec
+     * @return {boolean} if the track is muted or not
+     */
+    private isMuted(track: number): boolean {
+        for (let i = 0; i < this.mutedTracks.length; i++) {
+            if (this.mutedTracks[i] == track) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -284,8 +352,8 @@ export class MidiPlayer {
      */
     midiUpdate(event) {
         if (event.name == 'Note on') {
-            if (event.track != this.mutedTrack) {
-                MidiPlayer.piano.play(event.noteName, MidiPlayer.audioContext.currentTime, { gain: event.velocity / 100 });
+            if (!this.isMuted(event.track)) {
+                this.soundpool.play(event);
             }
         }
 
@@ -293,5 +361,100 @@ export class MidiPlayer {
             this.listener.midiUpdate(event);
         }
 
+    }
+
+    /**
+     * @name getInstrumentUrl
+     * @description obtain the soundfont url for the instrument we desire
+     * @param {string} instrument the instrument we're trying to get
+     * @return {string} the url to get the js soundfont
+     */
+    private getInsrumentUrl(instrument: string): string {
+        //remember to avoid using mp3 files as the decode in android is very slow
+        if (instrument.toLowerCase().trim().indexOf("flute") >= 0) {
+            return 'assets/soundfonts/flute-wav.js'
+        }
+        else if (instrument.toLowerCase().trim().indexOf("metronome") >= 0) {
+            return 'assets/soundfonts/metronome-wav.js'
+        } else {
+            return 'assets/soundfonts/acoustic_grand_piano-wav.js';
+        }
+    }
+}
+
+/**
+ * @name CircularSoundPool
+ * @description a circular sound pool to avoid playing infinite sounds. The threshold determine how many sounds can be played simultaneously
+ */
+class CircularSoundPool {
+    private trackList = [[]];
+    private pianoIndex: number = 0;
+    private pianoThreshold: number = 8;
+    private instrumentsMap: string[];
+
+    /**
+     * @name init
+     * @description initialize the circular sound pool with a set of instruments by track
+     * @param {string[]} instrumentMap a set of instruments by track (null or not defined means piano)
+     */
+    public init(instrumentMap: string[]) {
+        this.instrumentsMap = instrumentMap;
+        this.trackList = [[]];
+        for (let i = 0; i < this.instrumentsMap.length; i++) {
+            this.trackList.push([]);
+        }
+    }
+
+    /**
+     * @name stop
+     * @description stop all the instruments mapped
+     */
+    public stop() {
+        for (let i = 0; i < this.trackList.length; i++) {
+            if (this.trackList[i] && this.trackList[i] != null) {
+                for (let j = 0; j < this.trackList[i].length; j++) {
+                    let instrument = this.trackList[i][j];
+                    if (instrument && instrument != null) {
+                        instrument.stop();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @name play
+     * @description play a midi event
+     * @param {any} event a midi event
+     */
+    public play(event) {
+        let track: number = event.track;
+        let strInstrument: string = this.instrumentsMap[track];
+        if (!strInstrument || strInstrument == null) {
+            strInstrument = "piano";
+        }
+        let instrument = MidiPlayer.soundfonts[strInstrument];
+        if (!instrument || instrument == null) {
+            strInstrument = "piano";
+            instrument = MidiPlayer.soundfonts["piano"];
+        }
+
+        let max = (strInstrument == "piano" ? this.pianoThreshold : 1);
+        let index = (strInstrument == "piano" ? this.pianoIndex : 0);
+
+        if (this.trackList[track][index]) {
+            this.trackList[track][index].stop();
+        }
+
+        this.trackList[track][index] = instrument.play(event.noteName, MidiPlayer.audioContext.currentTime, { gain: event.velocity / 100 });
+
+        index++;
+        if (index == max) {
+            index = 0;
+        }
+
+        if (strInstrument == "piano") {
+            this.pianoIndex = index;
+        }
     }
 }

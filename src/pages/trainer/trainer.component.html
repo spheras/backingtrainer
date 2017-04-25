@@ -10,13 +10,13 @@
         </div>
 
         <ion-buttons end>
-            <button *ngIf="state==STATE_STOP || state==STATE_PAUSE" ion-button (click)="play();">
+            <button *ngIf="state==STATE_STOP || state==STATE_PAUSED" ion-button (click)="play();">
                 <ion-icon name="ios-play"></ion-icon>
             </button>
             <button *ngIf="state==STATE_PLAYING" ion-button (click)="pause();">
                 <ion-icon name="ios-pause"></ion-icon>
             </button>
-            <button *ngIf="state==STATE_PLAYING || state==STATE_PAUSE" ion-button (click)="stop();">
+            <button *ngIf="state==STATE_PLAYING || state==STATE_PAUSED" ion-button (click)="stop();">
                 <ion-icon name="ios-square" color="danger"></ion-icon>
             </button>
         </ion-buttons>

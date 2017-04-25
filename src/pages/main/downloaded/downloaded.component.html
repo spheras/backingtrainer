@@ -17,13 +17,13 @@
                 <ion-row nowrap>
                     <ion-col no-padding class="thumbnail-col">
                         <ion-thumbnail class="thumbnail" item-left>
-                            <img class="instrument-icon" src="assets/icon/instruments/{{composition.frontInstrument.toLowerCase()}}.svg">
+                            <img class="instrument-icon" src="assets/icon/instruments/{{composition.frontInstrument.name.toLowerCase()}}.svg">
                         </ion-thumbnail>
                     </ion-col>
                     <ion-col text-wrap>
                         <h2><strong><a target="_blank" href="{{composition.wikipediaLink}}">{{composition.name}}</a></strong></h2>
                         <h3>{{composition.author}}</h3>
-                        <p><strong>Level:{{composition.level}}</strong>{{(composition.description.length>0?' | ' + composition.description:'')}}</p>
+                        <p><strong>{{'SEARCH-LEVEL' | translate}}:{{composition.level}}</strong>{{(composition.description.length>0?' | ' + composition.description:'')}}</p>
                     </ion-col>
                 </ion-row>
                 <ion-row align-items-start>
@@ -49,3 +49,4 @@
     </ion-list>
 
 </ion-content>
+

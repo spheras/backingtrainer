@@ -106,7 +106,7 @@ export class RecentPage {
             this.filteredComp = this.compositions.filter((item: Composition) => {
                 return (item.author.toLowerCase().indexOf(val) > -1) ||
                     (item.name.toLowerCase().indexOf(val) > -1) ||
-                    (item.frontInstrument.toLowerCase().indexOf(val) > -1);
+                    (item.frontInstrument.name.toLowerCase().indexOf(val) > -1);
             })
         } else {
             this.filteredComp = this.compositions;

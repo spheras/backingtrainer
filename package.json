@@ -54,12 +54,12 @@
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
     "ionic-plugin-keyboard",
-    "cordova-plugin-crosswalk-webview",
     {
       "locator": "https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
       "id": "cordova-plugin-insomnia"
     },
-    "cordova-opentok-android-permissions"
+    "cordova-opentok-android-permissions",
+    "cordova-plugin-crosswalk-webview"
   ],
   "cordovaPlatforms": [
     {

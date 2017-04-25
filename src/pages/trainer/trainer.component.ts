@@ -9,7 +9,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { MenuController } from 'ionic-angular';
 import { DAO } from '../../dao/dao';
 import { KnobComponent } from 'ng2-knob';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subscription } from 'rxjs/Rx';
 
 @Component({
     templateUrl: 'trainer.component.html',
@@ -36,6 +36,9 @@ export class TrainerPage implements PlayerListener {
     private state: number = 0;
     private flagRendering: boolean = false;
 
+    private daoSubscription: Subscription = null;
+    private resizeSubscription: Subscription = null;
+
     @ViewChild('myknob1') knob: KnobComponent;
 
     constructor(private appref: ApplicationRef, private menu: MenuController, private insomnia: Insomnia,
@@ -61,7 +64,15 @@ export class TrainerPage implements PlayerListener {
         this.insomnia.allowSleepAgain();
         //disabling my menus
         this.disableMenus();
-        //this.nav.getPrevious().willEnter.emit();
+
+        //settings unsubscription
+        if (this.daoSubscription != null) {
+            this.daoSubscription.unsubscribe();
+        }
+        //resize unsubscription
+        if (this.resizeSubscription != null) {
+            this.resizeSubscription.unsubscribe();
+        }
     }
 
     /**
@@ -72,7 +83,7 @@ export class TrainerPage implements PlayerListener {
         const $resizeEvent = Observable.fromEvent(window, 'resize').debounceTime(200);
 
         let self = this;
-        $resizeEvent.subscribe(data => {
+        this.resizeSubscription = $resizeEvent.subscribe(data => {
             if (!this.flagRendering) {
                 this.flagRendering = true;
                 if (this.state == this.STATE_PLAYING) {
@@ -107,7 +118,15 @@ export class TrainerPage implements PlayerListener {
             this.flagRendering = true;
 
             this.listenResizeEvents();
-            this.player.init({ listener: this, composition: this.composition });
+            this.dao.getSettings().then((settings) => {
+                this.player.init(this.composition, this, settings);
+            });
+
+
+            this.daoSubscription = this.dao.observeSettings().subscribe((settings) => {
+                this.player.updateSettings(settings);
+            });
+
         });
     }
 
@@ -120,11 +139,13 @@ export class TrainerPage implements PlayerListener {
     svgLoaded(svg: string): void {
         this.svgContent = this._sanitizer.bypassSecurityTrustHtml(svg);
 
+        /*
         this.loader.dismiss();
         this.loader = this.loadingCtrl.create({
             content: this.translate.instant("TRAINER-WAIT-AUDIO")
         });
         this.loader.present();
+        */
     }
 
 
@@ -177,7 +198,7 @@ export class TrainerPage implements PlayerListener {
     play() {
         if (this.state == this.STATE_PAUSED) {
             this.resume();
-        } else if (this.state = this.STATE_STOP) {
+        } else if (this.state == this.STATE_STOP) {
             this.showPrepare().then(() => {
                 this.state = 1;
                 this.player.play(120);
@@ -204,6 +225,8 @@ export class TrainerPage implements PlayerListener {
         if (this.state == this.STATE_PAUSED || this.state == this.STATE_PLAYING) {
             this.state = this.STATE_STOP;
             this.player.stop();
+            //seems necesary in android
+            this.appref.tick();
         }
     }
 

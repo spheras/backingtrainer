@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SearchService } from './search.service';
-import { Composition } from '../../../player/composition';
+import { Composition, Collection } from '../../../player/composition';
 import { MidiPlayer } from '../../../player/midiplayer';
 import { PlayerService } from '../../../player/player.service';
 import { DAO } from '../../../dao/dao';
@@ -14,14 +14,27 @@ import { App } from 'ionic-angular';
 })
 export class SearchPage {
 
+    type: string = "compositions";
+
     private compositions: Composition[] = [];
     private filteredComp: Composition[] = [];
+    private collections: Collection[] = [];
+    private filteredCollections: Collection[] = [];
 
     constructor(private app: App, public alertCtrl: AlertController, private service: SearchService,
         private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
-        this.service.getServerIndex().subscribe((compositions) => {
+
+        //first we get the compositions
+        this.service.getServerCompositionIndex().subscribe((compositions) => {
             this.compositions = compositions;
             this.filteredComp = this.compositions;
+            this.checkDownloaded();
+        });
+
+        //second we get the collections
+        this.service.getServerCollectionIndex().subscribe((collections) => {
+            this.collections = collections;
+            this.filteredCollections = this.collections;
             this.checkDownloaded();
         });
     }
@@ -46,10 +59,18 @@ export class SearchPage {
     /**
       * @name trainComposition
       * @description train the selected composition
-      * @param {number} index the index of the composition selected
+     * @param <number> indexComposition the index of the composition to be trained
+     * @param <number> indexCollection (optional) the index of the collection to be trained
       */
-    trainComposition(index: number) {
-        let comp = this.filteredComp[index];
+    trainComposition(indexComposition: number, indexCollection?:number) {
+        let comp = null;
+        if (indexCollection) {
+            let coll = this.filteredCollections[indexCollection];
+            comp = coll.compositions[indexComposition];
+        } else {
+            comp = this.filteredComp[indexComposition];
+        }
+
         this.dao.addRecent(comp);
         this.app.getRootNav().push(TrainerPage, comp, null, function () {
             //console.log('done');
@@ -58,8 +79,21 @@ export class SearchPage {
         //this.modalCtrl.create(TrainerPage, comp).present();
     }
 
-    downloadComposition(index: number) {
-        let comp = this.filteredComp[index];
+    /**
+     * @name downloadComposition
+     * @description download an existing composition
+     * @param <number> indexComposition the index of the composition to be downloaded
+     * @param <number> indexCollection (optional) the index of the collection to be downloaded
+     */
+    downloadComposition(indexComposition: number, indexCollection?: number) {
+        let comp = null;
+        if (indexCollection) {
+            let coll = this.filteredCollections[indexCollection];
+            comp = coll.compositions[indexComposition];
+        } else {
+            comp = this.filteredComp[indexComposition];
+        }
+
         let loader = this.loadingCtrl.create({
             content: "Please wait while downloading..."
         });
@@ -98,9 +132,17 @@ export class SearchPage {
     /**
      * @name stopMidi
      * @description stop the currently midi being played
+     * @param <number> indexComposition the index of the composition to be stopped
+     * @param <number> indexCollection (optional) the index of the collection to be stopped
      */
-    stopMidi(index: number) {
-        let comp = this.filteredComp[index];
+    stopMidi(indexComposition: number, indexCollection?: number) {
+        let comp = null;
+        if (indexCollection) {
+            let coll = this.filteredCollections[indexCollection];
+            comp = coll.compositions[indexComposition];
+        } else {
+            comp = this.filteredComp[indexComposition];
+        }
         comp.flagPlaying = false;
         this.player.stop();
     }
@@ -108,10 +150,17 @@ export class SearchPage {
     /**
      * @name playMidi
      * @description play the midi file linked with the composition
-     * @param <number> index the index to be played
+     * @param <number> indexComposition the index of the composition to be played
+     * @param <number> indexCollection (optional) the index of the collection to be played
      */
-    playMidi(index: number) {
-        let comp = this.filteredComp[index];
+    playMidi(indexComposition: number, indexCollection?: number) {
+        let comp = null;
+        if (indexCollection) {
+            let coll = this.filteredCollections[indexCollection];
+            comp = coll.compositions[indexComposition];
+        } else {
+            comp = this.filteredComp[indexComposition];
+        }
         this.player.stop();
         comp.flagPlaying = true;
         this.player.load(comp).then(() => {
@@ -131,10 +180,40 @@ export class SearchPage {
             this.filteredComp = this.compositions.filter((item: Composition) => {
                 return (item.author.toLowerCase().indexOf(val) > -1) ||
                     (item.name.toLowerCase().indexOf(val) > -1) ||
-                    (item.frontInstrument.toLowerCase().indexOf(val) > -1);
+                    (item.frontInstrument.name.toLowerCase().indexOf(val) > -1);
             })
         } else {
             this.filteredComp = this.compositions;
+        }
+
+        // if the value is an empty string don't filter the items
+        if (val && val.trim() != '') {
+            val = val.toLowerCase();
+            this.filteredCollections = this.collections.filter((item: Collection) => {
+                return (item.author.toLowerCase().indexOf(val) > -1) ||
+                    (item.name.toLowerCase().indexOf(val) > -1) ||
+                    (item.instrument.toLowerCase().indexOf(val) > -1);
+            })
+        } else {
+            this.filteredCollections = this.collections;
+        }
+    }
+
+    expandCollection(index: number) {
+        let col = this.filteredCollections[index];
+        col.flagExpanded = !col.flagExpanded;
+
+        if (col.flagExpanded && !col.compositions) {
+            col.compositions = [];
+            for (let i = 0; i < col.compositionIds.length; i++) {
+                let id = col.compositionIds[i];
+                for (let j = 0; j < this.compositions.length; j++) {
+                    if (id == this.compositions[j].id) {
+                        col.compositions.push(this.compositions[j]);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

@@ -1,0 +1,25 @@
+[
+    {
+        "id": "00000",
+        "name": "Test Collection",
+        "author": "spheras",
+        "description": "This is a small test collection for backingtrainer app",
+        "level": 1,
+        "instrument": "Flute",
+        "compositionIds": [
+            "00000",
+            "00003"
+        ]
+    },
+    {
+        "id": "00001",
+        "name": "Flute Mozart Collection",
+        "author": "spheras",
+        "description": "Mozart Collection Compositions",
+        "level": 1,
+        "instrument": "Flute",
+        "compositionIds": [
+            "00001"
+        ]
+    }    
+]

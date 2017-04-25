@@ -58,10 +58,10 @@
       </ion-item>
       <ion-item text-wrap>
         <ion-label>
-          <strong>{{ 'MENU-TRAINER-QUALITY-TITLE' | translate }}</strong>
-          <h5>{{ 'MENU-TRAINER-QUALITY-DESC' | translate }}</h5>
+          <strong>{{ 'MENU-TRAINER-PLAYBACK-TITLE' | translate }}</strong>
+          <h5>{{ 'MENU-TRAINER-PLAYBACK-DESC' | translate }}</h5>
         </ion-label>
-        <ion-toggle color="royal" [ngModel]="settings.playerSettings.highQualitySound" (ngModelChange)="settingSoundQuality($event)"></ion-toggle>
+        <ion-toggle color="royal" [ngModel]="settings.playerSettings.playBack" (ngModelChange)="settingPlayBack($event)"></ion-toggle>
       </ion-item>
       <ion-item text-wrap>
         <ion-label>
@@ -76,6 +76,13 @@
           <h5>{{ 'MENU-TRAINER-DOUBLEPREPARATION-DESC' | translate }}</h5>
         </ion-label>
         <ion-toggle color="danger" [ngModel]="settings.playerSettings.doublePreparation" (ngModelChange)="settingDoublePreparation($event)"></ion-toggle>
+      </ion-item>
+      <ion-item text-wrap>
+        <ion-label>
+          <strong>{{ 'MENU-TRAINER-METRONOME-TITLE' | translate }}</strong>
+          <h5>{{ 'MENU-TRAINER-METRONOME-DESC' | translate }}</h5>
+        </ion-label>
+        <ion-toggle color="danger" [ngModel]="settings.playerSettings.metronome" (ngModelChange)="settingMetronome($event)"></ion-toggle>
       </ion-item>
     </ion-list>
   </ion-content>

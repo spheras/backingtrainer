@@ -13,17 +13,22 @@ export class PlayerSettings {
     public cursorAnimation: boolean = false;
 
     /**
-     * high quality requires a good performance
+     * inciates if we want to hear the backing track
      */
-    public highQualitySound: boolean = false;
+    public playBack: boolean = true;
 
     /**
      * indicates if the soloist voice should be played during the training or not
      */
-    public playSoloist:boolean=false;
+    public playSoloist: boolean = false;
 
     /**
      * Indicates if we need a double preparation before starting playing the music
      */
-    public doublePreparation:boolean=false;
+    public doublePreparation: boolean = true;
+
+    /**
+     * indicates if we want to play the metronome
+     */
+    public metronome: boolean = false;
 }

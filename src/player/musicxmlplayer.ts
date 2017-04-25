@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Platform, LoadingController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
-import { extend } from '../util/Util';
 import { PlayerService } from './player.service';
 import { MidiPlayer, MidiPlayerListener } from './midiplayer';
 import { Composition } from './composition';
-import { DAO } from '../dao/dao';
 import { Settings } from '../dao/settings';
 import { MusicXML2SVG, FigureBox, ConversionOptions } from './musicxml2svg';
 //vertaal function is the xml2abc library function
@@ -46,25 +44,21 @@ export interface PlayerListener {
  */
 @Injectable()
 export class MusicXMLPlayer implements MidiPlayerListener {
-    /**
-     * Options of the player
-     */
-    private options: Options = new Options();
     /** the midi player */
     private midiPlayer: MidiPlayer = null;
     /** the musicxml to svg converter */
     private converter: MusicXML2SVG = null;
+    /** the composition to play */
+    private composition: Composition = null;
+    /** the listener to notify */
+    private listener: PlayerListener = null;
+    /** the current settings */
+    private settings: Settings = null;
 
-    constructor(private service: PlayerService, private dao: DAO, private platform: Platform,
+    constructor(private service: PlayerService, private platform: Platform,
         private loadingCtrl: LoadingController, private translate: TranslateService) {
         this.midiPlayer = new MidiPlayer(service, platform);
         this.midiPlayer.setListener(this);
-        this.dao.getSettings().then((settings) => {
-            this.updateSettings(settings);
-        });
-        this.dao.observeSettings().subscribe((settings) => {
-            this.updateSettings(settings);
-        });
     }
 
     /**
@@ -81,22 +75,43 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @description  Updating the settings that affect to the player
      * @param {Settings} settings the new settings
      */
-    private updateSettings(settings: Settings) {
+    public updateSettings(settings: Settings) {
+        this.settings = settings;
         //checking if we have changed the play soloist paremeter
-        if (settings.playerSettings.playSoloist) {
-            this.midiPlayer.unmuteTracks();
-        } else {
-            this.midiPlayer.muteTrack(1);
-        }
+        this.muteSoloist(!this.settings.playerSettings.playSoloist);
+        //checking if we have changed the play back paremeter
+        this.muteBack(!this.settings.playerSettings.playBack);
+        //setting metronome
+        this.midiPlayer.setMetronome(this.settings.playerSettings.metronome);
+    }
 
-        //checking if we have changed the sound quality config
-        if (MidiPlayer.isLowQuality() == settings.playerSettings.highQualitySound) {
-            let loader = this.loadingCtrl.create({
-                content: this.translate.instant("TRAINER-WAIT-AUDIO")
-            });
-            this.midiPlayer.setQuality(!settings.playerSettings.highQualitySound).then(() => {
-                loader.dismiss();
-            });
+    /**
+     * @name muteSoloist
+     * @description mute or unmute the soloist track
+     * @param {boolean} mute if we want to mute or unmute
+     */
+    private muteSoloist(mute: boolean) {
+        if (mute) {
+            this.midiPlayer.muteTrack(this.composition.frontInstrument.track);
+        } else {
+            this.midiPlayer.unmuteTrack(this.composition.frontInstrument.track);
+        }
+    }
+
+    /**
+     * @name muteBack
+     * @description mute or unmute the backing track
+     * @param {boolean} mute if we want to mute or unmute
+     */
+    private muteBack(mute: boolean) {
+        if (mute) {
+            for (let i = 0; i < this.composition.backInstruments.length; i++) {
+                this.midiPlayer.muteTrack(this.composition.backInstruments[i].track);
+            }
+        } else {
+            for (let i = 0; i < this.composition.backInstruments.length; i++) {
+                this.midiPlayer.unmuteTrack(this.composition.backInstruments[i].track);
+            }
         }
     }
 
@@ -121,34 +136,32 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     /**
      * @name init
      * @description initialize the player
-     * @param <Options> options the options of the player
      */
-    public init(options) {
-        //we merge the options into this.options
-        this.options = extend(options, this.options);
+    public init(composition: Composition, listener: PlayerListener, settings: Settings) {
+        this.composition = composition;
+        this.listener = listener;
+        this.updateSettings(settings);
 
-
-        let self = this;
         return new Promise<string>(resolve => {
 
             //we load the front sheet and generate the SVG code
-            this.loadAndRenderScore(this.options.composition).then((frontsvg: string) => {
+            this.loadAndRenderScore(this.composition).then((frontsvg: string) => {
                 //we got the svg
-                if (self.options.listener != null) {
-                    self.options.listener.svgLoaded(frontsvg);
+                if (this.listener != null) {
+                    this.listener.svgLoaded(frontsvg);
                 }
 
-                //we load the midi data
-                self.loadMidiData(this.options.composition).then((midi => {
-                    //finally, we load the soundfont(s?)
-                    self.midiPlayer.loadSoundFont().then(() => {
-                        this.findTempo().then((bpm) => {
-                            if (self.options.listener != null) {
-                                self.options.listener.playerInitialized();
+                //loading midi data, soundfonts and tempo
+                this.loadMidiData(this.composition).then(() => {
+                    //we need to load midi before finding tempo
+                    Promise.all([
+                        this.midiPlayer.loadSoundFonts(this.composition),
+                        this.findTempo()]).then(() => {
+                            if (this.listener != null) {
+                                this.listener.playerInitialized();
                             }
                         });
-                    });
-                }));
+                })
             });
         });
 
@@ -171,14 +184,14 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @return <Promise<string>> a promise to be returned a svg
      */
     public loadAndRenderScore(comp: Composition): Promise<string> {
-        if (this.options.scoreData == null) {
+        if (this.composition.scoreXMLData == null) {
 
             let obs = this.service.getScore(comp);
 
             let self = this;
             return new Promise<string>(resolve => {
                 obs.then((data: string) => {
-                    self.options.scoreData = $.parseXML(data);
+                    this.composition.scoreXMLData = data;
                     let svg = self.renderScore();
                     resolve(svg);
                 });
@@ -186,9 +199,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
 
         } else {
             let svg = this.renderScore();
-            return new Promise<string>(resolve => {
-                resolve(svg);
-            });
+            return Promise.resolve(svg);
         }
     }
 
@@ -203,7 +214,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
         if (document.documentElement.clientWidth > 1024) {
             coptions.p = 'f';
         }
-        this.converter = new MusicXML2SVG(this.options.scoreData, coptions);
+        this.converter = new MusicXML2SVG($.parseXML(this.composition.scoreXMLData), coptions);
         let svg = this.converter.renderScore(document.documentElement.clientWidth - 40);
         return svg;
     }
@@ -268,17 +279,22 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     private $wijzer: any = null;
 
     /**
+     * @name endOfSong
+     * @description the player notify that the midi has ended
+     */
+    endOfSong() {
+        if (this.listener != null) {
+            this.listener.endOfSong();
+        }
+    }
+
+
+    /**
      * @override
      */
     midiUpdate(event) {
-        if (event.name == 'End of Track') {
-            //finish?
-            if (this.options.listener != null) {
-                this.options.listener.endOfSong();
-            }
-            return;
-        } else if (event.name == 'Note on') {
-            if (event.track == 1) {
+        if (event.name == 'Note on') {
+            if (event.track == this.composition.frontInstrument.track) {
                 if (event.velocity <= 0) {
                     return;
                 }
@@ -299,7 +315,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                         this.$wijzer.remove();
                     }
                     this.$wijzer = $(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
-                    this.$wijzer.attr({ "fill": "#387ef5", "fill-opacity": (this.dao.settingsCache.playerSettings.cursor ? "0.5" : "0") });
+                    this.$wijzer.attr({ "fill": "#387ef5", "fill-opacity": (this.settings.playerSettings.cursor ? "0.5" : "0") });
                     $("svg > g").eq(this.currentBarline).prepend(this.$wijzer);
                 }
 
@@ -313,7 +329,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                         y = y + svgs[isvg].getBoundingClientRect().height;
                     }
                     let svgHeight = svgs[figure.barline].getBoundingClientRect().height;
-                    if (this.dao.settingsCache.playerSettings.cursorAnimation) {
+                    if (this.settings.playerSettings.cursorAnimation) {
                         $('.scroll-content').animate({ scrollTop: y - svgHeight - 50 }, 200);
                     } else {
                         $('.scroll-content').scrollTop(y - svgHeight - 50);
@@ -366,20 +382,3 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     }
 }
 
-export class Options {
-    /** the composition to be played */
-    public composition: Composition = null;
-    /* indicates if the backtrack should be played or not */
-    public flagPlayBack: boolean = true;
-    /* indicates if the fronttrack should be played or not */
-    public flagPlayFront: boolean = true;
-    /* the front sheet data once loaded */
-    public scoreData: string = null;
-    /* zoom aplied */
-    public zoom: number = 50;
-    /* page we want to see initially */
-    public page: number = 1;
-    /** the player listener */
-    public listener: PlayerListener = null;
-
-}
