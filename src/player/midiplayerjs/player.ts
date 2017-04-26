@@ -130,6 +130,7 @@ export class Player {
 			if (Utils.bytesToLetters(this.buffer.slice(index, index + 4)) == 'MTrk') {
 				let trackLength = Utils.bytesToNumber(this.buffer.slice(index + 4, index + 8));
 				let newtrack: Track = new Track(this.tracks.length, this.buffer.slice(index + 8, index + 8 + trackLength));
+				//patch, we force a tempo if needed
 				newtrack.forcedTempo = this.forcedTempo;
 				this.tracks.push(newtrack);
 
@@ -369,7 +370,9 @@ export class Player {
 	 */
 	emitEvent(event) {
 		// Grab tempo if available.
-		if (event.hasOwnProperty('name') && event.name === 'Set Tempo') this.tempo = event.data;
+		if (event.hasOwnProperty('name') && event.name === 'Set Tempo'){
+ 			this.tempo = event.data;
+		}
 		this.triggerPlayerEvent('midiEvent', event);
 		return this;
 	}

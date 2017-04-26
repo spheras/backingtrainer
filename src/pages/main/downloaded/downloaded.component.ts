@@ -65,7 +65,7 @@ export class DownloadedPage {
         this.player.stop();
         comp.flagPlaying = true;
         this.player.load(comp).then(() => {
-            this.player.play(120);
+            this.player.play();
         });
     }
 

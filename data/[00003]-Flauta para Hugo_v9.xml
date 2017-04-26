@@ -113,10 +113,10 @@
         <direction-type>
           <metronome parentheses="no">
             <beat-unit>quarter</beat-unit>
-            <per-minute>200</per-minute>
+            <per-minute>120</per-minute>
             </metronome>
           </direction-type>
-        <sound tempo="200"/>
+        <sound tempo="120"/>
         </direction>
       <note default-x="103.46" default-y="-30.00">
         <pitch>

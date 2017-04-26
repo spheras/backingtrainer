@@ -50,7 +50,7 @@ export class MidiPlayer {
     /** circular sound pool */
     private soundpool: CircularSoundPool;
     /** last metronome tick */
-    private lastTick = 0;
+    private lastTick = -1;
     /** to activate or deactivate metronome */
     private metronome: boolean = false;
 
@@ -123,6 +123,7 @@ export class MidiPlayer {
                 if (event.name == 'Set Tempo') {
                     self.player.tempo = event.data;
                     player.stop();
+                    self.player.setForcedTempo(event.data);
                     resolve(event.data);
                 }
             });
@@ -167,18 +168,24 @@ export class MidiPlayer {
         });
         this.player.on('playing', function (event) {
             if (self.player.isPlaying()) {
-                let division = self.player.division;
-                let tempo = self.player.tempo; //bpm
-                let tempoBySec = tempo / 60; //bps
-                //let currentTick=Math.round(((new Date()).getTime() - this.startTime) / 1000 * (this.division * (this.tempo / 60))) + this.startTick;
+                let division = self.player.division;//parts (ticks) per quarter (is quarter the beat reference?)
+                let tempo = self.player.tempo; //qpm quarter per minute
+                //let tempoBySec = tempo / 60; //qps quarter per second
+
                 let tick = event.tick;
                 let diff = tick - self.lastTick;
-                if (self.lastTick == 0 || diff >= 479) {
-                    self.lastTick = self.lastTick + 479;
-                    //console.log("tick");
-                    if (self.metronome) {
-                        self.soundpool.play({ noteName: "A0", track: 0, velocity: 100 });
+
+                //console.log("tick:" + tick + ";division:" + division + ";diff:" + diff);
+
+                if (self.lastTick < 0 || diff >= division) {
+                    //console.log(">>>>>>>>>>>tick:" + tick + ";division:" + division);
+                    if (self.lastTick < 0) {
+                        self.lastTick = 0;
+                    } else {
+                        self.lastTick = self.lastTick + division;
                     }
+                    //console.log("diff:" + (diff - division));
+                    self.playMetronome(true);
                 }
             }
         })
@@ -256,19 +263,29 @@ export class MidiPlayer {
      * @name play
      * @description play the music, start the show!
      */
-    public play(bpm: number) {
-        this.playMidiData(bpm, this.midiDataArrayBuffer);
+    public play() {
+        this.playMidiData(this.midiDataArrayBuffer);
     }
 
     /**
      * @name playMidiData
      * @description play the music, start the show!
-     * @param {number} bpm the bpm to start playing
      * @param {ArrayBuffer} data the binary data of the midi to be played
      */
-    public playMidiData(bpm: number, data: ArrayBuffer) {
+    public playMidiData(data: ArrayBuffer) {
         this.player.loadArrayBuffer(data);
         this.player.play();
+    }
+
+    /**
+     * @name playMetronome
+     * @description play the metronome
+     * @param {boolean} high indicates if we want to hear a high tick metronome pulse or low 
+     */
+    public playMetronome(high: boolean) {
+        if (this.metronome) {
+            this.soundpool.play({ noteName: (high ? "A0" : "Bb0"), track: 0, velocity: 100 });
+        }
     }
 
     /**
@@ -276,7 +293,7 @@ export class MidiPlayer {
      * @description stop the current playing
      */
     public stop() {
-        this.lastTick = 0;
+        this.lastTick = -1;
         this.player.stop();
         this.soundpool.stop();
     }
@@ -442,7 +459,7 @@ class CircularSoundPool {
         let max = (strInstrument == "piano" ? this.pianoThreshold : 1);
         let index = (strInstrument == "piano" ? this.pianoIndex : 0);
 
-        if (this.trackList[track][index]) {
+        if (this.trackList[track][index] && strInstrument != "metronome") {
             this.trackList[track][index].stop();
         }
 

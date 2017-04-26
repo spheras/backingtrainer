@@ -237,10 +237,18 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     /**
      * @name play
      * @description play the music, start the show!
-     * @param <number> bpm TODO the bpm to play
      */
-    public play(bpm: number) {
-        this.midiPlayer.play(bpm);
+    public play() {
+        this.midiPlayer.play();
+    }
+
+    /**
+     * @name playMetronome
+     * @description play the metronome
+     * @param {boolean} high indicates if we want to hear a high tick metronome pulse or low 
+     */
+    public playMetronome(high: boolean) {
+        this.midiPlayer.playMetronome(high);
     }
 
     /**

@@ -25,7 +25,6 @@ export class TrainerPage implements PlayerListener {
     svgContent: SafeHtml;
     tempo: number = 0;
 
-    prepare: number = -1;
 
     private STATE_STOP = 0;
     private STATE_PLAYING = 1;
@@ -200,8 +199,8 @@ export class TrainerPage implements PlayerListener {
             this.resume();
         } else if (this.state == this.STATE_STOP) {
             this.showPrepare().then(() => {
-                this.state = 1;
-                this.player.play(120);
+                this.state = this.STATE_PLAYING;
+                this.player.play();
             });
         }
     }
@@ -241,6 +240,8 @@ export class TrainerPage implements PlayerListener {
         });
     }
 
+    private prepare = -1;
+
     /**
      * @name showPrepare
      * @description show the prepare screen, before starting the music
@@ -253,27 +254,28 @@ export class TrainerPage implements PlayerListener {
             let time: number = 60000 / bpm;
 
             this.prepare = 0;
-            let self = this;
             this.dao.getSettings().then((settings) => {
                 let double: boolean = settings.playerSettings.doublePreparation;
                 let cycle = 0;
 
                 let show = function () {
-                    self.prepare++;
+                    this.prepare++;
 
-                    if (self.prepare > numerator && double && cycle < 1) {
+                    if (this.prepare > numerator && double && cycle < 1) {
                         cycle++;
-                        self.prepare = 1;
-                        setTimeout(show, time);
-                    } else if (self.prepare <= numerator) {
-                        setTimeout(show, time);
+                        this.prepare = 1;
+                        this.player.playMetronome(true);
+                        setTimeout(show.bind(this), time);
+                    } else if (this.prepare <= numerator) {
+                        this.player.playMetronome(true);
+                        setTimeout(show.bind(this), time);
                     } else {
-                        self.prepare = -1;
+                        this.prepare = -1;
                         resolve();
                     }
                 };
 
-                setTimeout(show, 1000);
+                setTimeout(show.bind(this), 1000);
 
             });
         });
