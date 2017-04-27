@@ -92,7 +92,7 @@
 
                     <ion-list>
                         <ng-template ngFor let-composition [ngForOf]="collection.compositions" let-i="index">
-                            <ion-item class="item subitem">
+                            <ion-item class="item subitem" (click)="$event.stopPropagation();$event.preventDefault();">
                                 <ion-row nowrap>
                                     <ion-col no-padding class="thumbnail-col">
                                         <ion-thumbnail class="thumbnail" item-left>

@@ -37,7 +37,7 @@ export class MidiPlayer {
     private player: InternalMidiPlayer;
 
     /** we have static fields to avoid creating again these object, which have a huge cost */
-    public static audioContext: AudioContext = new AudioContext();
+    public static audioContext: AudioContext = new ((<any>window).AudioContext || (<any>window).webkitAudioContext)();//new AudioContext();
     public static soundfonts: any = {};
 
 
@@ -387,14 +387,20 @@ export class MidiPlayer {
      * @return {string} the url to get the js soundfont
      */
     private getInsrumentUrl(instrument: string): string {
+        let android: boolean = this.platform.is("android");
+        let codec: string = "mp3";
+        if (android) {
+            //unfortunately android mp3 decodification is veeryyyyy slow! (do the same in IOS?)
+            codec = "wav";
+        }
         //remember to avoid using mp3 files as the decode in android is very slow
         if (instrument.toLowerCase().trim().indexOf("flute") >= 0) {
-            return 'assets/soundfonts/flute-wav.js'
+            return 'assets/soundfonts/flute-' + codec + '.js'
         }
         else if (instrument.toLowerCase().trim().indexOf("metronome") >= 0) {
             return 'assets/soundfonts/metronome-wav.js'
         } else {
-            return 'assets/soundfonts/acoustic_grand_piano-wav.js';
+            return 'assets/soundfonts/acoustic_grand_piano-' + codec + '.js';
         }
     }
 }

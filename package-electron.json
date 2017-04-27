@@ -1,0 +1,41 @@
+{
+  "name": "backingtrainer",
+  "version": "1.0.0",
+  "author": "spheras",
+  "homepage": "https://github.com/spheras",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spheras/backingtrainer.git"
+  },
+  "devDependencies": {
+    "electron": "1.6.5"
+  },
+  "license": "GPL-3.0",
+  "description": "Train with your favourite soloist instrument thru backing tracks",
+  "main": "electron.js",
+  "build": {
+    "appId": "org.spheras.backingtrainer",
+    "productName": "BackingTrainer",
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.music",
+      "icon": "../../../resources/electron/icon/icon",
+      "target": [
+        "zip"
+      ]
+    },
+    "linux": {
+      "icon": "../../../resources/electron/icon",
+      "target": [
+        "AppImage"
+      ]
+    },
+    "win": {
+      "icon": "../../../resources/electron/icon/icon",
+      "target": [
+        "portable"
+      ]
+    }
+  }
+}

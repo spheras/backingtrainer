@@ -1,6 +1,6 @@
 {
   "name": "backingtrainer",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "author": "spheras",
   "homepage": "https://github.com/spheras",
   "private": false,
@@ -10,9 +10,10 @@
   },
   "license": "GPL-3.0",
   "scripts": {
-    "electron": "ionic-app-scripts build  && electron . --enable-logging",
-    "electron-dist-linux-x64": "ionic build browser --prod --release && electron-packager . backingtrainer-app --out=platforms --app-version=1.0.0 --version-string.CompanyName=spheras --version-string.ProductName=BackingTrainer --version-string.ProductVersion=1.0.0 --platform=linux --arch=x64 --icon=src/assets/icon/favicon.ico --prune --asar --overwrite --ignore=config --ignore=platforms --ignore=node_modules --ignore=coverage --ignore=resources --ignore=tests --ignore=plugins --ignore=src --ignore=hooks",
-    "electron-dist-all-x64": "ionic build browser --prod --release && electron-packager . backingtrainer-app --out=platforms --app-version=1.0.0 --version-string.CompanyName=spheras --version-string.ProductName=BackingTrainer --version-string.ProductVersion=1.0.0 --category=Music --win --linux --target=deb --target=rpm --arch=x64 --icon=src/assets/icon/favicon.ico --prune --asar --overwrite --ignore=config --ignore=platforms --ignore=node_modules --ignore=coverage --ignore=resources --ignore=tests --ignore=plugins --ignore=src --ignore=hooks",
+    "electron-dist-win": "sh ./add-platform-electron.sh && cd ./platforms/electron/src && build -w --x64",
+    "electron-dist-linux": "sh ./add-platform-electron.sh && cd ./platforms/electron/src && build -l --x64",
+    "electron-dist-mac": "sh ./add-platform-electron.sh && cd ./platforms/electron/src && build -m --x64",
+    "electron-dist-all": "sh ./add-platform-electron.sh && cd ./platforms/electron/src && build -lwm --x64",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "ionic:build": "ionic-app-scripts build",
@@ -35,7 +36,7 @@
     "ionicons": "3.0.0",
     "rxjs": "5.1.1",
     "sw-toolbox": "3.4.0",
-    "zone.js": "^0.8.4",
+    "zone.js": "0.8.8",
     "@ionic-native/insomnia": "3.4.4",
     "ng2-knob": "^1.0.1",
     "ng2-translate": "5.0.0",
@@ -43,9 +44,10 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.3.0",
-    "typescript": "~2.2.1",
-    "electron": "^1.6.5",
-    "electron-packager": "^8.6.0"
+    "typescript": "2.2.2",
+    "electron": "1.6.5",
+    "electron-packager": "8.6.0",
+    "electron-builder": "17.1.1"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
@@ -68,9 +70,9 @@
       "locator": "android"
     },
     {
-      "platform": "backingtrainer-app-linux-x64",
+      "platform": "electron",
       "version": "",
-      "locator": "backingtrainer-app-linux-x64"
+      "locator": "electron"
     },
     {
       "platform": "browser",
@@ -78,6 +80,5 @@
       "locator": "browser"
     }
   ],
-  "description": "backingtrainer: An Ionic project",
-  "main": "electron.js"
+  "description": "Train with your favourite soloist instrument thru backing tracks"
 }

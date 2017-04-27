@@ -65,7 +65,7 @@ export class PitchDetect {
     */
 
     constructor() {
-        this.audioContext = new AudioContext();
+        this.audioContext = new ((<any>window).AudioContext || (<any>window).webkitAudioContext)();//new AudioContext();
         PitchDetect.MAX_SIZE = Math.max(4, Math.floor(this.audioContext.sampleRate / 5000));	// corresponds to a 5kHz signal
         this.observable = new Observable(observer => this.observer = observer);
     }
