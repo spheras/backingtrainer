@@ -116,4 +116,5 @@ export class Composition {
 export class Instrument {
     public name: string;
     public track: number;
+    public help: number = -1;
 }

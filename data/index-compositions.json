@@ -184,13 +184,10 @@
         "scoreURL": "Nocture II-Opus9-EFlat Major.xml",
         "frontInstrument": {
             "name": "Flute",
-            "track": 1
+            "track": 1,
+            "help": 2
         },
         "backInstruments": [
-            {
-                "name": "Flute",
-                "track": 2
-            },
             {
                 "name": "Piano",
                 "track": 3
@@ -201,5 +198,5 @@
             }
         ],
         "version": 1
-    }    
+    }
 ]

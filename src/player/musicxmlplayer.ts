@@ -93,8 +93,14 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     private muteSoloist(mute: boolean) {
         if (mute) {
             this.midiPlayer.muteTrack(this.composition.frontInstrument.track);
+            if (this.composition.frontInstrument.help >= 0) {
+                this.midiPlayer.muteTrack(this.composition.frontInstrument.help);
+            }
         } else {
             this.midiPlayer.unmuteTrack(this.composition.frontInstrument.track);
+            if (this.composition.frontInstrument.help >= 0) {
+                this.midiPlayer.unmuteTrack(this.composition.frontInstrument.help);
+            }
         }
     }
 
