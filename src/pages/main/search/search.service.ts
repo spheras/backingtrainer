@@ -7,7 +7,7 @@ import { encode } from '../../../util/Util';
 @Injectable()
 export class SearchService {
 
-    private dataUrl1 = 'https://raw.githubusercontent.com/spheras/backingtrainer/master/data';
+    private dataUrl1 = 'https://raw.githubusercontent.com/spheras/backingtrainer/compositions';
     //private dataUrl1 = 'assets/data';
 
     constructor(private http: Http) { }
