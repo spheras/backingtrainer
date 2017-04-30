@@ -60,8 +60,7 @@
       "locator": "https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
       "id": "cordova-plugin-insomnia"
     },
-    "cordova-opentok-android-permissions",
-    "cordova-plugin-crosswalk-webview"
+    "cordova-opentok-android-permissions"
   ],
   "cordovaPlatforms": [
     {

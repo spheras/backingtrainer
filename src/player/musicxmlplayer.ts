@@ -263,7 +263,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @name stop
      * @description stop the music
      */
-    public stop() {
+    public stop(dontScroll?: boolean) {
         this.currentBarline = 0;
         this.currentNote = 0;
         if (this.$wijzer != null) {
@@ -271,7 +271,9 @@ export class MusicXMLPlayer implements MidiPlayerListener {
             this.$wijzer = null;
         }
         this.midiPlayer.stop();
-        $('.scroll-content').animate({ scrollTop: 0 }, 1000);
+        if (!dontScroll) {
+            $('.scroll-content').animate({ scrollTop: 0 }, 1000);
+        }
     }
 
     /**
@@ -325,23 +327,13 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                     this.$wijzer = $(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
                     this.$wijzer.attr({ "fill": "#387ef5", "fill-opacity": (this.settings.playerSettings.cursor ? "0.5" : "0") });
                     $("svg > g").eq(this.currentBarline).prepend(this.$wijzer);
+                    this.scrollToCursor(figure);
                 }
 
                 //lets prepare next cursor
                 let nextFigure: FigureBox = this.getNextFigure(this.currentNote, 1);
                 if (nextFigure != null && this.currentBarline != nextFigure.barline) {
-                    var y = 0;
-                    var svgs = $("svg > g");
-                    //FIXME, calculate the absolute position not working, why!?
-                    for (var isvg = 0; isvg <= nextFigure.barline; isvg++) {
-                        y = y + svgs[isvg].getBoundingClientRect().height;
-                    }
-                    let svgHeight = svgs[figure.barline].getBoundingClientRect().height;
-                    if (this.settings.playerSettings.cursorAnimation) {
-                        $('.scroll-content').animate({ scrollTop: y - svgHeight - 50 }, 200);
-                    } else {
-                        $('.scroll-content').scrollTop(y - svgHeight - 50);
-                    }
+                    this.scrollToCursor(figure, nextFigure);
                 }
 
                 //we position correctly the focus rectangle
@@ -357,6 +349,32 @@ export class MusicXMLPlayer implements MidiPlayerListener {
             }
         }
 
+    }
+
+    /**
+     * @name scrollToCursor
+     * @description scroll the score to the cursor position (or the future cursor defined by the nextFigure)
+     * @param {FigureBox} currentFigure the current figure which have the cursor
+     * @param {FigureBox} nextFigure the next figure which have the cursor
+     */
+    private scrollToCursor(currentFigure: FigureBox, nextFigure?: FigureBox) {
+        var y = 0;
+        var svgs = $("svg > g");
+        let toFigure: FigureBox = currentFigure;
+        if (nextFigure) {
+            toFigure = nextFigure;
+        }
+
+        //FIXME, calculate the absolute position not working, why!?
+        for (var isvg = 0; isvg < toFigure.barline; isvg++) {
+            y = y + svgs[isvg].getBoundingClientRect().height;
+        }
+        let svgHeight = svgs[currentFigure.barline].getBoundingClientRect().height;
+        if (this.settings.playerSettings.cursorAnimation) {
+            $('.scroll-content').animate({ scrollTop: y - (nextFigure ? svgHeight : 0) - 50 }, 200);
+        } else {
+            $('.scroll-content').scrollTop(y - (nextFigure ? svgHeight : 0) - 50);
+        }
     }
 
     /**

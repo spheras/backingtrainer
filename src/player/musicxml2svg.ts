@@ -57,8 +57,8 @@ export class MusicXML2SVG {
     /**
      * numerator and denominator of the meter signature
      */
-    public numerator:number;
-    public denominator:number;
+    public numerator: number;
+    public denominator: number;
 
     /**
      * the abc2svg library with user config
@@ -212,7 +212,7 @@ export class MusicXML2SVG {
      * @see http://moinejf.free.fr/js/interface-1.xhtml
      */
     private annoStart(type: string, startOffset: number, stopOffset: number, x: number, y: number, w: number, h: number) {
-        //console.log(type)
+        console.log(type)
         if (type == 'note' || type == 'rest' || type == 'grace') {
 
             let bbox = new FigureBox();
@@ -253,11 +253,11 @@ export class MusicXML2SVG {
         let indexFine = -1;
         let indexToCoda = -1;
         let flagLastLigato = false;
-        
+
         //getting the meter signature (numerator/denominator)
-        let meterSignature:string[]=info.M.split("/");
-        this.numerator=parseInt(meterSignature[0]);
-        this.denominator=parseInt(meterSignature[1]);
+        let meterSignature: string[] = info.M.split("/");
+        this.numerator = parseInt(meterSignature[0]);
+        this.denominator = parseInt(meterSignature[1]);
 
         for (var ts = tsFirst; ts; ts = ts.ts_next) {
             switch (ts.type) {
@@ -382,6 +382,10 @@ export class MusicXML2SVG {
                     } else if (ts.bar_type === '::' || ts.bar_type === ':|') {
                         //now we repeat from the start to the end
                         let indexStartRep = startReps[startReps.length - 1];
+                        if (!indexStartRep) {
+                            //if we don't have yet a start definition, then we start from the begining
+                            indexStartRep = 0;
+                        }
                         let toIndex = index;
                         if (indexFirstEndings.length == indexSecondEndings.length && ts.text && ts.text.trim() === '2') {
                             toIndex = indexFirstEndings[indexFirstEndings.length - 1];
@@ -419,7 +423,7 @@ export class ConversionOptions {
     public m: number = 2;  //no midi, minimal midi, all midi output (0,1,2)
     public x: number = 0;  //no line breaks (1)
     public t: number = 1;  //clef dependent step value (1)
-    public p: string = '1.0,'+ Math.round((document.documentElement.clientWidth * 20)/640) +',0,0';   // page format: scale (1.0), width, left and right margin in cm
+    public p: string = '1.0,' + Math.round((document.documentElement.clientWidth * 20) / 640) + ',0,0';   // page format: scale (1.0), width, left and right margin in cm
 }
 
 /**

@@ -58,7 +58,7 @@ export class TrainerPage implements PlayerListener {
 
     ionViewDidLeave() {
         //stopping the player
-        this.player.stop();
+        this.player.stop(true);
         //allowing to sleep again the device
         this.insomnia.allowSleepAgain();
         //disabling my menus
@@ -198,8 +198,8 @@ export class TrainerPage implements PlayerListener {
         if (this.state == this.STATE_PAUSED) {
             this.resume();
         } else if (this.state == this.STATE_STOP) {
+            this.state = this.STATE_PLAYING;
             this.showPrepare().then(() => {
-                this.state = this.STATE_PLAYING;
                 this.player.play();
             });
         }
@@ -234,8 +234,8 @@ export class TrainerPage implements PlayerListener {
      * @description resume the music
      */
     resume() {
+        this.state = this.STATE_PLAYING;
         this.showPrepare().then(() => {
-            this.state = this.STATE_PLAYING;
             this.player.resume();
         });
     }
@@ -250,6 +250,9 @@ export class TrainerPage implements PlayerListener {
     private showPrepare(): Promise<void> {
         return new Promise<void>((resolve) => {
             let numerator = this.player.getMeterSignatureNumerator();
+            while (numerator > 4) {
+                numerator = numerator / 2;
+            }
             let bpm = this.player.getTempo(); //bpm
             let time: number = 60000 / bpm;
 
@@ -260,6 +263,11 @@ export class TrainerPage implements PlayerListener {
 
                 let show = function () {
                     this.prepare++;
+
+                    if (this.state != this.STATE_PLAYING) {
+                        this.prepare=-1;
+                        return;
+                    }
 
                     if (this.prepare > numerator && double && cycle < 1) {
                         cycle++;
