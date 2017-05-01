@@ -229,6 +229,13 @@ export class MidiPlayer {
         let frontName = composition.frontInstrument.name.toLowerCase().trim();
         safe(result, composition.frontInstrument.track);
         result[composition.frontInstrument.track] = frontName;
+
+        //front could have a help track
+        if (composition.frontInstrument.help >= 0) {
+            safe(result, composition.frontInstrument.help);
+            result[composition.frontInstrument.help] = frontName;
+        }
+
         for (let i = 0; i < composition.backInstruments.length; i++) {
             let backName = composition.backInstruments[i].name.toLowerCase().trim();
             let track = composition.backInstruments[i].track;
