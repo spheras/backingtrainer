@@ -4,6 +4,7 @@ import { Player as InternalMidiPlayer } from './midiplayerjs/player';//midi-play
 import { Platform } from 'ionic-angular';
 import { Composition } from './composition';
 import * as Soundfont from 'soundfont-player';
+//import { SoundFontMidiSynth } from './sf2midisynth/soundfont.midi.synth';
 
 /**
  * @interface
@@ -23,6 +24,19 @@ export interface MidiPlayerListener {
      * @description the song was finished
      */
     endOfSong();
+}
+
+export type TrackInfo = {
+    pointer: number,
+    lastStatus: number,
+    delta: number,
+    runningDelta: number,
+    lastTick: number
+}
+
+export type MidiInfo = {
+    tempo: number,
+    notes: { tick: number, tracks: TrackInfo[] }[]
 }
 
 /**
@@ -53,7 +67,8 @@ export class MidiPlayer {
     private lastTick = -1;
     /** to activate or deactivate metronome */
     private metronome: boolean = false;
-
+    /** sf2 midi synth */
+    //private sf2MidiSynth: SoundFontMidiSynth;
 
     constructor(private service: PlayerService, private platform: Platform) {
         this.soundpool = new CircularSoundPool();
@@ -66,6 +81,14 @@ export class MidiPlayer {
      */
     public setListener(listener: MidiPlayerListener) {
         this.listener = listener;
+    }
+
+    /**
+     * @name prepare
+     * @description prepare the midi player to start playing
+     */
+    public prepare() {
+        this.player.prepare();
     }
 
     /**
@@ -110,29 +133,103 @@ export class MidiPlayer {
      */
     public loadMidiData(data: ArrayBuffer) {
         this.midiDataArrayBuffer = data;
+        this.player.loadArrayBuffer(data);
+    }
+
+    public play() {
+        this.resume();
     }
 
     /**
-     * @name findTempo
-     * @description internal function to load the midi and find the tempo info
+     * @name createMap
+     * @description internal function to load the midi and create a map of ticks, find the tempo info, ...
+     * @param {number} itrack the index of the track in which the map will be based on
+     * @return {Promise<MidiInfo>} the promise to return the midi info
      */
-    public findTempo(): Promise<number> {
-        return new Promise<number>((resolve) => {
-            let self = this;
-            let player = new InternalMidiPlayer(function (event) {
-                if (event.name == 'Set Tempo') {
-                    self.player.tempo = event.data;
-                    player.stop();
-                    self.player.setForcedTempo(event.data);
-                    resolve(event.data);
+    public createMap(itrack: number): Promise<MidiInfo> {
+        return new Promise<MidiInfo>((resolve) => {
+            //preparing some variables
+            let result: MidiInfo = { tempo: 0, notes: [] };
+            let foundTempo: boolean = false;
+            let oldEventHandlers = this.player.eventListeners;
+            this.player.eventListeners = {};
+            let player = this.player;
+            player.resetTracks();
+            let currentTick: number = 0;
+            //we need to store delta time to wait ticks
+            let deltaTracks: number[] = [];
+            for (let i = 0; i < player.tracks.length; i++) {
+                deltaTracks.push(0);
+            }
+            let tickDelta = 0;
+
+            //lets start reading
+            while (!player.endOfFile()) {
+
+                let tracks: TrackInfo[] = [];
+                //we get info from each track
+                for (let i = 0; i < player.tracks.length; i++) {
+                    let track = player.tracks[i];
+                    let trackInfo: TrackInfo = {
+                        pointer: track.pointer,
+                        lastStatus: track.lastStatus,
+                        delta: track.delta,
+                        runningDelta: track.runningDelta,
+                        lastTick: track.lastTick,
+                    };
+                    let event = track.handleEvent(currentTick, false);
+                    tracks.push(trackInfo)
+
+                    //lets capture the tempo
+                    if (event != null && event.name == 'Set Tempo' && !foundTempo) {
+                        foundTempo = true;
+                        this.player.tempo = event.data;
+                        this.player.setForcedTempo(event.data);
+                    }
+
+                    //if we are dealing with the front track
+                    if (i == (itrack - 1)) {
+                        if (event != null) {
+                            if (event.name == 'Note on' && event.velocity > 0) {
+                                //a new note, lets save the track infos
+                                result.notes.push({ tick: currentTick, tracks });
+                            }
+                        }
+                    }
+
+                    if (event != null) {
+                        deltaTracks[i] = track.getDelta();
+                    } else {
+                        deltaTracks[i] = deltaTracks[i] - tickDelta;
+                    }
                 }
-            });
-            player.stop();
-            player.loadArrayBuffer(this.midiDataArrayBuffer);
-            player.play();
+
+                //lets calculate the next tick delta
+                tickDelta = Math.min.apply(null, deltaTracks);
+                if (tickDelta <= 0) {
+                    tickDelta = 5;
+                }
+                currentTick = currentTick + tickDelta;
+            }
+
+            //restoring the player
+            player.resetTracks();
+            this.player.eventListeners=oldEventHandlers;
+
+            resolve(result);
+
         });
     }
 
+    /**
+     * @name seek
+     * @description seek the midi player
+     * @param {number} tick the tick number to seek
+	 * @param {trackInfos[]} list of track info to restore the status
+     */
+    public seek(tick: number, trackInfos: TrackInfo[]) {
+        this.player.seek(tick, trackInfos);
+    }
 
     /**
      * @name setTempo
@@ -148,6 +245,7 @@ export class MidiPlayer {
         } else {
             this.bpm = bpm;
             this.player.tempo = bpm;
+            this.player.setForcedTempo(bpm);
         }
     }
 
@@ -156,39 +254,36 @@ export class MidiPlayer {
      * @description initialize the midi player
      */
     private initMidiPlayer() {
-        let self = this;
-        this.player = new InternalMidiPlayer(function (event) {
-            self.midiUpdate(event);
-        });
+        this.player = new InternalMidiPlayer(this.midiUpdate.bind(this));
         this.player.on('endOfFile', function () {
-            self.stop();
-            if (self.listener && self.listener != null) {
-                self.listener.endOfSong();
+            this.stop();
+            if (this.listener && this.listener != null) {
+                this.listener.endOfSong();
             }
-        });
+        }.bind(this));
         this.player.on('playing', function (event) {
-            if (self.player.isPlaying()) {
-                let division = self.player.division;//parts (ticks) per quarter (is quarter the beat reference?)
-                let tempo = self.player.tempo; //qpm quarter per minute
+            if (this.player.isPlaying()) {
+                let division = this.player.division;//parts (ticks) per quarter (is quarter the beat reference?)
+                //let tempo = this.player.tempo; //qpm quarter per minute
                 //let tempoBySec = tempo / 60; //qps quarter per second
 
                 let tick = event.tick;
-                let diff = tick - self.lastTick;
+                let diff = tick - this.lastTick;
 
                 //console.log("tick:" + tick + ";division:" + division + ";diff:" + diff);
 
-                if (self.lastTick < 0 || diff >= division) {
+                if (this.lastTick < 0 || diff >= division) {
                     //console.log(">>>>>>>>>>>tick:" + tick + ";division:" + division);
-                    if (self.lastTick < 0) {
-                        self.lastTick = 0;
+                    if (this.lastTick < 0) {
+                        this.lastTick = 0;
                     } else {
-                        self.lastTick = self.lastTick + division;
+                        this.lastTick = this.lastTick + division;
                     }
                     //console.log("diff:" + (diff - division));
-                    self.playMetronome(true);
+                    this.playMetronome(true);
                 }
             }
-        })
+        }.bind(this))
     }
 
     /**
@@ -259,20 +354,25 @@ export class MidiPlayer {
             for (let i = 0; i < instrumentsByTrack.length; i++) {
                 promises.push(this.loadSoundFont(instrumentsByTrack[i]));
             }
+
             Promise.all(promises).then(() => {
                 this.soundpool.init(instrumentsByTrack);
                 resolve();
+
+                /*
+                TODO: use soundfonts for orchestras
+                this.service.getSoundfont().then((response: ArrayBuffer) => {
+                    let input: Uint8Array = new Uint8Array(response);
+                    this.sf2MidiSynth = new SoundFontMidiSynth();
+                    this.sf2MidiSynth.loadSoundFont(input);
+                    resolve();
+                });
+                */
             })
         });
     }
 
-    /**
-     * @name play
-     * @description play the music, start the show!
-     */
-    public play() {
-        this.playMidiData(this.midiDataArrayBuffer);
-    }
+
 
     /**
      * @name playMidiData
@@ -359,7 +459,7 @@ export class MidiPlayer {
      * @param {number} track the track to chec
      * @return {boolean} if the track is muted or not
      */
-    private isMuted(track: number): boolean {
+    public isMuted(track: number): boolean {
         for (let i = 0; i < this.mutedTracks.length; i++) {
             if (this.mutedTracks[i] == track) {
                 return true;
@@ -375,6 +475,18 @@ export class MidiPlayer {
      * @param event the event produced
      */
     midiUpdate(event) {
+        /*
+        TODO: use soundfonts for orchestras
+        console.log("EVENT:" + event.name + ";velocity:" + event.velocity);
+        if (event.name == 'Note on') {
+            console.log("note");
+            if (event.velocity == 0) {
+                console.log("cero");
+            }
+        }
+        this.sf2MidiSynth.processMidiMessage(event.message);
+        */
+
         if (event.name == 'Note on') {
             if (!this.isMuted(event.track)) {
                 this.soundpool.play(event);
@@ -384,7 +496,6 @@ export class MidiPlayer {
         if (this.listener && this.listener != null) {
             this.listener.midiUpdate(event);
         }
-
     }
 
     /**
@@ -395,7 +506,7 @@ export class MidiPlayer {
      */
     private getInsrumentUrl(instrument: string): string {
         let android: boolean = this.platform.is("android");
-        let codec: string = "mp3";
+        let codec: string = "wav"; //TODO, always wav? or try mp3 and then wav? increasing size of the app?
         if (android) {
             //unfortunately android mp3 decodification is veeryyyyy slow! (do the same in IOS?)
             codec = "wav";

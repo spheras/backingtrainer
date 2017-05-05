@@ -119,6 +119,13 @@ export class DAO {
     public addRecent(comp: Composition): Promise<void> {
         return new Promise<void>((resolve) => {
             this.getRecents().then((comps) => {
+                for (let i = 0; i < comps.length; i++) {
+                    if (comps[i].id == comp.id) {
+                        comps.splice(i, 1);
+                        i--;
+                    }
+                }
+
                 if (comps.length > 10) {
                     comps.splice(comps.length - 1, 1);
                 }

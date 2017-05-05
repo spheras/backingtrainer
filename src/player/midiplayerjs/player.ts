@@ -13,7 +13,7 @@ export class Player {
 	public division;
 	private format;
 	private setIntervalId = null;
-	private tracks = [];
+	public tracks = [];
 	public tempo: number = 120;
 	private forcedTempo: number = -1;
 	private startTick: number = 0;
@@ -22,7 +22,7 @@ export class Player {
 	private inLoop = false;
 	private totalTicks = 0;
 	private events = [];
-	private eventListeners = {};
+	public eventListeners = {};
 
 	constructor(eventHandler, buffer?) {
 		this.sampleRate = 5; // milliseconds
@@ -50,7 +50,7 @@ export class Player {
 	 * @param {array} arrayBuffer - Array buffer of file to be loaded.
 	 * @return {Player}
 	 */
-	loadArrayBuffer(arrayBuffer) {
+	public loadArrayBuffer(arrayBuffer) {
 		this.buffer = new Uint8Array(arrayBuffer);
 		return this.fileLoaded();
 	}
@@ -200,7 +200,11 @@ export class Player {
 
 				} else {
 					let event = track.handleEvent(this.tick, dryRun);
-					if (event && !dryRun) this.emitEvent(event);
+					if (event && !dryRun) {
+						this.emitEvent(event);
+					} else if (event && dryRun && dryRun instanceof Function) {
+						dryRun(event);
+					}
 				}
 
 			}, this);
@@ -245,6 +249,39 @@ export class Player {
 		this.startTick = this.tick;
 		this.startTime = 0;
 		return this;
+	}
+
+	/**
+	 * @name seek
+	 * @description seek the player
+	 * @param {number} tick the tick to seek
+	 * @param {trackInfos[]} list of track info to restore the status
+	 */
+	seek(tick: number, trackInfos: any[]) {
+		this.pause();
+		this.lastTick = tick;
+		this.startTick = tick;
+		for (let i = 0; i < trackInfos.length; i++) {
+			this.tracks[i].pointer = trackInfos[i].pointer;
+			this.tracks[i].lastStatus = trackInfos[i].lastStatus;
+			this.tracks[i].delta = trackInfos[i].delta;
+			this.tracks[i].runningDelta = trackInfos[i].runningDelta;
+			this.tracks[i].lastTick = trackInfos[i].lastTick;
+		}
+	}
+
+	/**
+	 * @name prepare
+	 * @description prepare the midi to start playing the first note
+	 */
+	prepare() {
+		if (this.startTick == 0) {
+			this.playLoop(function (event) {
+				if (event.name == "Note on") {
+					this.pause();
+				}
+			}.bind(this));
+		}
 	}
 
 	/**
@@ -370,8 +407,8 @@ export class Player {
 	 */
 	emitEvent(event) {
 		// Grab tempo if available.
-		if (event.hasOwnProperty('name') && event.name === 'Set Tempo'){
- 			this.tempo = event.data;
+		if (event.hasOwnProperty('name') && event.name === 'Set Tempo') {
+			this.tempo = event.data;
 		}
 		this.triggerPlayerEvent('midiEvent', event);
 		return this;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Platform, LoadingController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
 import { PlayerService } from './player.service';
-import { MidiPlayer, MidiPlayerListener } from './midiplayer';
+import { MidiPlayer, MidiPlayerListener, MidiInfo } from './midiplayer';
 import { Composition } from './composition';
 import { Settings } from '../dao/settings';
 import { MusicXML2SVG, FigureBox, ConversionOptions } from './musicxml2svg';
@@ -54,6 +54,8 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     private listener: PlayerListener = null;
     /** the current settings */
     private settings: Settings = null;
+    /** the current midi info */
+    private midiInfo: MidiInfo = null;
 
     constructor(private service: PlayerService, private platform: Platform,
         private loadingCtrl: LoadingController, private translate: TranslateService) {
@@ -83,6 +85,14 @@ export class MusicXMLPlayer implements MidiPlayerListener {
         this.muteBack(!this.settings.playerSettings.playBack);
         //setting metronome
         this.midiPlayer.setMetronome(this.settings.playerSettings.metronome);
+    }
+
+    /**
+     * @name prepare
+     * @description prepare the midi player to start playing
+     */
+    public prepare() {
+        this.midiPlayer.prepare();
     }
 
     /**
@@ -159,10 +169,10 @@ export class MusicXMLPlayer implements MidiPlayerListener {
 
                 //loading midi data, soundfonts and tempo
                 this.loadMidiData(this.composition).then(() => {
-                    //we need to load midi before finding tempo
+                    //we need to load midi before creating a map
                     Promise.all([
                         this.midiPlayer.loadSoundFonts(this.composition),
-                        this.findTempo()]).then(() => {
+                        this.createMap()]).then(() => {
                             if (this.listener != null) {
                                 this.listener.playerInitialized();
                             }
@@ -174,14 +184,125 @@ export class MusicXMLPlayer implements MidiPlayerListener {
 
     }
 
+
     /**
-     * @name findTempo
-     * @description internal function to load the midi and find the tempo info
+     * @name crateMap
+     * @description internal function to load the midi and create a map of the music
+     * @return {Promise<void>} the promise to create a map
      */
-    private findTempo(): Promise<number> {
-        return this.midiPlayer.findTempo();
+    private createMap(): Promise<void> {
+        return new Promise<void>((resolve) => {
+            this.midiPlayer.createMap(this.composition.frontInstrument.track).then((midiInfo: MidiInfo) => {
+                this.midiInfo = midiInfo;
+                resolve();
+            });
+        });
     }
 
+    /**
+     * @name svgPoint
+     * @description translate page to SVG coordinates
+     * @param {any} svgGraphicElement the g element inside the SVG to transform the coordinates
+     * @param {number} x the x position relative to the svg
+     * @param {number} y the y position relative to the svg
+     */
+    private svgPoint(svgGraphicElement: any, x: number, y: number) {
+        /*
+        if (!svgGraphicElement.parent()[0].createSVGPoint) {
+            console.log("why");
+        }
+        */
+        var pt = svgGraphicElement.parent()[0].createSVGPoint();
+        pt.x = x;
+        pt.y = y;
+        return pt.matrixTransform(svgGraphicElement[0].getScreenCTM().inverse());
+    }
+
+    /**
+     * @name select
+     * @description select a certain note or rest
+     * @param {any} svgGraphicElement the g element inside the SVG to transform the coordinates
+     * @param {number} index the svg element index where is contained the note
+     * @param {number} x the x position relative to the svg
+     * @param {number} y the y position relative to the svg
+     */
+    public select(svgGraphicElement: any, index: number, x: number, y: number) {
+        //first we need to transform the x,y page position to an SVG scaled position
+        let point = this.svgPoint(svgGraphicElement, x, y);
+        x = point.x;
+        y = point.y;
+        //console.log("x:" + x + ",y:" + y);
+
+        //we try to select the figure selected        
+        let iFigure: number = 0;
+        let iFigureNote: number = -1;
+        let selectedFigure: FigureBox = null;
+        for (; iFigure < this.converter.figureBoxes.length; iFigure++) {
+            let figure: FigureBox = this.converter.figureBoxes[iFigure];
+            if (figure.type == 1 && !figure.ligato) {
+                iFigureNote++;
+            }
+            if (figure.barline > index) {
+                //we haven't found the figure
+                break;
+            }
+            if (figure.barline == index && x > figure.x && x < figure.x + figure.w) {
+                if (y > figure.y && y < figure.y + figure.h) {
+                    selectedFigure = figure;
+                    break;
+                }
+            }
+        }
+
+        if (selectedFigure != null) {
+            //we can only select notes, not rest
+            while ((selectedFigure.type != 1 || selectedFigure.ligato) &&
+                this.converter.figureBoxes.length > iFigure) {
+                iFigure++;
+                selectedFigure = this.converter.figureBoxes[iFigure];
+                if (selectedFigure.type == 1 && !selectedFigure.ligato) {
+                    iFigureNote++;
+                }
+            }
+            if (selectedFigure.type == 1 && !selectedFigure.ligato) {
+                //lets put the cursor over the figure
+                this.currentBarline = index;
+                if (this.$wijzer != null) {
+                    this.$wijzer.remove();
+                }
+                this.$wijzer = $(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
+                this.$wijzer.attr({ "fill": "#387ef5", "fill-opacity": (this.settings.playerSettings.cursor ? "0.5" : "0") });
+                $("svg > g").eq(this.currentBarline).prepend(this.$wijzer);
+                this.scrollToCursor(selectedFigure);
+                //we position correctly the focus rectangle
+                this.$wijzer.attr({
+                    "x": "" + (selectedFigure.x),
+                    "y": "" + (selectedFigure.y),
+                    "width": "" + selectedFigure.w,
+                    "height": "" + selectedFigure.h
+                });
+
+                //oh, wait, we need to search the figure in the timeline map of figures
+                let indexTimeLineOnlyNotes: number = -1;
+                let indexTimeLine = 0;
+                for (; indexTimeLine < this.converter.timeLineMap.length; indexTimeLine++) {
+                    let iFigureTimeLine = this.converter.timeLineMap[indexTimeLine];
+                    let figureTimeLine = this.converter.figureBoxes[iFigureTimeLine];
+                    if (figureTimeLine.type == FigureBox.TYPE_NOTE && !figureTimeLine.ligato) {
+                        indexTimeLineOnlyNotes++;
+                    }
+                    if (iFigureTimeLine == iFigure) {
+                        break;
+                    }
+                }
+                this.midiPlayer.seek(this.midiInfo.notes[indexTimeLineOnlyNotes].tick, this.midiInfo.notes[indexTimeLineOnlyNotes].tracks);
+
+                //finally seek the midi player
+                this.currentNote = indexTimeLine;
+                this.currentBarline = index;
+            }
+        }
+    }
 
     /**
      * @name loadAndRenderScore
@@ -245,7 +366,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @description play the music, start the show!
      */
     public play() {
-        this.midiPlayer.play();
+        this.midiPlayer.resume();
     }
 
     /**

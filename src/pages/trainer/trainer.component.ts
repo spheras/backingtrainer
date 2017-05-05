@@ -3,13 +3,14 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MusicXMLPlayer, PlayerListener } from '../../player/musicxmlplayer';
 import { Composition } from '../../player/composition';
 import { PlayerService } from '../../player/player.service';
-import { LoadingController, Loading, NavParams } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
 import { Insomnia } from '@ionic-native/insomnia';
 import { MenuController } from 'ionic-angular';
 import { DAO } from '../../dao/dao';
 import { KnobComponent } from 'ng2-knob';
 import { Observable, Subscription } from 'rxjs/Rx';
+declare var $: any;
 
 @Component({
     templateUrl: 'trainer.component.html',
@@ -31,18 +32,19 @@ export class TrainerPage implements PlayerListener {
     private STATE_PAUSED = 2;
 
     private composition: Composition = null;
-    private loader: Loading = null;
     private state: number = 0;
     private flagRendering: boolean = false;
 
     private daoSubscription: Subscription = null;
     private resizeSubscription: Subscription = null;
 
+    private loadingComponent: string = "";
+
     @ViewChild('myknob1') knob: KnobComponent;
 
     constructor(private appref: ApplicationRef, private menu: MenuController, private insomnia: Insomnia,
         navParams: NavParams, private player: MusicXMLPlayer, private _sanitizer: DomSanitizer, private dao: DAO,
-        private loadingCtrl: LoadingController, private translate: TranslateService) {
+        private translate: TranslateService) {
 
         //we get from the params the composition we want to train
         this.composition = navParams.data;
@@ -89,18 +91,41 @@ export class TrainerPage implements PlayerListener {
                     self.pause();
                 }
 
-                this.loader = this.loadingCtrl.create({
-                    content: this.translate.instant("TRAINER-WAIT-SCORE")
-                });
-                this.loader.present().then((value) => {
-                    this.player.loadAndRenderScore(this.composition).then((svg) => {
-                        this.svgContent = this._sanitizer.bypassSecurityTrustHtml(svg);
-                        this.flagRendering = false;
-                        this.loader.dismiss();
-                    });
+                this.loadingComponent = "score";
+                this.player.loadAndRenderScore(this.composition).then((svg) => {
+                    this.svgContent = this._sanitizer.bypassSecurityTrustHtml(svg);
+                    this.listenSVG();
+                    this.flagRendering = false;
+                    this.loadingComponent = "";
                 });
             }
         });
+    }
+
+    /**
+     * @name listenSVG
+     * @description listen click events on the SVG to select notes
+     */
+    private listenSVG() {
+        $("#svg").off("click").click(function (event) {
+            let $target = $(event.target);
+            let tries = 0;
+            //we get the g element
+            if ($target.is("svg")) {
+                $target = $target.find(">g.music").eq(0);
+            } else {
+                while (!$target.is("g.music") && tries < 3) {
+                    $target = $target.parent();
+                    tries++;
+                }
+            }
+
+            if ($target.is("g.music")) {
+                if (this.state != this.STATE_PLAYING) {
+                    this.player.select($target, $target.parent().index(), event.clientX, event.clientY);
+                }
+            }
+        }.bind(this))
     }
 
     ionViewDidEnter() {
@@ -110,22 +135,17 @@ export class TrainerPage implements PlayerListener {
         this.insomnia.keepAwake();
 
         //lets start loading
-        this.loader = this.loadingCtrl.create({
-            content: this.translate.instant("TRAINER-WAIT-SCORE")
+        this.loadingComponent = "score";
+        this.flagRendering = true;
+
+        this.listenResizeEvents();
+        this.dao.getSettings().then((settings) => {
+            this.player.init(this.composition, this, settings);
         });
-        this.loader.present().then((value) => {
-            this.flagRendering = true;
-
-            this.listenResizeEvents();
-            this.dao.getSettings().then((settings) => {
-                this.player.init(this.composition, this, settings);
-            });
 
 
-            this.daoSubscription = this.dao.observeSettings().subscribe((settings) => {
-                this.player.updateSettings(settings);
-            });
-
+        this.daoSubscription = this.dao.observeSettings().subscribe((settings) => {
+            this.player.updateSettings(settings);
         });
     }
 
@@ -137,14 +157,8 @@ export class TrainerPage implements PlayerListener {
      */
     svgLoaded(svg: string): void {
         this.svgContent = this._sanitizer.bypassSecurityTrustHtml(svg);
-
-        /*
-        this.loader.dismiss();
-        this.loader = this.loadingCtrl.create({
-            content: this.translate.instant("TRAINER-WAIT-AUDIO")
-        });
-        this.loader.present();
-        */
+        this.listenSVG();
+        this.loadingComponent = "audio";
     }
 
 
@@ -162,7 +176,8 @@ export class TrainerPage implements PlayerListener {
         //----------------------------------------
 
         this.knob.setInitialValue(bpm);
-        this.loader.dismiss();
+        this.loadingComponent = "";
+        //this.loader.dismiss();
         this.flagRendering = false;
     }
 
@@ -248,6 +263,7 @@ export class TrainerPage implements PlayerListener {
      * @return {Promise<void>} resolve when all the preparation has been finished 
      */
     private showPrepare(): Promise<void> {
+        this.player.prepare();
         return new Promise<void>((resolve) => {
             let numerator = this.player.getMeterSignatureNumerator();
             while (numerator > 4) {
@@ -265,7 +281,7 @@ export class TrainerPage implements PlayerListener {
                     this.prepare++;
 
                     if (this.state != this.STATE_PLAYING) {
-                        this.prepare=-1;
+                        this.prepare = -1;
                         return;
                     }
 

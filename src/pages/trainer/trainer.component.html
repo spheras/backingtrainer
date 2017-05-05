@@ -1,3 +1,11 @@
+<div id="overlay" *ngIf="loadingComponent.length>0">
+    <div id="loading">
+        {{'TRAINER-WAIT' | translate}} {{loadingComponent}}
+        <div id="patient">{{'TRAINER-WAIT-DETAIL' | translate}}</div>
+    </div>
+
+</div>
+
 <ion-header>
     <ion-navbar color="dark">
         <button ion-button menuToggle>

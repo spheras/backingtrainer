@@ -1,0 +1,6 @@
+this library use .sf2 soundfonts to synthesize the midi sounds
+it is 99% based in https://github.com/logue/sf2synth.js, which is MIT licensed
+differences:
++ typescript compatiblity
+- removed webmidilink (http://www.g200kg.com/en/docs/webmidilink/)
+- removed web page renderization

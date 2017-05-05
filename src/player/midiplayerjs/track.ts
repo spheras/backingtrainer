@@ -9,7 +9,7 @@ export class Track {
 	private enabled: boolean = true;
 	private pointer: number = 0;
 	private lastTick: number = 0;
-	private lastStatus = null;
+	public lastStatus = null;
 	private index;
 	private data;
 	private delta: number = 0;
@@ -108,6 +108,12 @@ export class Track {
 		dryRun = dryRun || false;
 		if (this.pointer < this.data.length && (dryRun || currentTick - this.lastTick >= this.getDelta())) {
 			let event = this.parseEvent();
+
+			/*			
+			if (this.index > 0 && event.name == "Note on") {
+				console.log(this.index + " - new event[delta:" + this.getDelta() + ";currentTick:" + currentTick + ";lastTick:" + this.lastTick + "]");
+			}
+			*/
 			if (this.enabled) return event;
 			// Recursively call this function for each event ahead that has 0 delta time?
 		}
@@ -130,15 +136,27 @@ export class Track {
 	}
 
 	/**
+	 * add a message to the event json
+	 * @param {any} the eventJson produced
+	 * @param {number} the number of messages to add
+	 */
+	private addMessage(event: any, start: number, howmany: number) {
+		for (var i = 0; i < howmany; i++) {
+			event.message.push(this.data[start + i]);
+		}
+	}
+
+	/**
 	 * Parses event into JSON and advances pointer for the track
 	 * @return {object}
 	 */
 	parseEvent() {
-		var eventStartIndex = this.pointer + this.getDeltaByteCount();
-		var eventJson: any = {};
 		var deltaByteCount = this.getDeltaByteCount();
+		var eventStartIndex = this.pointer + deltaByteCount;
+		var eventJson: any = {};
 		eventJson.track = this.index + 1;
 		eventJson.delta = this.getDelta();
+		eventJson.message = [];
 		this.lastTick = this.lastTick + eventJson.delta;
 		this.runningDelta += eventJson.delta;
 		eventJson.tick = this.runningDelta;
@@ -201,7 +219,7 @@ export class Track {
 					if (this.forcedTempo < 0) {
 						this.tempo = eventJson.data;
 					} else {
-						eventJson.data=this.forcedTempo;
+						eventJson.data = this.forcedTempo;
 						this.tempo = this.forcedTempo;
 					}
 					break;
@@ -225,14 +243,15 @@ export class Track {
 			var length = this.data[this.pointer + deltaByteCount + 2];
 			// Some meta events will have vlv that needs to be handled
 
+			this.addMessage(eventJson, eventStartIndex, 3);
 			this.pointer += deltaByteCount + 3 + length;
 
 		} else if (this.data[eventStartIndex] == 0xf0) {
 			// Sysex
 			eventJson.name = 'Sysex';
 			var length = this.data[this.pointer + deltaByteCount + 1];
+			this.addMessage(eventJson, eventStartIndex, 2 + length);
 			this.pointer += deltaByteCount + 2 + length;
-
 		} else {
 			// Voice event
 			if (this.data[eventStartIndex] < 0x80) {
@@ -243,14 +262,16 @@ export class Track {
 				eventJson.velocity = this.data[eventStartIndex + 1];
 
 				if (this.lastStatus <= 0x8f) {
+					eventJson.message.push(this.lastStatus);
 					eventJson.name = 'Note off';
 					eventJson.channel = this.lastStatus - 0x80 + 1;
 
 				} else if (this.lastStatus <= 0x9f) {
+					eventJson.message.push(this.lastStatus);
 					eventJson.name = 'Note on';
 					eventJson.channel = this.lastStatus - 0x90 + 1;
 				}
-
+				this.addMessage(eventJson, eventStartIndex, 2);
 				this.pointer += deltaByteCount + 2;
 
 			} else {
@@ -263,6 +284,7 @@ export class Track {
 					eventJson.noteNumber = this.data[eventStartIndex + 1];
 					eventJson.noteName = Constants.NOTES[this.data[eventStartIndex + 1]];
 					eventJson.velocity = Math.round(this.data[eventStartIndex + 2] / 127 * 100);
+					this.addMessage(eventJson, eventStartIndex, 3);
 					this.pointer += deltaByteCount + 3;
 
 				} else if (this.data[eventStartIndex] <= 0x9f) {
@@ -272,6 +294,7 @@ export class Track {
 					eventJson.noteNumber = this.data[eventStartIndex + 1];
 					eventJson.noteName = Constants.NOTES[this.data[eventStartIndex + 1]];
 					eventJson.velocity = Math.round(this.data[eventStartIndex + 2] / 127 * 100);
+					this.addMessage(eventJson, eventStartIndex, 3);
 					this.pointer += deltaByteCount + 3;
 
 				} else if (this.data[eventStartIndex] <= 0xaf) {
@@ -280,6 +303,7 @@ export class Track {
 					eventJson.channel = this.lastStatus - 0xa0 + 1;
 					eventJson.note = Constants.NOTES[this.data[eventStartIndex + 1]];
 					eventJson.pressure = event[2];
+					this.addMessage(eventJson, eventStartIndex, 3);
 					this.pointer += deltaByteCount + 3;
 
 				} else if (this.data[eventStartIndex] <= 0xbf) {
@@ -288,24 +312,28 @@ export class Track {
 					eventJson.channel = this.lastStatus - 0xb0 + 1;
 					eventJson.number = this.data[eventStartIndex + 1];
 					eventJson.value = this.data[eventStartIndex + 2];
+					this.addMessage(eventJson, eventStartIndex, 3);
 					this.pointer += deltaByteCount + 3;
 
 				} else if (this.data[eventStartIndex] <= 0xcf) {
 					// Program Change
 					eventJson.name = 'Program Change';
 					eventJson.channel = this.lastStatus - 0xc0 + 1;
+					this.addMessage(eventJson, eventStartIndex, 2);
 					this.pointer += deltaByteCount + 2;
 
 				} else if (this.data[eventStartIndex] <= 0xdf) {
 					// Channel Key Pressure
 					eventJson.name = 'Channel Key Pressure';
 					eventJson.channel = this.lastStatus - 0xd0 + 1;
+					this.addMessage(eventJson, eventStartIndex, 2);
 					this.pointer += deltaByteCount + 2;
 
 				} else if (this.data[eventStartIndex] <= 0xef) {
 					// Pitch Bend
 					eventJson.name = 'Pitch Bend';
 					eventJson.channel = this.lastStatus - 0xe0 + 1;
+					this.addMessage(eventJson, eventStartIndex, 2);
 					this.pointer += deltaByteCount + 3;
 
 				} else {

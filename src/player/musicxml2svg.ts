@@ -63,7 +63,7 @@ export class MusicXML2SVG {
     /**
      * the abc2svg library with user config
      */
-    private abc2svg: Abc = null;
+    public abc2svg: Abc = null;
 
     /** list of ligatos recovered, just for internal adjustements */
     private ligatos: boolean[] = [];
@@ -212,14 +212,14 @@ export class MusicXML2SVG {
      * @see http://moinejf.free.fr/js/interface-1.xhtml
      */
     private annoStart(type: string, startOffset: number, stopOffset: number, x: number, y: number, w: number, h: number) {
-        console.log(type)
+        //console.log(type)
         if (type == 'note' || type == 'rest' || type == 'grace') {
 
             let bbox = new FigureBox();
             bbox.barline = this.barlines;
             bbox.type = (type == 'note' || type == 'grace' ? FigureBox.TYPE_NOTE : FigureBox.TYPE_REST);
-            bbox.x = this.abc2svg.sx(x).toFixed(2);
-            bbox.y = this.abc2svg.sy(y).toFixed(2);
+            bbox.x = parseFloat(this.abc2svg.sx(x).toFixed(2));
+            bbox.y = parseFloat(this.abc2svg.sy(y).toFixed(2));
             bbox.w = w;
             bbox.h = h;
             bbox.offsetStart = startOffset;

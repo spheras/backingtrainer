@@ -11,6 +11,34 @@ export class PlayerService {
 
     constructor(private http: Http) { }
 
+    public getSoundfont(): Promise<ArrayBuffer> {
+        return new Promise<ArrayBuffer>((resolve) => {
+            let url = 'assets/soundfonts/FluidR3 GM2-2.SF2';
+            var basicOptions: RequestOptionsArgs = {
+                url: url,
+                method: RequestMethod.Get,
+                search: null,
+                headers: null,
+                body: null,
+                withCredentials: false,
+                responseType: ResponseContentType.ArrayBuffer
+            };
+            var reqOptions = new RequestOptions(basicOptions);
+            var req = new Request(reqOptions);
+            this.http.request(req)
+                .map((r: Response) => {
+                    return r.arrayBuffer();
+                })
+                .catch((error) => {
+                    console.error(error);
+                    throw error;
+                }).subscribe((response: ArrayBuffer) => {
+                    resolve(response);
+                });
+        });
+    }
+
+
     /**
      * @name getScore
      * @description return the score xml string corresponding to the composition. It can be retrieved directly from memory or downloading from server.
