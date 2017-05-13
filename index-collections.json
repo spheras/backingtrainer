@@ -21,5 +21,16 @@
         "compositionIds": [
             "00001"
         ]
-    }    
+    },
+    {
+        "id": "00002",
+        "name": "Chopin Collection",
+        "author": "spheras",
+        "description": "Chopin Collection Compositions",
+        "level": 1,
+        "instrument": "Flute",
+        "compositionIds": [
+            "00008","00009"
+        ]
+    }
 ]

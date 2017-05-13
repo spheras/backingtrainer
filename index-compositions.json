@@ -128,7 +128,7 @@
         "name": "Sicilienne Opus 78",
         "author": "Gabriel Fauré",
         "description": "Transcribed for Flute and Piano by Mike Magatagan 2011",
-        "wikipediaLink": "https://en.wikipedia.org/wiki/Sicilienne_(Faur%C3%A9)",
+        "wikipediaLink": "https://musescore.com/mike_magatagan/sicilienne-opus-78-for-flute-and-piano",
         "level": 2,
         "midiURL": "Sicilienne-Opus78.mid",
         "scoreURL": "Sicilienne-Opus78.xml",
@@ -150,9 +150,9 @@
     },
     {
         "id": "00007",
-        "name": "'Méditation' from the Opera 'Thaïs'",
+        "name": "Méditation from the Opera 'Thaïs'",
         "author": "Jules Massenet",
-        "description": "Arranged for Flute &amp; Piano by Mike Magatagan 2012",
+        "description": "Arranged for Flute & Piano by Mike Magatagan 2012",
         "wikipediaLink": "https://musescore.com/mike_magatagan/meditation-by-jules-massenet",
         "level": 2,
         "midiURL": "Meditation.mid",
@@ -175,13 +175,13 @@
     },
     {
         "id": "00008",
-        "name": "Nocture Op. 9",
+        "name": "Nocturne Op. 9",
         "author": "Frédéric Chopin",
-        "description": "Arranged for Flute &amp; Arp by Mike Magatagan 2012",
+        "description": "Arranged for Flute & Arp by Mike Magatagan 2012",
         "wikipediaLink": "https://musescore.com/mike_magatagan/nocturne-opus-9-no-2-for-flute--harp",
         "level": 2,
-        "midiURL": "Nocture II-Opus9-EFlat Major.mid",
-        "scoreURL": "Nocture II-Opus9-EFlat Major.xml",
+        "midiURL": "Nocturne II-Opus9-EFlat Major.mid",
+        "scoreURL": "Nocturne II-Opus9-EFlat Major.xml",
         "frontInstrument": {
             "name": "Flute",
             "track": 1,
@@ -189,14 +189,131 @@
         },
         "backInstruments": [
             {
-                "name": "Piano",
+                "name": "Harp",
                 "track": 3
             },
             {
-                "name": "Piano",
+                "name": "Harp",
                 "track": 4
             }
         ],
+        "version": 1
+    },
+    {
+        "id": "00009",
+        "name": "Vals del Adieu - Opus 69, Nº1",
+        "author": "Frédéric Chopin",
+        "description": "Transcribed for Harp by Mike Magatagan 2012",
+        "wikipediaLink": "https://musescore.com/mike_magatagan/valse-de-ladieu-waltz-5-opus-69-no-1-for-harp",
+        "level": 2,
+        "midiURL": "Chopin-ValsDelAdieu.mid",
+        "scoreURL": "Chopin-ValsDelAdieu.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "backInstruments": [
+            {
+                "name": "Harp",
+                "track": 2
+            },
+            {
+                "name": "Harp",
+                "track": 3
+            }
+        ],
+        "version": 1
+    },
+    {
+        "id": "00010",
+        "name": "Dance Of The Little Swans",
+        "author": "Tchaikovsky",
+        "description": "Dance of the Little Swans from 'Swan Lake'",
+        "wikipediaLink": "https://www.youtube.com/watch?v=sVE-UUrv-NI",
+        "level": 2,
+        "midiURL": "Tchaikovsky-DanceOfTheLittleSwans.mid",
+        "scoreURL": "Tchaikovsky-DanceOfTheLittleSwans.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "backInstruments": [
+            {
+                "name": "Flute",
+                "track": 2
+            },
+            {
+                "name": "Flute",
+                "track": 3
+            }
+        ],
+        "version": 1
+    },
+    {
+        "id": "00011",
+        "name": "Aria: 'Aus Liebe will meinx Heiland sterben' (BWV 244 No. 49)",
+        "author": "J. S. Bach",
+        "description": "Interpretation for Flute &amp; Harp by Mike Magatagan 2017",
+        "wikipediaLink": "https://musescore.com/mike_magatagan/scores/3876626",
+        "level": 2,
+        "midiURL": "Bach-BWV244N49.mid",
+        "scoreURL": "Bach-BWV244N49.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1,
+            "help": 2
+        },
+        "backInstruments": [
+            {
+                "name": "Harp",
+                "track": 3
+            },
+            {
+                "name": "Harp",
+                "track": 4
+            }
+        ],
+        "version": 1
+    },
+    {
+        "id": "00012",
+        "name": "Swan Lake",
+        "author": "Tchaikovsky",
+        "description": "Swan Lake",
+        "wikipediaLink": "",
+        "level": 2,
+        "midiURL": "Tchaikovsky-Swan Lake.mid",
+        "scoreURL": "Tchaikovsky-Swan Lake.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "backInstruments": [
+            {
+                "name": "Harp",
+                "track": 2
+            },
+            {
+                "name": "Harp",
+                "track": 3
+            }
+        ],
+        "version": 1
+    },
+    {
+        "id": "00013",
+        "name": "Agua de Beber",
+        "author": "Antonio Carlos Jobim",
+        "description": "'Água de Beber' ('Drinking-Water' or 'Potable Water') is a bossa nova jazz standard composed by Antonio Carlos Jobim.",
+        "wikipediaLink": "https://www.youtube.com/watch?v=kem3aeUy3Bk",
+        "level": 2,
+        "midiURL": "AguaDeBeber.mid",
+        "scoreURL": "AguaDeBeber.xml",
+        "mp3URL": "AguaDeBeber.mp3",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
         "version": 1
     }
 ]
