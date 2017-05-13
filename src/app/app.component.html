@@ -1,4 +1,3 @@
-<!--
 <ion-menu [content]="content" side="right" id="menu-search" persistent="true" type="overlay" enabled="false">
   <ion-header>
     <ion-toolbar color="primary">
@@ -8,25 +7,29 @@
   <ion-content>
     <ion-list>
       <ion-item>
-        <ion-label>Ordenar por Tipo</ion-label>
-        <ion-toggle color="primary" [ngModel]="settings.playerSettings.cursorAnimation" (ngModelChange)="settingAnimation($event)"></ion-toggle>
+        <ion-label>Show Flute</ion-label>
+        <ion-toggle color="royal" [ngModel]="settings.filterSettings.flute" (ngModelChange)="settingInstrumentFilter('flute',$event)"></ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-label>Ordenar por Nombre</ion-label>
-        <ion-toggle color="bright" [ngModel]="settings.playerSettings.cursor" (ngModelChange)="settingCursor($event)"></ion-toggle>
+        <ion-label>Show Clarinet</ion-label>
+        <ion-toggle color="bright" [ngModel]="settings.filterSettings.clarinet" (ngModelChange)="settingInstrumentFilter('clarinet',$event)"></ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-label>High Quality Sound (this will require a good performance of your device)</ion-label>
-        <ion-toggle color="royal" [ngModel]="settings.playerSettings.highQualitySound" (ngModelChange)="settingSoundQuality($event)"></ion-toggle>
+        <ion-label>Show Record</ion-label>
+        <ion-toggle color="primary" [ngModel]="settings.filterSettings.record" (ngModelChange)="settingInstrumentFilter('record',$event)"></ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-label>Play Soloist Voice</ion-label>
-        <ion-toggle color="subtle" [ngModel]="settings.playerSettings.playSoloist" (ngModelChange)="settingPlaySoloist($event)"></ion-toggle>
+        <ion-label>Show Trumpet</ion-label>
+        <ion-toggle color="subtle" [ngModel]="settings.filterSettings.trumpet" (ngModelChange)="settingInstrumentFilter('trumpet',$event)"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Show Saxophone</ion-label>
+        <ion-toggle color="danger" [ngModel]="settings.filterSettings.saxophone" (ngModelChange)="settingInstrumentFilter('saxophone',$event)"></ion-toggle>
       </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
--->
+
 <ion-menu [content]="content" side="left" id="menu-trainer" persistent="true" type="overlay" enabled="false">
   <ion-header>
     <ion-toolbar color="primary">

@@ -1,5 +1,15 @@
 export class Settings {
+    public filterSettings: FilterSettings = new FilterSettings();
     public playerSettings: PlayerSettings = new PlayerSettings();
+}
+
+export class FilterSettings {
+    //instrumentos melódicos
+    public flute: boolean = true;
+    public clarinet: boolean = true;
+    public record: boolean = true;
+    public trumpet: boolean = true;
+    public saxophone: boolean = true;
 }
 
 export class PlayerSettings {

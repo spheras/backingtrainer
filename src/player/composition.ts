@@ -84,7 +84,10 @@ export class Composition {
      */
     public scoreURL: string;
     public scoreXMLData: string;
-
+    /**
+     * this is the url to obtain the mp3 back track. Optional
+     */
+    public mp3URL?: string;
 
     /**
      * the soloist instrument

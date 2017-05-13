@@ -4,6 +4,7 @@ import { Player as InternalMidiPlayer } from './midiplayerjs/player';//midi-play
 import { Platform } from 'ionic-angular';
 import { Composition } from './composition';
 import * as Soundfont from 'soundfont-player';
+//TODO, sf2 for orchestras?
 //import { SoundFontMidiSynth } from './sf2midisynth/soundfont.midi.synth';
 
 /**
@@ -53,6 +54,8 @@ export class MidiPlayer {
     /** we have static fields to avoid creating again these object, which have a huge cost */
     public static audioContext: AudioContext = new ((<any>window).AudioContext || (<any>window).webkitAudioContext)();//new AudioContext();
     public static soundfonts: any = {};
+    //TODO, sf2 for orchestras?
+    //public static sf2MidiSynth:SoundFontMidiSynth;
 
 
     //the preferred tempo, -1 not set
@@ -67,8 +70,6 @@ export class MidiPlayer {
     private lastTick = -1;
     /** to activate or deactivate metronome */
     private metronome: boolean = false;
-    /** sf2 midi synth */
-    //private sf2MidiSynth: SoundFontMidiSynth;
 
     constructor(private service: PlayerService, private platform: Platform) {
         this.soundpool = new CircularSoundPool();
@@ -107,6 +108,16 @@ export class MidiPlayer {
      */
     public setMetronome(activate: boolean) {
         this.metronome = activate;
+    }
+
+    /**
+     * @name getCurrentTime
+     * @description return the current time in milliseconds
+     * @return {number} the current time in milliseconds
+     */
+    public getCurrentTime(): number {
+        let currentTick = this.player.startTick;
+        return currentTick / this.player.division / this.player.tempo * 60000;
     }
 
     /**
@@ -214,7 +225,7 @@ export class MidiPlayer {
 
             //restoring the player
             player.resetTracks();
-            this.player.eventListeners=oldEventHandlers;
+            this.player.eventListeners = oldEventHandlers;
 
             resolve(result);
 
@@ -331,11 +342,13 @@ export class MidiPlayer {
             result[composition.frontInstrument.help] = frontName;
         }
 
-        for (let i = 0; i < composition.backInstruments.length; i++) {
-            let backName = composition.backInstruments[i].name.toLowerCase().trim();
-            let track = composition.backInstruments[i].track;
-            safe(result, track);
-            result[track] = backName;
+        if (composition.backInstruments) {
+            for (let i = 0; i < composition.backInstruments.length; i++) {
+                let backName = composition.backInstruments[i].name.toLowerCase().trim();
+                let track = composition.backInstruments[i].track;
+                safe(result, track);
+                result[track] = backName;
+            }
         }
         result[0] = "metronome";
         return result;
@@ -358,13 +371,12 @@ export class MidiPlayer {
             Promise.all(promises).then(() => {
                 this.soundpool.init(instrumentsByTrack);
                 resolve();
-
                 /*
-                TODO: use soundfonts for orchestras
+                TODO, sf2 for orchestras?
                 this.service.getSoundfont().then((response: ArrayBuffer) => {
                     let input: Uint8Array = new Uint8Array(response);
-                    this.sf2MidiSynth = new SoundFontMidiSynth();
-                    this.sf2MidiSynth.loadSoundFont(input);
+                    MidiPlayer.sf2MidiSynth = new SoundFontMidiSynth();
+                    MidiPlayer.sf2MidiSynth.loadSoundFont(input);
                     resolve();
                 });
                 */
@@ -475,16 +487,16 @@ export class MidiPlayer {
      * @param event the event produced
      */
     midiUpdate(event) {
+        //TODO, sf2 for orchestras?
         /*
-        TODO: use soundfonts for orchestras
-        console.log("EVENT:" + event.name + ";velocity:" + event.velocity);
-        if (event.name == 'Note on') {
-            console.log("note");
-            if (event.velocity == 0) {
-                console.log("cero");
-            }
-        }
-        this.sf2MidiSynth.processMidiMessage(event.message);
+                console.log("EVENT:" + event.name + ";velocity:" + event.velocity);
+                if (event.name == 'Note on') {
+                    console.log("note");
+                    if (event.velocity == 0) {
+                        console.log("cero");
+                    }
+                }
+                MidiPlayer.sf2MidiSynth.processMidiMessage(event.message);
         */
 
         if (event.name == 'Note on') {
@@ -492,7 +504,6 @@ export class MidiPlayer {
                 this.soundpool.play(event);
             }
         }
-
         if (this.listener && this.listener != null) {
             this.listener.midiUpdate(event);
         }
@@ -517,6 +528,8 @@ export class MidiPlayer {
         }
         else if (instrument.toLowerCase().trim().indexOf("metronome") >= 0) {
             return 'assets/soundfonts/metronome-wav.js'
+        } else if (instrument.toLowerCase().trim().indexOf("harp") >= 0) {
+            return 'assets/soundfonts/harp-wav.js'
         } else {
             return 'assets/soundfonts/acoustic_grand_piano-' + codec + '.js';
         }
@@ -580,8 +593,8 @@ class CircularSoundPool {
             instrument = MidiPlayer.soundfonts["piano"];
         }
 
-        let max = (strInstrument == "piano" ? this.pianoThreshold : 1);
-        let index = (strInstrument == "piano" ? this.pianoIndex : 0);
+        let max = (strInstrument == "piano" || strInstrument == "harp" ? this.pianoThreshold : 1);
+        let index = (strInstrument == "piano" || strInstrument == "harp" ? this.pianoIndex : 0);
 
         if (this.trackList[track][index] && strInstrument != "metronome") {
             this.trackList[track][index].stop();
@@ -594,7 +607,7 @@ class CircularSoundPool {
             index = 0;
         }
 
-        if (strInstrument == "piano") {
+        if (strInstrument == "piano" || strInstrument == "harp") {
             this.pianoIndex = index;
         }
     }

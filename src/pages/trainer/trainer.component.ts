@@ -122,7 +122,18 @@ export class TrainerPage implements PlayerListener {
 
             if ($target.is("g.music")) {
                 if (this.state != this.STATE_PLAYING) {
-                    this.player.select($target, $target.parent().index(), event.clientX, event.clientY);
+                    let response = this.player.select($target, $target.parent().index(), event.clientX, event.clientY);
+                    this.state = this.STATE_PAUSED;
+
+                    if (!response && this.composition.mp3URL && this.composition.mp3URL.length > 0) {
+                        //oh oh! we need to buffer the entire song :(
+                        //TODO ask to the user
+                        this.loadingComponent = "mp3";
+                        this.player.preloadMP3().then(() => {
+                            this.loadingComponent = "";
+                            this.player.select($target, $target.parent().index(), event.clientX, event.clientY);
+                        });
+                    }
                 }
             }
         }.bind(this))

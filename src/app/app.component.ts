@@ -8,7 +8,7 @@ import { ModalController } from 'ionic-angular';
 import { MainPage } from '../pages/main/main.component';
 import { TunerPage } from '../pages/tuner/tuner.component';
 import { DAO } from '../dao/dao';
-import { Settings } from '../dao/settings';
+import { Settings, PlayerSettings, FilterSettings } from '../dao/settings';
 
 @Component({
   templateUrl: 'app.component.html',
@@ -51,6 +51,9 @@ export class MyApp {
     });
 
     this.dao.getSettings().then((settings) => {
+      if (!settings.filterSettings) {
+        settings.filterSettings = new FilterSettings();
+      }
       this.settings = settings;
       this.dao.observeSettings().subscribe((settings) => {
         this.settings = settings;
@@ -154,6 +157,22 @@ export class MyApp {
     });
   }
 
-  
+  /**
+   * @name settingInstrumentFilter
+   * @description set the instrument filter
+   * @param {string} instrument the instrument name (translated to a field for the setting object)
+   * @param {boolean} value the value to filter or not the instrument
+   */
+  settingInstrumentFilter(instrument: string, value: boolean) {
+    this.dao.getSettings().then((settings) => {
+      if (!settings.filterSettings) {
+        settings.filterSettings = new FilterSettings();
+      }
+
+      settings.filterSettings[instrument] = value;
+      this.settings.filterSettings = settings.filterSettings;
+      this.dao.setSettings(settings);
+    });
+  }
 
 }

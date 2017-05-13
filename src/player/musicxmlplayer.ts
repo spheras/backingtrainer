@@ -3,6 +3,7 @@ import { Platform, LoadingController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
 import { PlayerService } from './player.service';
 import { MidiPlayer, MidiPlayerListener, MidiInfo } from './midiplayer';
+import { MP3Player } from './mp3player';
 import { Composition } from './composition';
 import { Settings } from '../dao/settings';
 import { MusicXML2SVG, FigureBox, ConversionOptions } from './musicxml2svg';
@@ -46,6 +47,8 @@ export interface PlayerListener {
 export class MusicXMLPlayer implements MidiPlayerListener {
     /** the midi player */
     private midiPlayer: MidiPlayer = null;
+    /** the mp3 player */
+    private mp3Player: MP3Player = null;
     /** the musicxml to svg converter */
     private converter: MusicXML2SVG = null;
     /** the composition to play */
@@ -60,6 +63,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     constructor(private service: PlayerService, private platform: Platform,
         private loadingCtrl: LoadingController, private translate: TranslateService) {
         this.midiPlayer = new MidiPlayer(service, platform);
+        this.mp3Player = new MP3Player(service, platform);
         this.midiPlayer.setListener(this);
     }
 
@@ -115,18 +119,35 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     }
 
     /**
+     * @name isMP3BackingTrack
+     * @description check if the composition has an mp3 backing track
+     * @return {boolean} true if the composition backing track is mp3 based
+     */
+    private isMP3BackingTrack(): boolean {
+        return this.composition.mp3URL && this.composition.mp3URL.length > 0;
+    }
+
+    /**
      * @name muteBack
      * @description mute or unmute the backing track
      * @param {boolean} mute if we want to mute or unmute
      */
     private muteBack(mute: boolean) {
         if (mute) {
-            for (let i = 0; i < this.composition.backInstruments.length; i++) {
-                this.midiPlayer.muteTrack(this.composition.backInstruments[i].track);
+            if (this.isMP3BackingTrack()) {
+                this.mp3Player.mute(mute);
+            } else {
+                for (let i = 0; i < this.composition.backInstruments.length; i++) {
+                    this.midiPlayer.muteTrack(this.composition.backInstruments[i].track);
+                }
             }
         } else {
-            for (let i = 0; i < this.composition.backInstruments.length; i++) {
-                this.midiPlayer.unmuteTrack(this.composition.backInstruments[i].track);
+            if (this.isMP3BackingTrack()) {
+                this.mp3Player.mute(mute);
+            } else {
+                for (let i = 0; i < this.composition.backInstruments.length; i++) {
+                    this.midiPlayer.unmuteTrack(this.composition.backInstruments[i].track);
+                }
             }
         }
     }
@@ -166,9 +187,9 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                 if (this.listener != null) {
                     this.listener.svgLoaded(frontsvg);
                 }
-
-                //loading midi data, soundfonts and tempo
-                this.loadMidiData(this.composition).then(() => {
+                //loading mp3, midi data, soundfonts and tempo
+                Promise.all([this.loadMP3Data(this.composition),
+                this.loadMidiData(this.composition)]).then(() => {
                     //we need to load midi before creating a map
                     Promise.all([
                         this.midiPlayer.loadSoundFonts(this.composition),
@@ -184,6 +205,28 @@ export class MusicXMLPlayer implements MidiPlayerListener {
 
     }
 
+    /**
+     * @name loadMP3Data
+     * @description load the mp3 data backing track
+     * @param {Composition} composition the composition to load
+     */
+    private loadMP3Data(composition: Composition): Promise<void> {
+        if (this.isMP3BackingTrack()) {
+            let url = PlayerService.dataUrl1 + '/[' + composition.id + ']-' + composition.mp3URL;
+            /*
+            return new Promise<void>((resolve) => {
+                this.service.getMP3(url).then((data: string) => {
+                    this.mp3Player.reset();
+                    return this.mp3Player.init('data:audio/mp3;base64,' + data).then(() => {
+                        resolve();
+                    });
+                });
+            });*/
+            return this.mp3Player.init(url);
+        } else {
+            return Promise.resolve();
+        }
+    }
 
     /**
      * @name crateMap
@@ -219,12 +262,34 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     }
 
     /**
+     * @name preloadMP3
+     * @description preload the mp3 backing track
+     * @return {Promise<void>} the promise to preload the mp3
+     */
+    public preloadMP3(): Promise<void> {
+        if (this.isMP3BackingTrack()) {
+            return new Promise<void>((resolve) => {
+                let url = PlayerService.dataUrl1 + '/[' + this.composition.id + ']-' + this.composition.mp3URL;
+                this.service.getMP3(url).then((data: string) => {
+                    this.mp3Player.reset();
+                    this.mp3Player.init('data:audio/mp3;base64,' + data).then(() => {
+                        resolve();
+                    });
+                });
+            });
+        } else {
+            return Promise.resolve();
+        }
+    }
+
+    /**
      * @name select
      * @description select a certain note or rest
      * @param {any} svgGraphicElement the g element inside the SVG to transform the coordinates
      * @param {number} index the svg element index where is contained the note
      * @param {number} x the x position relative to the svg
      * @param {number} y the y position relative to the svg
+     * @return {boolean} true if it was seeked, false if it was not seeked because the mp3 backing track need to be buffered
      */
     public select(svgGraphicElement: any, index: number, x: number, y: number) {
         //first we need to transform the x,y page position to an SVG scaled position
@@ -254,17 +319,17 @@ export class MusicXMLPlayer implements MidiPlayerListener {
             }
         }
 
-        if (selectedFigure != null) {
+        if (selectedFigure && selectedFigure != null) {
             //we can only select notes, not rest
-            while ((selectedFigure.type != 1 || selectedFigure.ligato) &&
+            while (selectedFigure && (selectedFigure.type != 1 || selectedFigure.ligato) &&
                 this.converter.figureBoxes.length > iFigure) {
                 iFigure++;
                 selectedFigure = this.converter.figureBoxes[iFigure];
-                if (selectedFigure.type == 1 && !selectedFigure.ligato) {
+                if (selectedFigure && selectedFigure.type == 1 && !selectedFigure.ligato) {
                     iFigureNote++;
                 }
             }
-            if (selectedFigure.type == 1 && !selectedFigure.ligato) {
+            if (selectedFigure && selectedFigure.type == 1 && !selectedFigure.ligato) {
                 //lets put the cursor over the figure
                 this.currentBarline = index;
                 if (this.$wijzer != null) {
@@ -273,7 +338,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                 this.$wijzer = $(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
                 this.$wijzer.attr({ "fill": "#387ef5", "fill-opacity": (this.settings.playerSettings.cursor ? "0.5" : "0") });
                 $("svg > g").eq(this.currentBarline).prepend(this.$wijzer);
-                this.scrollToCursor(selectedFigure);
+                //this.scrollToCursor(selectedFigure);
                 //we position correctly the focus rectangle
                 this.$wijzer.attr({
                     "x": "" + (selectedFigure.x),
@@ -296,12 +361,22 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                     }
                 }
                 this.midiPlayer.seek(this.midiInfo.notes[indexTimeLineOnlyNotes].tick, this.midiInfo.notes[indexTimeLineOnlyNotes].tracks);
+                if (this.isMP3BackingTrack()) {
+                    let ms = this.midiPlayer.getCurrentTime();
+                    let resp = this.mp3Player.seek(ms);
+                    if (!resp) {
+                        //oh oh, not enough buffered info
+                        return false;
+                    }
+                }
 
                 //finally seek the midi player
                 this.currentNote = indexTimeLine;
                 this.currentBarline = index;
+                return true;
             }
         }
+        return true;
     }
 
     /**
@@ -367,6 +442,9 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      */
     public play() {
         this.midiPlayer.resume();
+        if (this.isMP3BackingTrack()) {
+            this.mp3Player.play();
+        }
     }
 
     /**
@@ -384,6 +462,9 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      */
     public pause() {
         this.midiPlayer.pause();
+        if (this.isMP3BackingTrack()) {
+            this.mp3Player.pause();
+        }
     }
 
     /**
@@ -398,6 +479,9 @@ export class MusicXMLPlayer implements MidiPlayerListener {
             this.$wijzer = null;
         }
         this.midiPlayer.stop();
+        if (this.isMP3BackingTrack()) {
+            this.mp3Player.stop();
+        }
         if (!dontScroll) {
             $('.scroll-content').animate({ scrollTop: 0 }, 1000);
         }
@@ -409,6 +493,9 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      */
     public resume() {
         this.midiPlayer.resume();
+        if (this.isMP3BackingTrack()) {
+            this.mp3Player.resume();
+        }
     }
 
     private currentBarline = 0;

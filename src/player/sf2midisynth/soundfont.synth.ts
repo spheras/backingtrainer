@@ -109,7 +109,7 @@ export class SoundFontSynthesizer {
             this.percussionVolume[i] = 127;
         }
 
-        this.reverb = false;
+        this.reverb = true;
         this.reverbNode = this.ctx.createConvolver();
         this.reverbLevel = this.ctx.createGain();
 

@@ -3,12 +3,10 @@ import { Observable } from 'rxjs';
 import { Http, Response, Request, RequestOptions, RequestOptionsArgs, RequestMethod, ResponseContentType } from '@angular/http';
 import { Composition, Collection } from '../../../player/composition';
 import { encode } from '../../../util/Util';
+import { PlayerService } from '../../../player/player.service';
 
 @Injectable()
 export class SearchService {
-
-    private dataUrl1 = 'https://raw.githubusercontent.com/spheras/backingtrainer/compositions';
-    //private dataUrl1 = 'assets/data';
 
     constructor(private http: Http) { }
 
@@ -19,7 +17,7 @@ export class SearchService {
      */
     public getServerCompositionIndex(): Observable<Composition[]> {
         return this.http
-            .get(this.dataUrl1 + '/index-compositions.json')
+            .get(PlayerService.dataUrl1 + '/index-compositions.json')
             .map((r: Response) => {
                 return <Composition[]>r.json();
             })
@@ -36,7 +34,7 @@ export class SearchService {
      */
     public getServerCollectionIndex(): Observable<Collection[]> {
         return this.http
-            .get(this.dataUrl1 + '/index-collections.json')
+            .get(PlayerService.dataUrl1 + '/index-collections.json')
             .map((r: Response) => {
                 return <Collection[]>r.json();
             })
@@ -53,7 +51,7 @@ export class SearchService {
      * @return {Observable<string>} the observable to get the b64 string
      */
     public downloadMidiB64(comp: Composition): Observable<string> {
-        let url = this.dataUrl1 + '/[' + comp.id + ']-' + comp.midiURL;
+        let url = PlayerService.dataUrl1 + '/[' + comp.id + ']-' + comp.midiURL;
         var basicOptions: RequestOptionsArgs = {
             url: url,
             method: RequestMethod.Get,
@@ -84,7 +82,7 @@ export class SearchService {
      * @return {Observable<string>} the observable to get the XML score string
      */
     public downloadScore(comp: Composition): Observable<string> {
-        let url = this.dataUrl1 + '/[' + comp.id + ']-' + comp.scoreURL;
+        let url = PlayerService.dataUrl1 + '/[' + comp.id + ']-' + comp.scoreURL;
         return this.http
             .get(url)
             .map((r: Response) => {

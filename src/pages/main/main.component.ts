@@ -4,6 +4,7 @@ import { DownloadedPage } from './downloaded/downloaded.component';
 import { SearchPage } from './search/search.component';
 import { InfoPage } from './info/info.component';
 import { Tab } from 'ionic-angular';
+import { MenuController } from 'ionic-angular';
 
 @Component({
     templateUrl: 'main.component.html'
@@ -17,7 +18,7 @@ export class MainPage {
 
     private currentTab: Tab = null;
 
-    constructor() {
+    constructor(private menu: MenuController, ) {
     }
 
     ionViewWillEnter() {
@@ -28,6 +29,7 @@ export class MainPage {
         this.disableMenus();
     }
 
+
     /**
      * @name enableMenus
      * @description Enable the corresponding menu to the selected tab
@@ -37,9 +39,9 @@ export class MainPage {
             if (this.currentTab.root === RecentPage) {
 
             } else if (this.currentTab.root === DownloadedPage) {
-
+                
             } else if (this.currentTab.root === SearchPage) {
-
+                this.menu.enable(true, 'menu-search');
             }
         } else {
             this.disableMenus();
@@ -51,7 +53,7 @@ export class MainPage {
      * @description disable all the menus for all the tabs
      */
     private disableMenus() {
-
+        this.menu.enable(false, 'menu-search');
     }
 
     /**
@@ -61,6 +63,7 @@ export class MainPage {
      */
     change(tab: Tab) {
         this.currentTab = tab;
+        this.disableMenus();
         this.enableMenus();
     }
 

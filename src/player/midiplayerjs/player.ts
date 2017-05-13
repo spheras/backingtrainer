@@ -16,11 +16,11 @@ export class Player {
 	public tracks = [];
 	public tempo: number = 120;
 	private forcedTempo: number = -1;
-	private startTick: number = 0;
+	public startTick: number = 0;
 	private tick = 0;
 	private lastTick = null;
 	private inLoop = false;
-	private totalTicks = 0;
+	public totalTicks = 0;
 	private events = [];
 	public eventListeners = {};
 
