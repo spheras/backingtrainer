@@ -3,9 +3,9 @@
 
 #creating the folders
 rm -rf ./platforms/electron
-mkdir ./platforms/electron
-mkdir ./platforms/electron/src
-#mkdir ./platforms/electron/dist
+mkdir -p ./platforms/electron
+mkdir -p ./platforms/electron/src
+#mkdir -p ./platforms/electron/dist
 #copying package dependencies
 cp ./package-electron.json ./platforms/electron/src/package.json
 #copying electron starter
