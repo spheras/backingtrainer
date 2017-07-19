@@ -1,0 +1,10 @@
+.logo {
+    font-size: 52px;
+    margin: 40px;
+    border-bottom: 4px solid #387ef5;
+    transition-property: border-bottom;
+}
+
+.logo:hover {
+    border-bottom: 8px solid #387ef5;
+}

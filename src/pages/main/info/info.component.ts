@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { CreditsPage } from '../../credits/credits.component';
+import { DownloadsPage } from '../../downloads/downloads.component';
 import { PlayerService } from '../../../player/player.service';
 
 @Component({
@@ -19,5 +20,13 @@ export class InfoPage {
      */
     showCredits() {
         this.modalCtrl.create(CreditsPage).present();
+    }
+
+    /**
+     * @name showDownloads
+     * @description show the downloads of the application
+     */
+    showDownloads() {
+        this.modalCtrl.create(DownloadsPage).present();
     }
 }

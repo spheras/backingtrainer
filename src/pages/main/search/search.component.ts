@@ -7,7 +7,7 @@ import { DAO } from '../../../dao/dao';
 import { LoadingController, AlertController } from 'ionic-angular';
 import { TrainerPage } from '../../trainer/trainer.component';
 import { App } from 'ionic-angular';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Rx';
 import { Settings } from '../../../dao/settings';
 
 @Component({

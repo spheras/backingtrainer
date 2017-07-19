@@ -8,7 +8,7 @@ import { ModalController } from 'ionic-angular';
 import { MainPage } from '../pages/main/main.component';
 import { TunerPage } from '../pages/tuner/tuner.component';
 import { DAO } from '../dao/dao';
-import { Settings, PlayerSettings, FilterSettings } from '../dao/settings';
+import { Settings, FilterSettings } from '../dao/settings';
 
 @Component({
   templateUrl: 'app.component.html',

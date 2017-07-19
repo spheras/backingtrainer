@@ -12,15 +12,22 @@
 
         <ion-slide class="slide1">
             <div class="container">
+                <a href=\ "https://github.com/spheras/backingtrainer\" target=\ "_blank\">
+                    <ion-icon class="github" name="logo-github"></ion-icon>
+                </a>
                 <img src="assets/icon/info-logo.png" class="slide-image" />
                 <h2 class="slide-title">{{'INFO-SLIDE1-TITLE' | translate}}</h2>
                 <div [innerHtml]="'INFO-SLIDE1-BODY' | translate"></div>
                 <button ion-button round color="epoque" (click)="showCredits()">
                     {{'INFO-CREDITS' | translate}}
                 </button>
+                <button class="downloads" ion-button round color="epoque" (click)="showDownloads()">
+                    {{'INFO-DOWNLOADS' | translate}}
+                </button>
             </div>
         </ion-slide>
 
+        <!--
         <ion-slide>
             <div class="container">
                 <img src="assets/icon/info-alpha.png" class="slide-image" />
@@ -28,6 +35,7 @@
                 <div [innerHtml]="'INFO-SLIDE2-BODY' | translate"></div>
             </div>
         </ion-slide>
+        -->
 
         <ion-slide>
             <div class="container">
@@ -42,6 +50,9 @@
                 <img src="assets/icon/info-mobile.png" class="slide-image" />
                 <h2><strong>{{'INFO-SLIDE4-TITLE' | translate}}</strong></h2>
                 <div [innerHtml]="'INFO-SLIDE4-BODY' | translate"></div>
+                <button class="downloads" ion-button round color="epoque" (click)="showDownloads()">
+                    {{'INFO-DOWNLOADS' | translate}}
+                </button>
             </div>
         </ion-slide>
 
