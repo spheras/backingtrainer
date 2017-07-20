@@ -516,6 +516,17 @@ export class MidiPlayer {
      * @return {string} the url to get the js soundfont
      */
     private getInsrumentUrl(instrument: string): string {
+        if (instrument.toLowerCase().trim().indexOf("metronome") >= 0) {
+            return 'assets/soundfonts/metronome-wav.js'
+        } else if(instrument.toLowerCase().trim().indexOf("piano")>=0){
+            instrument="acoustic_grand_piano";
+        } else if(instrument.toLowerCase().trim().indexOf("harp")>=0){
+            instrument="orchestral_harp";
+        }
+
+        return 'https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/'+instrument.toLowerCase().trim()+'-mp3.js';
+
+        /*
         let android: boolean = this.platform.is("android");
         let codec: string = "wav"; //TODO, always wav? or try mp3 and then wav? increasing size of the app?
         if (android) {
@@ -533,6 +544,7 @@ export class MidiPlayer {
         } else {
             return 'assets/soundfonts/acoustic_grand_piano-' + codec + '.js';
         }
+        */
     }
 }
 
