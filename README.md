@@ -1,13 +1,14 @@
 # Backing Trainer
 Train with your favourite soloist instrument thru backing tracks
 
-
 ## How to Download It
 Version 1.0 ready!  You can play it directly from web here:
 https://spheras.github.io/backingtrainer/
-
 or go to the releases page:
 https://github.com/spheras/backingtrainer/releases
+
+Now available on Google Play! 
+https://play.google.com/store/apps/details?id=com.ionicframework.backingtrainer763961
 
 Note: We don't have yet the native IOS version
 
