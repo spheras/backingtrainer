@@ -9,6 +9,10 @@ https://github.com/spheras/backingtrainer/releases
 
 Note: We don't have yet the native IOS version
 
+Note2: If you want to help us improving the set of compositions available, check this wiki page:
+https://github.com/spheras/backingtrainer/wiki/%5Benglish%5D-How-to-Include-new-Compositions
+
+
 Some screenshots:
 
 ![](https://raw.githubusercontent.com/spheras/backingtrainer/master/etc/captura_1.0.gif)
