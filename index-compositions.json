@@ -315,5 +315,30 @@
             "track": 1
         },
         "version": 1
+    },
+    {
+        "id": "00014",
+        "name": "Ave Maria",
+        "author": "Franz Schubert",
+        "description": "It has become one of Schubert's most popular works, recorded by a wide variety and large number of singers, under the title of 'Ave Maria', in arrangements with various lyrics which commonly differ from the original context of the poem. It was arranged in three versions for piano by Franz Liszt.",
+        "wikipediaLink": "https://musescore.com/mike_magatagan/scores/66437",
+        "level": 1,
+        "midiURL": "Schubert-AveMaria.mid",
+        "scoreURL": "Schubert-AveMaria.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "backInstruments": [
+            {
+                "name": "Harp",
+                "track": 2
+            },
+            {
+                "name": "Harp",
+                "track": 3
+            }
+        ],
+        "version": 1
     }
 ]
