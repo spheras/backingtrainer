@@ -29,22 +29,6 @@ export class SearchPage {
     constructor(private app: App, public alertCtrl: AlertController, private service: SearchService,
         private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
 
-        //first we get the compositions
-        this.service.getServerCompositionIndex().subscribe((compositions) => {
-            this.compositions = compositions;
-            this.filteredComp = this.compositions;
-            this.filterCompositions("");
-            this.checkDownloaded();
-        });
-
-        //second we get the collections
-        this.service.getServerCollectionIndex().subscribe((collections) => {
-            this.collections = collections;
-            this.filteredCollections = this.collections;
-            this.filterCompositions("");
-            this.checkDownloaded();
-        });
-
         this.dao.getSettings().then((settings) => {
             this.settings = settings;
         });
@@ -52,6 +36,29 @@ export class SearchPage {
             this.settings = settings;
             this.filterCompositions(this.lastCompositionsSearch);
         });
+
+        //first we get the compositions
+        this.service.getServerCompositionIndex().subscribe((compositions) => {
+            this.compositions = compositions;
+            this.filteredComp = this.compositions;
+            this.dao.getSettings().then((settings) => {
+                this.settings = settings;
+                this.filterCompositions("");
+                this.checkDownloaded();
+            });
+        });
+
+        //second we get the collections
+        this.service.getServerCollectionIndex().subscribe((collections) => {
+            this.collections = collections;
+            this.filteredCollections = this.collections;
+            this.dao.getSettings().then((settings) => {
+                this.settings = settings;
+                this.filterCompositions("");
+                this.checkDownloaded();
+            });
+        });
+
 
     }
 
@@ -239,24 +246,28 @@ export class SearchPage {
      */
     private isValidInstrument(name: string): boolean {
         name = name.toLowerCase();
-        if (this.settings.filterSettings) {
-            if (!this.settings.filterSettings.clarinet && name == "clarinet") {
-                return false;
+        if (this.settings) {
+            if (this.settings.filterSettings) {
+                if (!this.settings.filterSettings.clarinet && name == "clarinet") {
+                    return false;
+                }
+                if (!this.settings.filterSettings.flute && name == "flute") {
+                    return false;
+                }
+                if (!this.settings.filterSettings.record && name == "record") {
+                    return false;
+                }
+                if (!this.settings.filterSettings.saxophone && name == "saxophone") {
+                    return false;
+                }
+                if (!this.settings.filterSettings.trumpet && name == "trumpet") {
+                    return false;
+                }
             }
-            if (!this.settings.filterSettings.flute && name == "flute") {
-                return false;
-            }
-            if (!this.settings.filterSettings.record && name == "record") {
-                return false;
-            }
-            if (!this.settings.filterSettings.saxophone && name == "saxophone") {
-                return false;
-            }
-            if (!this.settings.filterSettings.trumpet && name == "trumpet") {
-                return false;
-            }
+            return true;
+        } else {
+            return false;
         }
-        return true;
     }
 
     /**

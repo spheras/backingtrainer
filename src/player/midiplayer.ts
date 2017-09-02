@@ -37,7 +37,7 @@ export type TrackInfo = {
 
 export type MidiInfo = {
     tempo: number,
-    notes: { tick: number, tracks: TrackInfo[] }[]
+    notes: { tempo: number, tick: number, tracks: TrackInfo[] }[]
 }
 
 /**
@@ -174,6 +174,8 @@ export class MidiPlayer {
             }
             let tickDelta = 0;
 
+            let currentTempo: number = 0;
+
             //lets start reading
             while (!player.endOfFile()) {
 
@@ -192,10 +194,14 @@ export class MidiPlayer {
                     tracks.push(trackInfo)
 
                     //lets capture the tempo
-                    if (event != null && event.name == 'Set Tempo' && !foundTempo) {
-                        foundTempo = true;
-                        this.player.tempo = event.data;
-                        this.player.setForcedTempo(event.data);
+                    if (event != null && event.name == 'Set Tempo') {
+                        if (!foundTempo) {
+                            foundTempo = true;
+                            this.player.tempo = event.data;
+                            this.player.setForcedTempo(event.data);
+                            this.player.setOriginalTempo(event.data);
+                        }
+                        currentTempo = event.data;
                     }
 
                     //if we are dealing with the front track
@@ -203,7 +209,7 @@ export class MidiPlayer {
                         if (event != null) {
                             if (event.name == 'Note on' && event.velocity > 0) {
                                 //a new note, lets save the track infos
-                                result.notes.push({ tick: currentTick, tracks });
+                                result.notes.push({ tempo: currentTempo, tick: currentTick, tracks });
                             }
                         }
                     }
@@ -235,11 +241,12 @@ export class MidiPlayer {
     /**
      * @name seek
      * @description seek the midi player
+     * @param {number} tempo the original tempo of the track at the tick specified
      * @param {number} tick the tick number to seek
 	 * @param {trackInfos[]} list of track info to restore the status
      */
-    public seek(tick: number, trackInfos: TrackInfo[]) {
-        this.player.seek(tick, trackInfos);
+    public seek(tempo: number, tick: number, trackInfos: TrackInfo[]) {
+        this.player.seek(tempo, tick, trackInfos);
     }
 
     /**
@@ -518,13 +525,13 @@ export class MidiPlayer {
     private getInsrumentUrl(instrument: string): string {
         if (instrument.toLowerCase().trim().indexOf("metronome") >= 0) {
             return 'assets/soundfonts/metronome-wav.js'
-        } else if(instrument.toLowerCase().trim().indexOf("piano")>=0){
-            instrument="acoustic_grand_piano";
-        } else if(instrument.toLowerCase().trim().indexOf("harp")>=0){
-            instrument="orchestral_harp";
+        } else if (instrument.toLowerCase().trim().indexOf("piano") >= 0) {
+            instrument = "acoustic_grand_piano";
+        } else if (instrument.toLowerCase().trim().indexOf("harp") >= 0) {
+            instrument = "orchestral_harp";
         }
 
-        return 'https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/'+instrument.toLowerCase().trim()+'-mp3.js';
+        return 'https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/' + instrument.toLowerCase().trim() + '-mp3.js';
 
         /*
         let android: boolean = this.platform.is("android");

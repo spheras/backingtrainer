@@ -17,6 +17,7 @@ export class Track {
 	private events = [];
 	private tempo;
 	public forcedTempo: number = -1;
+	public originalTempo: number = -1;
 
 	constructor(index, data) {
 		this.enabled = true;
@@ -108,7 +109,7 @@ export class Track {
 		dryRun = dryRun || false;
 		if (this.pointer < this.data.length && (dryRun || currentTick - this.lastTick >= this.getDelta())) {
 			let event = this.parseEvent();
-
+			
 			/*			
 			if (this.index > 0 && event.name == "Note on") {
 				console.log(this.index + " - new event[delta:" + this.getDelta() + ";currentTick:" + currentTick + ";lastTick:" + this.lastTick + "]");
@@ -219,9 +220,17 @@ export class Track {
 					if (this.forcedTempo < 0) {
 						this.tempo = eventJson.data;
 					} else {
+						var diff = this.forcedTempo - this.originalTempo;
+						var newTempo=eventJson.data  + diff;
+
+						eventJson.data = newTempo;
+						this.tempo = newTempo;
+						/*
 						eventJson.data = this.forcedTempo;
 						this.tempo = this.forcedTempo;
+						*/
 					}
+					//console.log("new tempo:"+this.tempo);
 					break;
 				case 0x54: // SMTPE Offset
 					eventJson.name = 'SMTPE Offset';

@@ -36,6 +36,12 @@ export interface PlayerListener {
      * @description the player has ended the song
      */
     endOfSong(): void;
+
+    /**
+     * @name endOfPartSong
+     * @description the player has ended a part of the song, now start the next part
+     */
+    endOfPartSong(): void;
 }
 
 /**
@@ -360,7 +366,9 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                         break;
                     }
                 }
-                this.midiPlayer.seek(this.midiInfo.notes[indexTimeLineOnlyNotes].tick, this.midiInfo.notes[indexTimeLineOnlyNotes].tracks);
+
+                let midiinfo = this.midiInfo.notes[indexTimeLineOnlyNotes];
+                this.midiPlayer.seek(midiinfo.tempo, midiinfo.tick, midiinfo.tracks);
                 if (this.isMP3BackingTrack()) {
                     let ms = this.midiPlayer.getCurrentTime();
                     let resp = this.mp3Player.seek(ms);
@@ -512,6 +520,38 @@ export class MusicXMLPlayer implements MidiPlayerListener {
         }
     }
 
+    /**
+     * @name endOfPartSong
+     * @description the player notify that the song start now a new part
+     */
+    endOfPartSong() {
+        this.pause();
+
+        //oh, wait, we need to search the figure in the timeline map of figures
+        let indexTimeLineOnlyNotes: number = -1;
+        let indexTimeLine = 0;
+        for (; indexTimeLine < this.converter.timeLineMap.length; indexTimeLine++) {
+            let iFigureTimeLine = this.converter.timeLineMap[indexTimeLine];
+            let figureTimeLine = this.converter.figureBoxes[iFigureTimeLine];
+            if (figureTimeLine.type == FigureBox.TYPE_NOTE && !figureTimeLine.ligato) {
+                indexTimeLineOnlyNotes++;
+            }
+            if (iFigureTimeLine == this.currentNote) {
+                break;
+            }
+        }
+
+        let midiinfo = this.midiInfo.notes[indexTimeLineOnlyNotes];
+        this.midiPlayer.seek(midiinfo.tempo, midiinfo.tick, midiinfo.tracks);
+        if (this.isMP3BackingTrack()) {
+            let ms = this.midiPlayer.getCurrentTime();
+            this.mp3Player.seek(ms);
+        }
+
+        if (this.listener != null) {
+            this.listener.endOfPartSong();
+        }
+    }
 
     /**
      * @override
@@ -526,10 +566,16 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                 //first we get the figurebox to be highlighted
                 let indexBox: number = this.converter.timeLineMap[this.currentNote];
                 let figure: FigureBox = this.converter.figureBoxes[indexBox];
+                if (typeof figure === "undefined") {
+                    return;
+                }
                 while (figure.type != FigureBox.TYPE_NOTE || figure.ligato) {
                     this.currentNote++;
                     indexBox = this.converter.timeLineMap[this.currentNote];
                     figure = this.converter.figureBoxes[indexBox];
+                    if (typeof figure === "undefined") {
+                        return;
+                    }
                 }
 
                 //next we create the focus rectangle 
@@ -560,6 +606,32 @@ export class MusicXMLPlayer implements MidiPlayerListener {
 
 
                 this.currentNote++;
+                if (this.converter.startParts.length > 1 && this.converter.timeLineMap.length > this.currentNote) {
+
+                    //ensuring that the next figure is a note figure
+                    var tmpCurrentNote = this.currentNote;
+                    let figure: FigureBox = this.converter.figureBoxes[tmpCurrentNote];
+                    while (figure != null && (figure.type != FigureBox.TYPE_NOTE || figure.ligato)) {
+                        tmpCurrentNote++;
+                        if (this.converter.timeLineMap.length > this.currentNote) {
+                            indexBox = this.converter.timeLineMap[tmpCurrentNote];
+                            figure = this.converter.figureBoxes[indexBox];
+                        } else {
+                            figure = null;
+                        }
+                    }
+
+                    //checking if the start part of the next note figure match with any startpart
+                    if (figure != null) {
+                        for (var i = 0; i < this.converter.startParts.length; i++) {
+                            if (this.converter.startParts[i] == tmpCurrentNote) {
+                                //a new part is comingç
+                                this.currentNote = tmpCurrentNote;
+                                this.endOfPartSong();
+                            }
+                        }
+                    }
+                }
             }
         }
 

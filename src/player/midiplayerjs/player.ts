@@ -16,6 +16,7 @@ export class Player {
 	public tracks = [];
 	public tempo: number = 120;
 	private forcedTempo: number = -1;
+	private originalTempo: number = -1;
 	public startTick: number = 0;
 	private tick = 0;
 	private lastTick = null;
@@ -153,6 +154,17 @@ export class Player {
 	}
 
 	/**
+	 * Save the original tempo for this song
+	 * @param {number} bpm the original tempo
+	 */
+	setOriginalTempo(bpm: number) {
+		this.originalTempo = bpm;
+		for (let i = 0; i < this.tracks.length; i++) {
+			this.tracks[i].originalTempo = bpm;
+		}
+	}
+
+	/**
 	 * Enables a track for playing.
 	 * @param {number} trackNumber - Track number
 	 * @return {Player}
@@ -254,14 +266,24 @@ export class Player {
 	/**
 	 * @name seek
 	 * @description seek the player
+	 * @param {number} tempo the original tempo of this track at the tick specified
 	 * @param {number} tick the tick to seek
 	 * @param {trackInfos[]} list of track info to restore the status
 	 */
-	seek(tick: number, trackInfos: any[]) {
+	seek(tempo: number, tick: number, trackInfos: any[]) {
+
 		this.pause();
 		this.lastTick = tick;
+		var diff = this.forcedTempo - this.originalTempo;
+		var newTempo = tempo + diff;
+		this.tempo=newTempo;
 		this.startTick = tick;
+		this.tick=tick;
 		for (let i = 0; i < trackInfos.length; i++) {
+			var diff = this.tracks[i].forcedTempo - this.tracks[i].originalTempo;
+			var newTempo = tempo + diff;
+			this.tracks[i].tempo = newTempo;
+
 			this.tracks[i].pointer = trackInfos[i].pointer;
 			this.tracks[i].lastStatus = trackInfos[i].lastStatus;
 			this.tracks[i].delta = trackInfos[i].delta;

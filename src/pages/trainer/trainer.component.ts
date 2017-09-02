@@ -202,6 +202,15 @@ export class TrainerPage implements PlayerListener {
     }
 
     /**
+     * @name endOfSong
+     * @description the player indicates that a new part is starting now
+     * @override
+     */
+    endOfPartSong() {
+        this.pause();
+    }
+
+    /**
       * @name setTempo
       * @description set the tempo of the midi loaded
       * @param {number} bpm beats per minute

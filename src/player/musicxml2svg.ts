@@ -55,6 +55,12 @@ export class MusicXML2SVG {
     public timeLineMap: number[] = [];
 
     /**
+     * List of index where a new part of the composition starts.
+     * All compositions has at least one part starting at 0 position
+     */
+    public startParts: number[] = [0];
+
+    /**
      * numerator and denominator of the meter signature
      */
     public numerator: number;
@@ -138,7 +144,7 @@ export class MusicXML2SVG {
                 self.timeLine(tsFirst, voice_tb, music_types, info);
             },
             'imagesize': 'width="' + width + '"',
-            'page_format': true
+            'page_format': true,
         }
 
         //inforesult[0] = inforesult[0].replace(new RegExp("0.83", 'g'), "2.00");
@@ -199,6 +205,13 @@ export class MusicXML2SVG {
         return '';
     }
 
+    //CAUTION
+    //there is a bug or something when reporting the figures by the abc2svg library
+    //sometimes it reports an inexistent note before the first one, which is overlapping the cleff
+    //the only way to detect it is that it is overlapping the cleff
+    private clefDetected: boolean = false;
+    private firstFigureLeft: number = -1;
+
     /**
      * @name annoStart
      * @description Callback function for setting ABC references in the SVG images. This function is called just before the generation of a music element
@@ -213,6 +226,18 @@ export class MusicXML2SVG {
      */
     private annoStart(type: string, startOffset: number, stopOffset: number, x: number, y: number, w: number, h: number) {
         //console.log(type)
+        if (type == 'clef') {
+            //CAUTION
+            //there is a bug or something when reporting the figures by the abc2svg library
+            //sometimes it reports an inexistent note before the first one, which is overlapping the cleff
+            //the only way to detect it is that it is overlapping the cleff
+            //ups, no, let's try detecting it because the first note after the clef is not correctly aligned with others
+            this.clefDetected = true;//clefBoxHalf = parseFloat(this.abc2svg.sx(x).toFixed(2)) + (w / 2);
+        }
+        if (type == 'meter') {
+            //we discard this clef, it is the first one, and usually the meter move the note to the right
+            this.clefDetected = false;
+        }
         if (type == 'note' || type == 'rest' || type == 'grace') {
 
             let bbox = new FigureBox();
@@ -226,7 +251,31 @@ export class MusicXML2SVG {
             bbox.offsetStop = stopOffset;
             bbox.ligato = this.ligatos[this.figureBoxes.length];
 
+            /*
+            //CAUTION
+            //there is a bug or something when reporting the figures by the abc2svg library
+            //sometimes it reports an inexistent note before the first one, which is overlapping the cleff
+            //the only way to detect it is that it is overlapping the cleff
+            //ups, no, let's try detecting it because the first note after the clef is not correctly aligned with others
+            if (this.clefDetected) {
+                if (this.firstFigureLeft < 0) {
+                    this.firstFigureLeft = bbox.x;
+                    this.figureBoxes.push(bbox);
+                } else {
+                    if (this.firstFigureLeft > bbox.x) {
+                        //we discard this!! it seem a bug note
+                        console.warn("Warning! this seems a bug note: (expected:" + this.firstFigureLeft + ", obtained:" + bbox.x + ")");
+                        //this.figureBoxes.push(bbox);
+                    } else {
+                        this.figureBoxes.push(bbox);
+                    }
+                }
+            } else {
+                this.figureBoxes.push(bbox);
+            }*/
             this.figureBoxes.push(bbox);
+
+
         } else {
             //console.log(type);
         }
@@ -253,6 +302,7 @@ export class MusicXML2SVG {
         let indexFine = -1;
         let indexToCoda = -1;
         let flagLastLigato = false;
+        let endPart = false;
 
         //getting the meter signature (numerator/denominator)
         let meterSignature: string[] = info.M.split("/");
@@ -265,6 +315,12 @@ export class MusicXML2SVG {
                 case MusicXML2SVG.ABC2SVG_TYPE_NOTE:
                 case MusicXML2SVG.ABC2SVG_TYPE_REST:
                     map.push(index);
+
+                    //are we starting a new part?
+                    if (endPart && !(ts.type == MusicXML2SVG.ABC2SVG_TYPE_REST)) {
+                        this.startParts.push(map.length - 1);
+                        endPart = false;
+                    }
 
                     if (ts.type == MusicXML2SVG.ABC2SVG_TYPE_GRACE) {
                         this.ligatos.push(flagLastLigato);
@@ -375,8 +431,20 @@ export class MusicXML2SVG {
                         }
                     }
 
+                    if (ts.bar_type === '||') {
+                        //we discard it as an end of a new part if the previous bar was a :: or :|
+                        //then we supose this is the end of the repetition
+                        let tmp = ts.prev;
+                        while (tmp.type != MusicXML2SVG.ABC2SVG_TYPE_BAR) {
+                            tmp = tmp.prev;
+                        }
+                        if (!(tmp.bar_type === '::' || tmp.bar_type === ':|')) {
+                            //this part ends... a new part is coming?
+                            endPart = true;
+                        }
+                    }
 
-                    if (ts.bar_type === '|:') {
+                    if (ts.bar_type === '|:' || ts.bar_type === '||') {
                         //start a repetition
                         startReps.push(index);
                     } else if (ts.bar_type === '::' || ts.bar_type === ':|') {
