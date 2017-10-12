@@ -41,4 +41,9 @@ export class PlayerSettings {
      * indicates if we want to play the metronome
      */
     public metronome: boolean = false;
+
+    /**
+     * settings to indicate that we want the high quality instruments
+     */
+    public highQuality:boolean = false;
 }

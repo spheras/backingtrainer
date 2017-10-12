@@ -71,6 +71,9 @@ export class MidiPlayer {
     /** to activate or deactivate metronome */
     private metronome: boolean = false;
 
+    /** if we need highquality sounds or not */
+    private highQuality: boolean = false;
+
     constructor(private service: PlayerService, private platform: Platform) {
         this.soundpool = new CircularSoundPool();
         this.initMidiPlayer();
@@ -108,6 +111,19 @@ export class MidiPlayer {
      */
     public setMetronome(activate: boolean) {
         this.metronome = activate;
+    }
+
+    /**
+     * @name setHighQuality
+     * @description set or unset the high quality for sounds
+     * @param {boolean} highQuality true if we need high quality for sounds
+     */
+    public setHighQuality(highQuality: boolean, comp: Composition) {
+        if (this.highQuality != highQuality) {
+            this.highQuality = highQuality;
+            MidiPlayer.soundfonts = {};
+            this.loadSoundFonts(comp);
+        }
     }
 
     /**
@@ -370,6 +386,31 @@ export class MidiPlayer {
         return new Promise<void>(resolve => {
             let instrumentsByTrack: string[] = this.getInstrumentsByTrack(composition);
 
+            //lets remove every instrument not needed from memory
+            if (MidiPlayer.soundfonts) {
+                //we have soundfonts in memory
+                let keys: string[] = Object.keys(MidiPlayer.soundfonts);
+                for (let i = 0; i < keys.length; i++) {
+                    let name: string = keys[i];
+                    let needed: boolean = false;
+
+                    //let search if the instrument is needed
+                    for (let j = 0; j < instrumentsByTrack.length; j++) {
+                        if (instrumentsByTrack[j] === name) {
+                            //yes, it is needed
+                            needed = true;
+                            break;
+                        }
+                    }
+
+                    if (!needed) {
+                        //we don't need the instrument in memory
+                        delete MidiPlayer.soundfonts[name];
+                    }
+                }
+            }
+
+
             let promises: Promise<void>[] = [];
             for (let i = 0; i < instrumentsByTrack.length; i++) {
                 promises.push(this.loadSoundFont(instrumentsByTrack[i]));
@@ -531,7 +572,9 @@ export class MidiPlayer {
             instrument = "orchestral_harp";
         }
 
-        return 'https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/' + instrument.toLowerCase().trim() + '-mp3.js';
+        let highQualityUrl: string = 'http://gleitz.github.io/midi-js-soundfonts/MusyngKite/';
+        let lowQualityUrl: string = 'https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/';
+        return (this.highQuality ? highQualityUrl : lowQualityUrl) + instrument.toLowerCase().trim() + '-mp3.js';
 
         /*
         let android: boolean = this.platform.is("android");

@@ -175,4 +175,17 @@ export class MyApp {
     });
   }
 
+  /**
+   * @name settingHighQuality
+   * @description set/unset the quality for sounds
+   * @param {boolean} value the value to set
+   */
+  settingHighQuality(value:boolean){
+    this.dao.getSettings().then((settings) => {
+      this.settings.playerSettings.highQuality = value;
+      settings.playerSettings.highQuality = value;
+      this.dao.setSettings(settings);
+    });
+  }
+
 }

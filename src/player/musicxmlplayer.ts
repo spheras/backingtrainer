@@ -95,6 +95,8 @@ export class MusicXMLPlayer implements MidiPlayerListener {
         this.muteBack(!this.settings.playerSettings.playBack);
         //setting metronome
         this.midiPlayer.setMetronome(this.settings.playerSettings.metronome);
+
+        this.midiPlayer.setHighQuality(settings.playerSettings.highQuality, this.composition);
     }
 
     /**

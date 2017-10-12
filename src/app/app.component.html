@@ -33,7 +33,7 @@
 <ion-menu [content]="content" side="left" id="menu-trainer" persistent="true" type="overlay" enabled="false">
   <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>Opciones</ion-title>
+      <ion-title>{{ 'MENU-TRAINER-OPTIONS-TITLE' | translate }}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -87,6 +87,14 @@
         </ion-label>
         <ion-toggle color="danger" [ngModel]="settings.playerSettings.metronome" (ngModelChange)="settingMetronome($event)"></ion-toggle>
       </ion-item>
+      <ion-item text-wrap>
+        <ion-label>
+          <strong>{{ 'MENU-TRAINER-HIGHQUALITY-TITLE' | translate }}</strong>
+          <h5>{{ 'MENU-TRAINER-HIGHQUALITY-DESC' | translate }}</h5>
+        </ion-label>
+        <ion-toggle color="bright" [ngModel]="settings.playerSettings.highQuality" (ngModelChange)="settingHighQuality($event)"></ion-toggle>
+      </ion-item>
+      
     </ion-list>
   </ion-content>
 </ion-menu>
