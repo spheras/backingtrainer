@@ -252,7 +252,7 @@
     {
         "id": "00011",
         "name": "Aria: 'Aus Liebe will meinx Heiland sterben' (BWV 244 No. 49)",
-        "author": "J. S. Bach",
+        "author": "Johann Sebastian Bach",
         "description": "Interpretation for Flute &amp; Harp by Mike Magatagan 2017",
         "wikipediaLink": "https://musescore.com/mike_magatagan/scores/3876626",
         "level": 2,
@@ -337,6 +337,176 @@
             {
                 "name": "Harp",
                 "track": 3
+            }
+        ],
+        "version": 1
+    },
+    {
+        "id": "00015",
+        "name": "Fugue in E Minor (BWV 962)",
+        "author": "Johann Sebastian Bach",
+        "description": "The Fugue in E Minor (BWV 962) is generally not considered to be the work of J. S. Bach and instead has been attributed to Johann Georg Albrechtsberger (1736 — 1809).",
+        "wikipediaLink": "https://www.youtube.com/watch?v=0cGxbAaglTQ",
+        "level": 1,
+        "midiURL": "Bach-BWV962.mid",
+        "scoreURL": "Bach-BWV962.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "backInstruments": [
+            {
+                "name": "Clarinet",
+                "track": 2
+            },
+            {
+                "name": "Bassoon",
+                "track": 3
+            }
+        ],
+        "version": 1
+    },
+    {
+        "id": "00016",
+        "name": "Fugue in F# Minor (BWV 859 Nº2)",
+        "author": "Johann Sebastian Bach",
+        "description": "In this prelude, a steady, moderately fast jogging tune in the treble is followed at a close distance by similar material in the bass. The fugue has a radically different character: a slow, rising three-note figure creeps in, repeats with shorter note values after a pause, and gradually forms a more elaborate, stately theme. Bach makes excellent use of those rests in the principal subject, for when the theme enters in the second and third voices, the countersubject gets underway only at the beginning of the first rest, and the listener can discern the separate voices at play more readily than in some of Bach's busier, non-stop fugal subjects.",
+        "wikipediaLink": "https://musescore.com/mike_magatagan/scores/4355036",
+        "level": 2,
+        "midiURL": "Bach-BWV859.mid",
+        "scoreURL": "Bach-BWV859.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "backInstruments": [
+            {
+                "name": "Oboe",
+                "track": 2
+            },
+            {
+                "name": "english_horn",
+                "track": 3
+            },
+            {
+                "name": "Bassoon",
+                "track": 4
+            }
+        ],
+        "version": 1
+    },
+    {
+        "id": "00017",
+        "name": "Fugue in G Minor (BWV 1000)",
+        "author": "Johann Sebastian Bach",
+        "description": "The Fugue in G minor, BWV 1000, is the first of Johann Sebastian's Leipzig period lute works; it is usually played in conjunction with the slightly earlier Prelude in C minor, BWV 999, forming a makeshift prelude and fugue unit (in two different keys, unless the pieces are transposed, as they very often are) like those in the vaguely contemporaneous Well-Tempered Clavier Book I.",
+        "wikipediaLink": "https://musescore.com/mike_magatagan/scores/4246291",
+        "level": 2,
+        "midiURL": "Bach-BWV1000-FugueInGMinor.mid",
+        "scoreURL": "Bach-BWV1000-FugueInGMinor.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "backInstruments": [
+            {
+                "name": "Oboe",
+                "track": 2
+            },
+            {
+                "name": "Bassoon",
+                "track": 3
+            }
+        ],
+        "version": 1
+    },
+    {
+        "id": "00018",
+        "name": "Concerto G Major (BWV 986)",
+        "author": "Johann Sebastian Bach",
+        "description": "The Concerto no. 15 in G Major (BWV 986) is a charming work, more compact than BWV 983 and thus more likely to be based on a German original if not an early Venetian one",
+        "wikipediaLink": "https://en.wikipedia.org/wiki/Concerto_transcriptions_for_organ_and_harpsichord_(Bach)#Concerto_in_G_major.2C_BWV_986",
+        "level": 3,
+        "midiURL": "Bach-BWV986-ConcertoGMajor.mid",
+        "scoreURL": "Bach-BWV986-ConcertoGMajor.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "backInstruments": [
+            {
+                "name": "acoustic_guitar_nylon",
+                "track": 2
+            }
+        ],
+        "version": 1
+    },
+    {
+        "id": "00019",
+        "name": "Sonata A Major (BWV 1015)",
+        "author": "Johann Sebastian Bach",
+        "description": "Although Bach's Sonata No. 2 in A major for violin and harpsichord, BWV 1015, may seem virtually identical to the first of the set in terms of general structure and movement layout, a closer listen reveals that it is really quite individual in shape, content, and -- most significantly -- character. In the new realm of the duo sonata, it is every bit as warm and ingratiating a piece as its immediate predecessor is stern and, at times, lean.",
+        "wikipediaLink": "https://musescore.com/mike_magatagan/scores/4346656",
+        "level": 3,
+        "midiURL": "Bach-BWV1015-SonataAMajor.mid",
+        "scoreURL": "Bach-BWV1015-SonataAMajor.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "backInstruments": [
+            {
+                "name": "Oboe",
+                "track": 2
+            },
+            {
+                "name": "Bassoon",
+                "track": 3
+            }
+        ],
+        "version": 1
+    },
+    {
+        "id": "00020",
+        "name": "Misty",
+        "author": "Erroll Garner",
+        "description": "Misty is a jazz standard written in 1954 by the pianist Erroll Garner. Originally composed as an instrumental following the traditional 32-bar format and first recorded for Garner's 1955 album Contrasts, the tune was later paired with lyrics by Johnny Burke and became the signature song of Johnny Mathis, appearing on his 1959 album Heavenly and reaching number 12 on the U.S. Pop Singles chart later that year.",
+        "wikipediaLink": "https://en.wikipedia.org/wiki/Misty_(song)",
+        "level": 2,
+        "midiURL": "Misty.mid",
+        "scoreURL": "Misty.xml",
+        "mp3URL": "Misty.mp3",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "version": 1
+    },
+    {
+        "id": "00021",
+        "name": "Canon in D",
+        "author": "Johan Pachebel",
+        "description": "Pachelbel's Canon is the common name for a canon by the German Baroque composer Johann Pachelbel in his Canon and Gigue for 3 violins and basso continuo, sometimes referred to as Canon and Gigue in D or simply Canon in D. Neither the date nor the circumstances of its composition are known, and the oldest surviving manuscript copy of the piece dates from the 19th century.",
+        "wikipediaLink": "https://en.wikipedia.org/wiki/Pachelbel%27s_Canon",
+        "level": 1,
+        "midiURL": "Pachebel-CanonD.mid",
+        "scoreURL": "Pachebel-CanonD.xml",
+        "frontInstrument": {
+            "name": "Flute",
+            "track": 1
+        },
+        "backInstruments": [
+            {
+                "name": "Violin",
+                "track": 2
+            },
+            {
+                "name": "Violin",
+                "track": 3
+            },
+            {
+                "name": "Viola",
+                "track": 4
             }
         ],
         "version": 1

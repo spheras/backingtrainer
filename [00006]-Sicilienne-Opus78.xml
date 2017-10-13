@@ -6,7 +6,7 @@
 Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com)</rights>
     <encoding>
       <software>MuseScore 2.0.3</software>
-      <encoding-date>2017-04-28</encoding-date>
+      <encoding-date>2017-09-01</encoding-date>
       <supports element="accidental" type="yes"/>
       <supports element="beam" type="yes"/>
       <supports element="print" attribute="new-page" type="yes" value="yes"/>
@@ -34,18 +34,18 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
     <lyric-font font-family="FreeSerif" font-size="11"/>
     </defaults>
   <credit page="1">
-    <credit-words default-x="744.483" default-y="1894.88" justify="center" valign="top" font-family="Times New Roman" font-size="24">Sicilienne
+    <credit-words default-x="1420" default-y="1665.29" justify="right" valign="bottom" font-family="Times New Roman" font-size="12">Gabriel Fauré, 1893</credit-words>
+    </credit>
+  <credit page="1">
+    <credit-words default-x="744.485" default-y="1857.93" justify="center" valign="top" font-family="Times New Roman" font-size="24">Sicilienne
 </credit-words>
     <credit-words font-style="italic" font-size="19">(Opus 78)</credit-words>
     </credit>
   <credit page="1">
-    <credit-words default-x="1420" default-y="1727.24" justify="right" valign="bottom" font-family="Times New Roman" font-size="12">Gabriel Fauré, 1893</credit-words>
+    <credit-words default-x="744.485" default-y="1690.44" justify="center" valign="top" font-family="Times New Roman" font-size="14">Transcribed for Flute and Piano by Mike Magatagan 2011</credit-words>
     </credit>
   <credit page="1">
-    <credit-words default-x="744.483" default-y="1727.39" justify="center" valign="top" font-family="Times New Roman" font-size="14">Transcribed for Flute and Piano by Mike Magatagan 2011</credit-words>
-    </credit>
-  <credit page="1">
-    <credit-words default-x="744.483" default-y="103.448" justify="center" valign="bottom" font-family="Tempus Sans ITC" font-size="8">&amp;quot;Sicilienne&amp;quot; (Opus 78) by Gabriel Fauré Transcribed for Flute &amp;amp; Piano by Mike Magatagan
+    <credit-words default-x="744.485" default-y="103.448" justify="center" valign="bottom" font-size="8">&amp;quot;Sicilienne&amp;quot; (Opus 78) by Gabriel Fauré Transcribed for Flute &amp;amp; Piano by Mike Magatagan
 Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com)</credit-words>
     </credit>
   <part-list>
@@ -65,14 +65,14 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
       </score-part>
     </part-list>
   <part id="P1">
-    <measure number="1" width="294.44">
+    <measure number="1" width="307.74">
       <print>
         <system-layout>
           <system-margins>
-            <left-margin>59.91</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
-          <top-system-distance>211.66</top-system-distance>
+          <top-system-distance>262.64</top-system-distance>
           </system-layout>
         </print>
       <attributes>
@@ -93,16 +93,9 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <direction-type>
           <words font-weight="bold" font-family="Times New Roman" font-size="11.7074">Allegretto 
 </words>
-          <words font-style="italic" font-size="9.75613">molto moderato (</words>
-          </direction-type>
-        <direction-type>
-          <metronome parentheses="no">
-            <beat-unit>quarter</beat-unit>
-            <per-minute></per-minute>
-            </metronome>
-          </direction-type>
-        <direction-type>
-          <words font-weight="bold" font-style="italic" font-family="Times New Roman" font-size="9.75613">ca. 90)</words>
+          <words font-weight="normal" font-style="italic" font-size="9.75613">molto moderato (</words>
+          <words font-weight="bold">ca. 90)</words>
+          <words font-weight="normal" font-style="normal" font-family="MScore Text"></words>
           </direction-type>
         <sound tempo="90"/>
         </direction>
@@ -127,7 +120,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="260.07" default-y="-45.00">
+      <note default-x="259.55" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -141,7 +134,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="2" width="227.12">
+    <measure number="2" width="237.52">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -152,7 +145,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>up</stem>
         </note>
-      <note default-x="88.26" default-y="-20.00">
+      <note default-x="80.90" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -163,7 +156,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         <stem>down</stem>
         </note>
-      <note default-x="118.76" default-y="-10.00">
+      <note default-x="123.96" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -173,7 +166,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="195.02" default-y="5.00">
+      <note default-x="192.86" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -184,7 +177,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         </note>
       </measure>
-    <measure number="3" width="252.32">
+    <measure number="3" width="269.22">
       <note default-x="12.00" default-y="15.00">
         <pitch>
           <step>B</step>
@@ -198,7 +191,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="79.06" default-y="10.00">
+      <note default-x="71.72" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -210,7 +203,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="100.00" default-y="5.00">
+      <note default-x="102.33" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -221,7 +214,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="133.49" default-y="10.00">
+      <note default-x="151.30" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -234,7 +227,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="stop" number="1"/>
           </notations>
         </note>
-      <note default-x="217.22" default-y="-10.00">
+      <note default-x="218.64" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -250,7 +243,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="4" width="288.87">
+    <measure number="4" width="296.27">
       <note default-x="12.00" default-y="-10.00">
         <pitch>
           <step>D</step>
@@ -267,7 +260,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="stop"/>
           </notations>
         </note>
-      <note default-x="85.09" default-y="-15.00">
+      <note default-x="72.59" default-y="-15.00">
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -279,7 +272,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="113.61" default-y="-5.00">
+      <note default-x="103.65" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -291,7 +284,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="151.92" default-y="-10.00">
+      <note default-x="153.34" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -303,7 +296,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="225.01" default-y="-15.00">
+      <note default-x="213.93" default-y="-15.00">
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -315,7 +308,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="248.96" default-y="-5.00">
+      <note default-x="244.98" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -327,7 +320,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="5" width="228.38">
+    <measure number="5" width="240.28">
       <note default-x="12.00" default-y="-10.00">
         <pitch>
           <step>D</step>
@@ -343,7 +336,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="start"/>
           </notations>
         </note>
-      <note default-x="133.12" default-y="-10.00">
+      <note default-x="109.18" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -358,7 +351,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="stop" number="1"/>
           </notations>
         </note>
-      <note default-x="194.00" default-y="-45.00">
+      <note default-x="188.87" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -372,17 +365,17 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="6" width="356.57">
+    <measure number="6" width="363.50">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <system-distance>98.18</system-distance>
           </system-layout>
         </print>
-      <note default-x="71.78" default-y="-30.00">
+      <note default-x="73.18" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -392,7 +385,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>up</stem>
         </note>
-      <note default-x="172.92" default-y="-20.00">
+      <note default-x="162.02" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -403,7 +396,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         <stem>down</stem>
         </note>
-      <note default-x="213.38" default-y="-10.00">
+      <note default-x="217.54" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -413,7 +406,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="314.52" default-y="0.00">
+      <note default-x="306.38" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -424,7 +417,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         </note>
       </measure>
-    <measure number="7" width="337.87">
+    <measure number="7" width="341.90">
       <direction placement="below">
         <direction-type>
           <wedge type="diminuendo" number="1"/>
@@ -444,7 +437,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="103.45" default-y="5.00">
+      <note default-x="93.50" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -456,7 +449,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="131.84" default-y="0.00">
+      <note default-x="132.06" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -467,7 +460,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="177.27" default-y="5.00">
+      <note default-x="193.76" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -488,7 +481,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="36.67"/>
         </direction>
-      <note default-x="290.84" default-y="-30.00">
+      <note default-x="278.60" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -509,7 +502,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="8" width="371.00">
+    <measure number="8" width="373.53">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -526,7 +519,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="stop"/>
           </notations>
         </note>
-      <note default-x="114.73" default-y="-35.00">
+      <note default-x="89.15" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -540,7 +533,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="145.79" default-y="-25.00">
+      <note default-x="128.69" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -551,7 +544,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="195.48" default-y="-30.00">
+      <note default-x="191.96" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -563,7 +556,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="288.65" default-y="-35.00">
+      <note default-x="269.11" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -576,7 +569,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="319.71" default-y="-20.00">
+      <note default-x="308.66" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -589,7 +582,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="9" width="262.09">
+    <measure number="9" width="272.12">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -605,14 +598,14 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="10" width="289.78">
+    <measure number="10" width="297.70">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
+            <left-margin>0.00</left-margin>
             <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <system-distance>98.18</system-distance>
           </system-layout>
         </print>
       <direction placement="below">
@@ -623,7 +616,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="71.78" default-y="-30.00">
+      <note default-x="73.18" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -637,7 +630,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="179.81" default-y="-35.00">
+      <note default-x="184.64" default-y="-35.00">
         <pitch>
           <step>F</step>
           <octave>4</octave>
@@ -649,7 +642,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="11" width="232.36">
+    <measure number="11" width="238.88">
       <note default-x="14.36" default-y="-40.00">
         <pitch>
           <step>E</step>
@@ -662,7 +655,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <accidental>natural</accidental>
         <stem>up</stem>
         </note>
-      <note default-x="122.39" default-y="-35.00">
+      <note default-x="125.82" default-y="-35.00">
         <pitch>
           <step>F</step>
           <octave>4</octave>
@@ -677,14 +670,14 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="12" width="296.07">
+    <measure number="12" width="296.59">
       <note>
         <rest/>
         <duration>2</duration>
         <voice>1</voice>
         <type>eighth</type>
         </note>
-      <note default-x="61.95" default-y="-35.00">
+      <note default-x="59.33" default-y="-35.00">
         <pitch>
           <step>F</step>
           <octave>4</octave>
@@ -700,7 +693,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
             </articulations>
           </notations>
         </note>
-      <note default-x="115.35" default-y="-40.00">
+      <note default-x="106.46" default-y="-40.00">
         <pitch>
           <step>E</step>
           <octave>4</octave>
@@ -723,7 +716,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <voice>1</voice>
         <type>eighth</type>
         </note>
-      <note default-x="204.91" default-y="-35.00">
+      <note default-x="200.72" default-y="-35.00">
         <pitch>
           <step>F</step>
           <octave>4</octave>
@@ -739,7 +732,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
             </articulations>
           </notations>
         </note>
-      <note default-x="254.66" default-y="-40.00">
+      <note default-x="247.85" default-y="-40.00">
         <pitch>
           <step>E</step>
           <octave>4</octave>
@@ -756,7 +749,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="13" width="252.66">
+    <measure number="13" width="257.68">
       <direction placement="below">
         <direction-type>
           <wedge type="diminuendo" number="1"/>
@@ -781,7 +774,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <voice>1</voice>
         <type>quarter</type>
         </note>
-      <note default-x="217.35" default-y="-45.00">
+      <note default-x="203.86" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -800,7 +793,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="14" width="256.67">
+    <measure number="14" width="260.19">
       <direction placement="below">
         <direction-type>
           <wedge type="crescendo" number="1"/>
@@ -816,7 +809,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>up</stem>
         </note>
-      <note default-x="98.81" default-y="-20.00">
+      <note default-x="87.87" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -827,7 +820,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         <stem>down</stem>
         </note>
-      <note default-x="133.54" default-y="-10.00">
+      <note default-x="135.30" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -837,7 +830,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="220.35" default-y="0.00">
+      <note default-x="211.17" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -853,14 +846,14 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="15" width="280.03">
+    <measure number="15" width="318.80">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <system-distance>98.18</system-distance>
           </system-layout>
         </print>
       <direction placement="below">
@@ -868,7 +861,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="diminuendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="87.05" default-y="10.00">
+      <note default-x="88.45" default-y="10.00">
         <pitch>
           <step>A</step>
           <alter>-1</alter>
@@ -882,7 +875,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="142.27" default-y="5.00">
+      <note default-x="141.89" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -894,7 +887,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="159.43" default-y="0.00">
+      <note default-x="169.28" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -905,7 +898,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="183.45" default-y="5.00">
+      <note default-x="213.11" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -926,7 +919,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="245.65" default-y="-30.00">
+      <note default-x="273.37" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -947,7 +940,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="16" width="244.39">
+    <measure number="16" width="280.26">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -964,7 +957,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="stop"/>
           </notations>
         </note>
-      <note default-x="88.48" default-y="-35.00">
+      <note default-x="69.16" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -978,7 +971,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="106.41" default-y="-25.00">
+      <note default-x="98.45" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -989,7 +982,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="135.10" default-y="-30.00">
+      <note default-x="145.33" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -1001,7 +994,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="196.16" default-y="-35.00">
+      <note default-x="202.49" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -1014,7 +1007,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="214.09" default-y="-20.00">
+      <note default-x="231.78" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -1027,7 +1020,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="17" width="135.47">
+    <measure number="17" width="178.84">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -1043,7 +1036,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="18" width="282.18">
+    <measure number="18" width="0.00">
       <attributes>
         <measure-style>
           <multiple-rest>4</multiple-rest>
@@ -1055,37 +1048,28 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <voice>1</voice>
         </note>
       </measure>
-    <measure number="19" width="398.34">
+    <measure number="19" width="0.00">
       <note>
         <rest/>
         <duration>12</duration>
         <voice>1</voice>
         </note>
       </measure>
-    <measure number="20" width="320.08">
+    <measure number="20" width="0.00">
       <note>
         <rest/>
         <duration>12</duration>
         <voice>1</voice>
         </note>
       </measure>
-    <measure number="21" width="289.10">
+    <measure number="21" width="0.00">
       <note>
         <rest/>
         <duration>12</duration>
         <voice>1</voice>
         </note>
       </measure>
-    <measure number="22" width="267.99">
-      <print new-system="yes">
-        <system-layout>
-          <system-margins>
-            <left-margin>1083.04</left-margin>
-            <right-margin>-0.00</right-margin>
-            </system-margins>
-          <system-distance>-402.07</system-distance>
-          </system-layout>
-        </print>
+    <measure number="22" width="1351.04">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -1094,7 +1078,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="36.67"/>
         </direction>
-      <note default-x="14.36" default-y="-20.00">
+      <note default-x="84.53" default-y="-20.00">
         <pitch>
           <step>B</step>
           <octave>4</octave>
@@ -1110,7 +1094,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="67.20" default-y="-30.00">
+      <note default-x="355.66" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -1122,7 +1106,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="94.29" default-y="-25.00">
+      <note default-x="494.63" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -1133,7 +1117,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="137.63" default-y="-20.00">
+      <note default-x="716.99" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -1147,7 +1131,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="190.47" default-y="-15.00">
+      <note default-x="988.12" default-y="-15.00">
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -1159,7 +1143,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="223.06" default-y="-15.00">
+      <note default-x="1127.09" default-y="-15.00">
         <pitch>
           <step>C</step>
           <alter>1</alter>
@@ -1173,17 +1157,17 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="23" width="291.11">
+    <measure number="23" width="295.03">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <system-distance>98.18</system-distance>
           </system-layout>
         </print>
-      <note default-x="71.78" default-y="-10.00">
+      <note default-x="73.18" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -1195,7 +1179,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="118.45" default-y="-5.00">
+      <note default-x="124.63" default-y="-5.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -1208,7 +1192,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="142.37" default-y="0.00">
+      <note default-x="151.01" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -1219,7 +1203,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="180.65" default-y="5.00">
+      <note default-x="193.21" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -1229,7 +1213,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="251.24" default-y="-10.00">
+      <note default-x="251.23" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -1243,7 +1227,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="24" width="280.35">
+    <measure number="24" width="281.37">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -1273,7 +1257,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="68.39" default-y="-30.00">
+      <note default-x="68.99" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -1285,7 +1269,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="97.29" default-y="-25.00">
+      <note default-x="98.21" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -1296,7 +1280,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="143.53" default-y="-20.00">
+      <note default-x="144.95" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -1309,7 +1293,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="199.92" default-y="-15.00">
+      <note default-x="201.94" default-y="-15.00">
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -1321,7 +1305,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="232.50" default-y="-15.00">
+      <note default-x="233.03" default-y="-15.00">
         <pitch>
           <step>C</step>
           <alter>1</alter>
@@ -1340,7 +1324,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="25" width="263.46">
+    <measure number="25" width="265.98">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -1361,7 +1345,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="69.67" default-y="-5.00">
+      <note default-x="70.73" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -1374,7 +1358,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="102.25" default-y="0.00">
+      <note default-x="101.81" default-y="0.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -1387,7 +1371,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="149.54" default-y="5.00">
+      <note default-x="149.98" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -1407,7 +1391,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         </note>
       </measure>
-    <measure number="26" width="196.27">
+    <measure number="26" width="203.29">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -1442,7 +1426,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="103.33" default-y="-10.00">
+      <note default-x="106.84" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -1462,7 +1446,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="27" width="296.35">
+    <measure number="27" width="305.37">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -1492,7 +1476,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="85.70" default-y="10.00">
+      <note default-x="74.54" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -1504,7 +1488,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="110.86" default-y="15.00">
+      <note default-x="106.60" default-y="15.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -1516,7 +1500,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="149.67" default-y="10.00">
+      <note default-x="157.88" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -1528,7 +1512,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="223.36" default-y="5.00">
+      <note default-x="220.42" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -1540,7 +1524,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="255.95" default-y="0.00">
+      <note default-x="252.48" default-y="0.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -1562,14 +1546,14 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="28" width="317.80">
+    <measure number="28" width="326.48">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <system-distance>98.18</system-distance>
           </system-layout>
         </print>
       <direction placement="below">
@@ -1584,7 +1568,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="diminuendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="71.78" default-y="5.00">
+      <note default-x="73.18" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -1611,7 +1595,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="193.99" default-y="-10.00">
+      <note default-x="199.03" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -1626,7 +1610,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="29" width="376.80">
+    <measure number="29" width="375.08">
       <note default-x="12.00" default-y="-15.00">
         <pitch>
           <step>C</step>
@@ -1642,7 +1626,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="102.17" default-y="-25.00">
+      <note default-x="81.47" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -1654,7 +1638,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="132.23" default-y="-20.00">
+      <note default-x="117.09" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -1666,7 +1650,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="192.34" default-y="-25.00">
+      <note default-x="174.06" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -1685,7 +1669,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="crescendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="252.45" default-y="-45.00">
+      <note default-x="231.04" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -1700,7 +1684,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="285.03" default-y="-35.00">
+      <note default-x="266.65" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -1717,7 +1701,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="stop" number="1"/>
           </notations>
         </note>
-      <note default-x="315.09" default-y="-25.00">
+      <note default-x="302.26" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -1734,7 +1718,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
             </articulations>
           </notations>
         </note>
-      <note default-x="345.15" default-y="-10.00">
+      <note default-x="337.87" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -1757,7 +1741,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="30" width="266.43">
+    <measure number="30" width="273.70">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -1792,7 +1776,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="138.41" default-y="-10.00">
+      <note default-x="142.05" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -1812,7 +1796,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="31" width="366.50">
+    <measure number="31" width="375.78">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -1842,7 +1826,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="106.21" default-y="10.00">
+      <note default-x="89.63" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -1854,7 +1838,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="137.62" default-y="15.00">
+      <note default-x="129.42" default-y="15.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -1866,7 +1850,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="187.86" default-y="10.00">
+      <note default-x="193.09" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -1878,7 +1862,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="282.08" default-y="5.00">
+      <note default-x="270.72" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -1890,7 +1874,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="314.66" default-y="0.00">
+      <note default-x="310.51" default-y="0.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -1912,14 +1896,14 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="32" width="351.67">
+    <measure number="32" width="358.84">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <system-distance>98.18</system-distance>
           </system-layout>
         </print>
       <direction placement="below">
@@ -1934,7 +1918,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="diminuendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="71.78" default-y="5.00">
+      <note default-x="73.18" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -1956,7 +1940,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="210.92" default-y="-10.00">
+      <note default-x="215.21" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -1976,7 +1960,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="33" width="313.56">
+    <measure number="33" width="317.84">
       <note>
         <rest/>
         <duration>6</duration>
@@ -1998,7 +1982,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="88.89"/>
         </direction>
-      <note default-x="259.40" default-y="-45.00">
+      <note default-x="249.59" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -2012,7 +1996,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="34" width="318.56">
+    <measure number="34" width="321.33">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -2023,7 +2007,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>up</stem>
         </note>
-      <note default-x="120.91" default-y="-20.00">
+      <note default-x="106.69" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -2034,7 +2018,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         <stem>down</stem>
         </note>
-      <note default-x="164.48" default-y="-10.00">
+      <note default-x="165.87" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -2044,7 +2028,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="273.39" default-y="5.00">
+      <note default-x="260.55" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -2055,7 +2039,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         </note>
       </measure>
-    <measure number="35" width="343.75">
+    <measure number="35" width="353.03">
       <note default-x="12.00" default-y="15.00">
         <pitch>
           <step>B</step>
@@ -2069,7 +2053,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="100.43" default-y="10.00">
+      <note default-x="91.30" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -2081,7 +2065,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="129.91" default-y="5.00">
+      <note default-x="131.94" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -2092,7 +2076,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="177.08" default-y="10.00">
+      <note default-x="196.98" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -2105,7 +2089,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="stop" number="1"/>
           </notations>
         </note>
-      <note default-x="294.99" default-y="-10.00">
+      <note default-x="286.40" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -2121,17 +2105,17 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="36" width="408.25">
+    <measure number="36" width="412.92">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <system-distance>98.18</system-distance>
           </system-layout>
         </print>
-      <note default-x="74.28" default-y="-10.00">
+      <note default-x="75.68" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -2147,7 +2131,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="stop"/>
           </notations>
         </note>
-      <note default-x="163.31" default-y="-15.00">
+      <note default-x="147.62" default-y="-15.00">
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -2159,7 +2143,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="192.98" default-y="-5.00">
+      <note default-x="184.50" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -2171,7 +2155,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="240.46" default-y="-10.00">
+      <note default-x="243.50" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -2183,7 +2167,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="329.49" default-y="-15.00">
+      <note default-x="315.44" default-y="-15.00">
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -2195,7 +2179,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="359.17" default-y="-5.00">
+      <note default-x="352.32" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -2207,7 +2191,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="37" width="296.38">
+    <measure number="37" width="304.15">
       <note default-x="12.00" default-y="-10.00">
         <pitch>
           <step>D</step>
@@ -2223,7 +2207,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="start"/>
           </notations>
         </note>
-      <note default-x="185.13" default-y="-10.00">
+      <note default-x="136.56" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -2238,7 +2222,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="stop" number="1"/>
           </notations>
         </note>
-      <note default-x="248.61" default-y="-45.00">
+      <note default-x="238.71" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -2252,7 +2236,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="38" width="295.12">
+    <measure number="38" width="301.39">
       <direction placement="below">
         <direction-type>
           <wedge type="crescendo" number="1"/>
@@ -2268,7 +2252,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>up</stem>
         </note>
-      <note default-x="112.54" default-y="-20.00">
+      <note default-x="100.55" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -2279,7 +2263,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         <stem>down</stem>
         </note>
-      <note default-x="152.76" default-y="-10.00">
+      <note default-x="155.90" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -2289,7 +2273,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="253.30" default-y="0.00">
+      <note default-x="244.45" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -2305,7 +2289,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="39" width="327.79">
+    <measure number="39" width="332.57">
       <direction placement="below">
         <direction-type>
           <wedge type="diminuendo" number="1"/>
@@ -2325,7 +2309,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="100.75" default-y="5.00">
+      <note default-x="91.32" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -2337,7 +2321,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="128.24" default-y="0.00">
+      <note default-x="128.77" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -2348,7 +2332,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="172.23" default-y="5.00">
+      <note default-x="188.68" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -2369,7 +2353,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="36.67"/>
         </direction>
-      <note default-x="282.20" default-y="-30.00">
+      <note default-x="271.06" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -2390,17 +2374,17 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="40" width="453.59">
+    <measure number="40" width="456.41">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <system-distance>98.18</system-distance>
           </system-layout>
         </print>
-      <note default-x="74.28" default-y="-30.00">
+      <note default-x="75.68" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -2416,7 +2400,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="stop"/>
           </notations>
         </note>
-      <note default-x="178.13" default-y="-30.00">
+      <note default-x="156.94" default-y="-30.00">
         <pitch>
           <step>G</step>
           <alter>-1</alter>
@@ -2430,7 +2414,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="210.82" default-y="-25.00">
+      <note default-x="198.60" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -2441,7 +2425,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="263.13" default-y="-30.00">
+      <note default-x="265.24" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -2454,7 +2438,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="366.98" default-y="-30.00">
+      <note default-x="346.51" default-y="-30.00">
         <pitch>
           <step>G</step>
           <alter>-1</alter>
@@ -2468,7 +2452,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="399.68" default-y="-20.00">
+      <note default-x="388.16" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -2481,7 +2465,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="41" width="270.82">
+    <measure number="41" width="279.74">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -2498,7 +2482,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="42" width="270.82">
+    <measure number="42" width="279.74">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -2517,7 +2501,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="43" width="332.32">
+    <measure number="43" width="335.15">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -2541,18 +2525,15 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <dot/>
         </note>
-      <barline location="right">
-        <bar-style>light-light</bar-style>
-        </barline>
       </measure>
-    <measure number="44" width="360.23">
+    <measure number="44" width="363.65">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
+            <left-margin>0.00</left-margin>
             <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <system-distance>98.18</system-distance>
           </system-layout>
         </print>
       <attributes>
@@ -2568,7 +2549,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="81.78" default-y="30.00">
+      <note default-x="83.18" default-y="30.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -2584,7 +2565,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="141.12" default-y="25.00">
+      <note default-x="142.95" default-y="25.00">
         <pitch>
           <step>D</step>
           <octave>6</octave>
@@ -2596,7 +2577,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="171.54" default-y="20.00">
+      <note default-x="173.59" default-y="20.00">
         <pitch>
           <step>C</step>
           <octave>6</octave>
@@ -2607,7 +2588,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="220.21" default-y="15.00">
+      <note default-x="222.62" default-y="15.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -2620,7 +2601,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="279.55" default-y="10.00">
+      <note default-x="282.39" default-y="10.00">
         <pitch>
           <step>A</step>
           <alter>-1</alter>
@@ -2633,7 +2614,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="309.97" default-y="5.00">
+      <note default-x="313.03" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -2645,7 +2626,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="45" width="302.84">
+    <measure number="45" width="304.86">
       <note default-x="12.00" default-y="0.00">
         <pitch>
           <step>F</step>
@@ -2658,7 +2639,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="74.00" default-y="5.00">
+      <note default-x="74.43" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -2670,7 +2651,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="105.77" default-y="-5.00">
+      <note default-x="106.43" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -2682,7 +2663,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="156.62" default-y="0.00">
+      <note default-x="157.63" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -2694,7 +2675,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="218.61" default-y="-10.00">
+      <note default-x="220.06" default-y="-10.00">
         <pitch>
           <step>D</step>
           <alter>-1</alter>
@@ -2708,7 +2689,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="250.39" default-y="-10.00">
+      <note default-x="252.06" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -2721,7 +2702,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="46" width="293.39">
+    <measure number="46" width="295.41">
       <note default-x="12.00" default-y="-5.00">
         <pitch>
           <step>E</step>
@@ -2735,7 +2716,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="71.97" default-y="0.00">
+      <note default-x="72.41" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -2747,7 +2728,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="102.71" default-y="-10.00">
+      <note default-x="103.37" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -2758,7 +2739,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="151.90" default-y="-5.00">
+      <note default-x="152.91" default-y="-5.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -2771,7 +2752,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="211.87" default-y="-15.00">
+      <note default-x="213.31" default-y="-15.00">
         <pitch>
           <step>C</step>
           <alter>-1</alter>
@@ -2785,7 +2766,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="242.61" default-y="-10.00">
+      <note default-x="244.27" default-y="-10.00">
         <pitch>
           <step>D</step>
           <alter>-1</alter>
@@ -2799,7 +2780,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="47" width="204.28">
+    <measure number="47" width="210.80">
       <note default-x="12.00" default-y="-5.00">
         <pitch>
           <step>E</step>
@@ -2812,7 +2793,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <dot/>
         <stem>down</stem>
         </note>
-      <note default-x="107.34" default-y="-20.00">
+      <note default-x="96.54" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -2836,21 +2817,21 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         </note>
       </measure>
-    <measure number="48" width="166.80">
+    <measure number="48" width="176.32">
       <note>
         <rest/>
         <duration>12</duration>
         <voice>1</voice>
         </note>
       </measure>
-    <measure number="49" width="404.85">
-      <print new-system="yes">
+    <measure number="49" width="411.03">
+      <print new-page="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <top-system-distance>70.00</top-system-distance>
           </system-layout>
         </print>
       <direction placement="below">
@@ -2861,7 +2842,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="81.78" default-y="35.00">
+      <note default-x="83.18" default-y="35.00">
         <pitch>
           <step>F</step>
           <octave>6</octave>
@@ -2876,7 +2857,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="150.68" default-y="30.00">
+      <note default-x="153.11" default-y="30.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -2889,7 +2870,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="186.00" default-y="25.00">
+      <note default-x="188.95" default-y="25.00">
         <pitch>
           <step>D</step>
           <octave>6</octave>
@@ -2900,7 +2881,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="242.51" default-y="20.00">
+      <note default-x="246.30" default-y="20.00">
         <pitch>
           <step>C</step>
           <octave>6</octave>
@@ -2912,7 +2893,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="311.42" default-y="15.00">
+      <note default-x="316.23" default-y="15.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -2925,7 +2906,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="346.74" default-y="10.00">
+      <note default-x="352.08" default-y="10.00">
         <pitch>
           <step>A</step>
           <alter>-1</alter>
@@ -2938,7 +2919,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="50" width="330.24">
+    <measure number="50" width="335.02">
       <note default-x="12.00" default-y="5.00">
         <pitch>
           <step>G</step>
@@ -2951,7 +2932,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="79.87" default-y="-10.00">
+      <note default-x="80.90" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -2963,7 +2944,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="114.66" default-y="-5.00">
+      <note default-x="116.21" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -2980,7 +2961,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="crescendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="170.32" default-y="0.00">
+      <note default-x="172.71" default-y="0.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -2994,7 +2975,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="238.19" default-y="5.00">
+      <note default-x="241.60" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -3006,7 +2987,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="272.98" default-y="15.00">
+      <note default-x="276.92" default-y="15.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -3024,7 +3005,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="51" width="248.97">
+    <measure number="51" width="256.75">
       <direction placement="below">
         <direction-type>
           <wedge type="diminuendo" number="1"/>
@@ -3042,7 +3023,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <accidental>natural</accidental>
         <stem>down</stem>
         </note>
-      <note default-x="122.54" default-y="-20.00">
+      <note default-x="109.24" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -3074,7 +3055,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="52" width="343.47">
+    <measure number="52" width="348.25">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -3098,7 +3079,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="82.71" default-y="30.00">
+      <note default-x="83.73" default-y="30.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -3111,7 +3092,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="118.95" default-y="25.00">
+      <note default-x="120.50" default-y="25.00">
         <pitch>
           <step>D</step>
           <octave>6</octave>
@@ -3127,7 +3108,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="diminuendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="176.94" default-y="20.00">
+      <note default-x="179.32" default-y="20.00">
         <pitch>
           <step>C</step>
           <octave>6</octave>
@@ -3139,7 +3120,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="247.64" default-y="15.00">
+      <note default-x="251.05" default-y="15.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -3152,7 +3133,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="283.89" default-y="10.00">
+      <note default-x="287.82" default-y="10.00">
         <pitch>
           <step>A</step>
           <alter>-1</alter>
@@ -3170,17 +3151,17 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="53" width="341.51">
+    <measure number="53" width="271.07">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
-          <system-distance>92.07</system-distance>
+          <system-distance>150.00</system-distance>
           </system-layout>
         </print>
-      <note default-x="81.78" default-y="5.00">
+      <note default-x="83.18" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -3192,7 +3173,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="136.09" default-y="-5.00">
+      <note default-x="119.32" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -3205,7 +3186,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="168.67" default-y="0.00">
+      <note default-x="150.40" default-y="0.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -3218,7 +3199,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="213.22" default-y="5.00">
+      <note default-x="180.03" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -3230,7 +3211,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="267.53" default-y="10.00">
+      <note default-x="216.17" default-y="10.00">
         <pitch>
           <step>A</step>
           <alter>-1</alter>
@@ -3243,7 +3224,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="295.37" default-y="15.00">
+      <note default-x="239.84" default-y="15.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -3256,7 +3237,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="54" width="176.70">
+    <measure number="54" width="110.86">
       <note default-x="12.00" default-y="30.00">
         <pitch>
           <step>E</step>
@@ -3272,7 +3253,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="stop" number="1"/>
           </notations>
         </note>
-      <note default-x="93.55" default-y="-5.00">
+      <note default-x="60.63" default-y="-5.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -3290,7 +3271,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="55" width="269.36">
+    <measure number="55" width="197.52">
       <note default-x="12.00" default-y="-5.00">
         <pitch>
           <step>E</step>
@@ -3308,7 +3289,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="stop"/>
           </notations>
         </note>
-      <note default-x="66.82" default-y="25.00">
+      <note default-x="50.59" default-y="25.00">
         <pitch>
           <step>D</step>
           <octave>6</octave>
@@ -3320,7 +3301,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="94.92" default-y="20.00">
+      <note default-x="74.26" default-y="20.00">
         <pitch>
           <step>C</step>
           <octave>6</octave>
@@ -3331,7 +3312,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="139.88" default-y="15.00">
+      <note default-x="105.90" default-y="15.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -3344,7 +3325,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="194.70" default-y="10.00">
+      <note default-x="144.50" default-y="10.00">
         <pitch>
           <step>A</step>
           <alter>-1</alter>
@@ -3357,7 +3338,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="222.80" default-y="5.00">
+      <note default-x="164.28" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -3369,7 +3350,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="56" width="281.34">
+    <measure number="56" width="209.51">
       <note default-x="12.00" default-y="0.00">
         <pitch>
           <step>F</step>
@@ -3382,7 +3363,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="69.39" default-y="5.00">
+      <note default-x="50.97" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -3394,7 +3375,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="98.81" default-y="-5.00">
+      <note default-x="77.99" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -3406,7 +3387,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="145.87" default-y="0.00">
+      <note default-x="109.95" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -3418,7 +3399,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="203.26" default-y="-10.00">
+      <note default-x="148.92" default-y="-10.00">
         <pitch>
           <step>D</step>
           <alter>-1</alter>
@@ -3432,7 +3413,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="232.68" default-y="-10.00">
+      <note default-x="175.95" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -3445,7 +3426,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="57" width="258.63">
+    <measure number="57" width="186.79">
       <direction placement="below">
         <direction-type>
           <wedge type="crescendo" number="1"/>
@@ -3464,7 +3445,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="64.52" default-y="0.00">
+      <note default-x="49.12" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -3476,7 +3457,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="91.44" default-y="-10.00">
+      <note default-x="68.15" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -3487,7 +3468,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="134.51" default-y="-5.00">
+      <note default-x="98.60" default-y="-5.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -3500,7 +3481,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="187.04" default-y="-15.00">
+      <note default-x="135.72" default-y="-15.00">
         <pitch>
           <step>C</step>
           <alter>-1</alter>
@@ -3514,7 +3495,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="213.96" default-y="-5.00">
+      <note default-x="154.75" default-y="-5.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -3532,16 +3513,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="58" width="334.65">
-      <print new-page="yes">
-        <system-layout>
-          <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
-            </system-margins>
-          <top-system-distance>70.00</top-system-distance>
-          </system-layout>
-        </print>
+    <measure number="58" width="108.83">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -3550,7 +3522,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="88.89"/>
         </direction>
-      <note default-x="81.78" default-y="5.00">
+      <note default-x="12.00" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -3572,14 +3544,14 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <dot/>
         </note>
       </measure>
-    <measure number="59" width="243.91">
+    <measure number="59" width="80.97">
       <note>
         <rest/>
         <duration>12</duration>
         <voice>1</voice>
         </note>
       </measure>
-    <measure number="60" width="352.92">
+    <measure number="60" width="185.48">
       <note>
         <rest/>
         <duration>6</duration>
@@ -3595,7 +3567,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="36.67"/>
         </direction>
-      <note default-x="168.91" default-y="-20.00">
+      <note default-x="72.31" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-2</alter>
@@ -3617,7 +3589,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="crescendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="262.21" default-y="-15.00">
+      <note default-x="117.71" default-y="-15.00">
         <pitch>
           <step>C</step>
           <alter>-1</alter>
@@ -3631,7 +3603,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="296.49" default-y="-10.00">
+      <note default-x="146.65" default-y="-10.00">
         <pitch>
           <step>D</step>
           <alter>-1</alter>
@@ -3650,8 +3622,17 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="61" width="396.06">
-      <note default-x="12.00" default-y="-5.00">
+    <measure number="61" width="1351.04">
+      <print new-system="yes">
+        <system-layout>
+          <system-margins>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
+            </system-margins>
+          <system-distance>150.00</system-distance>
+          </system-layout>
+        </print>
+      <note default-x="83.18" default-y="-5.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -3664,7 +3645,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="85.66" default-y="-10.00">
+      <note default-x="349.43" default-y="-10.00">
         <pitch>
           <step>D</step>
           <alter>-1</alter>
@@ -3678,7 +3659,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="123.41" default-y="-5.00">
+      <note default-x="485.90" default-y="-5.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -3690,7 +3671,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="183.82" default-y="0.00">
+      <note default-x="704.26" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -3702,7 +3683,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="257.47" default-y="-5.00">
+      <note default-x="970.51" default-y="-5.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -3715,7 +3696,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="295.23" default-y="0.00">
+      <note default-x="1106.98" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -3729,15 +3710,12 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="stop" number="1"/>
           </notations>
         </note>
-      <barline location="right">
-        <bar-style>light-light</bar-style>
-        </barline>
       </measure>
-    <measure number="62" width="318.34">
+    <measure number="62" width="327.02">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
+            <left-margin>0.00</left-margin>
             <right-margin>0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
@@ -3760,7 +3738,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="diminuendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="71.78" default-y="5.00">
+      <note default-x="73.18" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -3782,7 +3760,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="194.26" default-y="-10.00">
+      <note default-x="199.30" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -3802,7 +3780,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="63" width="367.04">
+    <measure number="63" width="376.32">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -3832,7 +3810,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="106.37" default-y="10.00">
+      <note default-x="89.75" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -3844,7 +3822,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="137.83" default-y="15.00">
+      <note default-x="129.60" default-y="15.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -3856,7 +3834,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="188.16" default-y="10.00">
+      <note default-x="193.36" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -3868,7 +3846,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="282.53" default-y="5.00">
+      <note default-x="271.11" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -3880,7 +3858,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="315.11" default-y="0.00">
+      <note default-x="310.96" default-y="0.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -3902,7 +3880,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="64" width="266.96">
+    <measure number="64" width="274.24">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -3937,7 +3915,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="138.68" default-y="-10.00">
+      <note default-x="142.32" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -3957,7 +3935,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="65" width="375.19">
+    <measure number="65" width="373.47">
       <note default-x="12.00" default-y="-15.00">
         <pitch>
           <step>C</step>
@@ -3973,7 +3951,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="105.52" default-y="-25.00">
+      <note default-x="81.17" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -3985,7 +3963,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="136.69" default-y="-20.00">
+      <note default-x="116.62" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -3997,7 +3975,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="199.03" default-y="-25.00">
+      <note default-x="173.34" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -4016,7 +3994,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="crescendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="248.91" default-y="-45.00">
+      <note default-x="230.06" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -4031,7 +4009,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="280.08" default-y="-30.00">
+      <note default-x="265.51" default-y="-30.00">
         <pitch>
           <step>G</step>
           <alter>-1</alter>
@@ -4048,7 +4026,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="stop" number="1"/>
           </notations>
         </note>
-      <note default-x="311.25" default-y="-25.00">
+      <note default-x="300.97" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -4065,7 +4043,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
             </articulations>
           </notations>
         </note>
-      <note default-x="342.42" default-y="-10.00">
+      <note default-x="336.42" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -4088,12 +4066,12 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="66" width="331.27">
+    <measure number="66" width="340.82">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
           </system-layout>
@@ -4110,7 +4088,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="diminuendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="71.78" default-y="5.00">
+      <note default-x="73.18" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -4137,7 +4115,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="200.73" default-y="-10.00">
+      <note default-x="206.20" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -4152,7 +4130,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="67" width="363.97">
+    <measure number="67" width="366.12">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -4177,7 +4155,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" placement="above" number="1"/>
           </notations>
         </note>
-      <note default-x="105.47" default-y="-25.00">
+      <note default-x="87.56" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -4189,7 +4167,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="136.62" default-y="-20.00">
+      <note default-x="126.29" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -4206,7 +4184,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="diminuendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="186.47" default-y="-25.00">
+      <note default-x="188.26" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -4218,7 +4196,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="279.94" default-y="-30.00">
+      <note default-x="263.82" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -4230,7 +4208,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="312.52" default-y="-35.00">
+      <note default-x="302.55" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -4252,7 +4230,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="68" width="279.90">
+    <measure number="68" width="288.05">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -4288,7 +4266,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="36.67"/>
         </direction>
-      <note default-x="145.15" default-y="-45.00">
+      <note default-x="149.22" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -4308,7 +4286,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="69" width="352.40">
+    <measure number="69" width="356.05">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -4337,7 +4315,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="117.51" default-y="-30.00">
+      <note default-x="112.89" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -4347,7 +4325,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         <stem>up</stem>
         </note>
-      <note default-x="172.40" default-y="-35.00">
+      <note default-x="173.28" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -4376,7 +4354,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="88.89"/>
         </direction>
-      <note default-x="295.90" default-y="-45.00">
+      <note default-x="294.06" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -4395,17 +4373,17 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="70" width="348.37">
+    <measure number="70" width="354.04">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
           </system-layout>
         </print>
-      <note default-x="71.78" default-y="-30.00">
+      <note default-x="73.18" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -4415,7 +4393,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>up</stem>
         </note>
-      <note default-x="169.99" default-y="-20.00">
+      <note default-x="159.11" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -4426,7 +4404,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         <stem>down</stem>
         </note>
-      <note default-x="209.27" default-y="-10.00">
+      <note default-x="212.81" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -4436,7 +4414,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="307.48" default-y="5.00">
+      <note default-x="298.74" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -4447,7 +4425,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         </note>
       </measure>
-    <measure number="71" width="322.19">
+    <measure number="71" width="332.96">
       <note default-x="12.00" default-y="15.00">
         <pitch>
           <step>B</step>
@@ -4461,7 +4439,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="94.66" default-y="10.00">
+      <note default-x="86.61" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -4473,7 +4451,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="122.21" default-y="5.00">
+      <note default-x="124.85" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -4484,7 +4462,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="166.29" default-y="10.00">
+      <note default-x="186.04" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -4497,7 +4475,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="stop" number="1"/>
           </notations>
         </note>
-      <note default-x="276.50" default-y="-10.00">
+      <note default-x="270.17" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -4513,7 +4491,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="72" width="358.74">
+    <measure number="72" width="360.01">
       <note default-x="12.00" default-y="-10.00">
         <pitch>
           <step>D</step>
@@ -4530,7 +4508,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="stop"/>
           </notations>
         </note>
-      <note default-x="104.45" default-y="-15.00">
+      <note default-x="86.25" default-y="-15.00">
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -4542,7 +4520,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="135.26" default-y="-5.00">
+      <note default-x="124.31" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -4554,7 +4532,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="184.57" default-y="-10.00">
+      <note default-x="185.21" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -4566,7 +4544,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="277.02" default-y="-15.00">
+      <note default-x="259.46" default-y="-15.00">
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -4578,7 +4556,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="307.83" default-y="-5.00">
+      <note default-x="297.52" default-y="-5.00">
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -4590,7 +4568,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="73" width="298.25">
+    <measure number="73" width="304.02">
       <note default-x="12.00" default-y="-10.00">
         <pitch>
           <step>D</step>
@@ -4606,7 +4584,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="start"/>
           </notations>
         </note>
-      <note default-x="170.14" default-y="-10.00">
+      <note default-x="136.50" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -4629,7 +4607,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="88.89"/>
         </direction>
-      <note default-x="254.48" default-y="-45.00">
+      <note default-x="238.61" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -4643,12 +4621,12 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="74" width="350.95">
+    <measure number="74" width="357.88">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
           </system-layout>
@@ -4658,7 +4636,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="crescendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="71.78" default-y="-30.00">
+      <note default-x="73.18" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -4668,7 +4646,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>up</stem>
         </note>
-      <note default-x="164.30" default-y="-20.00">
+      <note default-x="160.29" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -4679,7 +4657,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         <stem>down</stem>
         </note>
-      <note default-x="205.43" default-y="-10.00">
+      <note default-x="214.73" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -4689,7 +4667,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="308.23" default-y="0.00">
+      <note default-x="301.84" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -4705,7 +4683,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="75" width="332.25">
+    <measure number="75" width="336.28">
       <direction placement="below">
         <direction-type>
           <wedge type="diminuendo" number="1"/>
@@ -4725,7 +4703,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="105.04" default-y="5.00">
+      <note default-x="92.19" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -4737,7 +4715,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="133.97" default-y="0.00">
+      <note default-x="130.08" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -4748,7 +4726,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="180.24" default-y="5.00">
+      <note default-x="190.70" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -4769,7 +4747,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="284.37" default-y="-30.00">
+      <note default-x="274.05" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -4790,7 +4768,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="76" width="387.86">
+    <measure number="76" width="390.39">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -4807,7 +4785,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="stop"/>
           </notations>
         </note>
-      <note default-x="115.10" default-y="-30.00">
+      <note default-x="92.76" default-y="-30.00">
         <pitch>
           <step>G</step>
           <alter>-1</alter>
@@ -4821,7 +4799,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="147.42" default-y="-25.00">
+      <note default-x="134.16" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -4832,7 +4810,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="199.13" default-y="-30.00">
+      <note default-x="200.39" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -4845,7 +4823,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="302.23" default-y="-30.00">
+      <note default-x="281.16" default-y="-30.00">
         <pitch>
           <step>G</step>
           <alter>-1</alter>
@@ -4859,7 +4837,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="334.55" default-y="-20.00">
+      <note default-x="322.55" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -4872,7 +4850,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="77" width="256.47">
+    <measure number="77" width="266.50">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -4889,17 +4867,17 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="78" width="340.22">
+    <measure number="78" width="346.47">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
-            <right-margin>-0.00</right-margin>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
           </system-layout>
         </print>
-      <note default-x="74.28" default-y="-30.00">
+      <note default-x="75.68" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -4929,7 +4907,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="300.86" default-y="-20.00">
+      <note default-x="285.72" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -4944,7 +4922,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="79" width="322.97">
+    <measure number="79" width="326.31">
       <note default-x="12.00" default-y="-5.00">
         <pitch>
           <step>E</step>
@@ -4956,7 +4934,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="117.77" default-y="0.00">
+      <note default-x="108.22" default-y="0.00">
         <pitch>
           <step>F</step>
           <octave>5</octave>
@@ -4966,7 +4944,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>eighth</type>
         <stem>down</stem>
         </note>
-      <note default-x="160.08" default-y="5.00">
+      <note default-x="168.36" default-y="5.00">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -4976,7 +4954,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="279.06" default-y="10.00">
+      <note default-x="264.58" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -4988,7 +4966,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>down</stem>
         </note>
       </measure>
-    <measure number="80" width="330.60">
+    <measure number="80" width="341.16">
       <note default-x="12.00" default-y="15.00">
         <pitch>
           <step>B</step>
@@ -5010,7 +4988,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="diminuendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="175.84" default-y="15.00">
+      <note default-x="129.66" default-y="15.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -5027,7 +5005,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="stop"/>
           </notations>
         </note>
-      <note default-x="258.00" default-y="5.00">
+      <note default-x="219.64" default-y="5.00">
         <pitch>
           <step>G</step>
           <alter>-1</alter>
@@ -5041,7 +5019,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="285.30" default-y="10.00">
+      <note default-x="265.76" default-y="10.00">
         <pitch>
           <step>A</step>
           <octave>5</octave>
@@ -5058,7 +5036,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="81" width="333.75">
+    <measure number="81" width="337.10">
       <note default-x="12.00" default-y="5.00">
         <pitch>
           <step>G</step>
@@ -5080,7 +5058,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="54.44"/>
         </direction>
-      <note default-x="125.61" default-y="-30.00">
+      <note default-x="111.54" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -5095,7 +5073,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="171.06" default-y="-30.00">
+      <note default-x="173.75" default-y="-30.00">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -5109,7 +5087,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <tied type="stop"/>
           </notations>
         </note>
-      <note default-x="286.71" default-y="-25.00">
+      <note default-x="273.29" default-y="-25.00">
         <pitch>
           <step>A</step>
           <alter>-1</alter>
@@ -5122,17 +5100,17 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="82" width="344.70">
+    <measure number="82" width="347.62">
       <print new-system="yes">
         <system-layout>
           <system-margins>
-            <left-margin>23.50</left-margin>
+            <left-margin>0.00</left-margin>
             <right-margin>-0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
           </system-layout>
         </print>
-      <note default-x="71.78" default-y="-20.00">
+      <note default-x="73.18" default-y="-20.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -5143,7 +5121,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="162.25" default-y="-15.00">
+      <note default-x="145.06" default-y="-15.00">
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -5158,7 +5136,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <wedge type="diminuendo" number="1"/>
           </direction-type>
         </direction>
-      <note default-x="198.44" default-y="-10.00">
+      <note default-x="197.33" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -5170,7 +5148,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="284.29" default-y="-35.00">
+      <note default-x="261.07" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -5184,7 +5162,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="306.91" default-y="-25.00">
+      <note default-x="293.75" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -5201,7 +5179,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         </direction>
       </measure>
-    <measure number="83" width="209.61">
+    <measure number="83" width="217.13">
       <direction placement="below">
         <direction-type>
           <dynamics>
@@ -5225,7 +5203,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="84" width="311.68">
+    <measure number="84" width="311.70">
       <note>
         <rest/>
         <duration>3</duration>
@@ -5241,7 +5219,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </direction-type>
         <sound dynamics="36.67"/>
         </direction>
-      <note default-x="91.42" default-y="-50.00">
+      <note default-x="76.05" default-y="-50.00">
         <pitch>
           <step>C</step>
           <octave>4</octave>
@@ -5256,7 +5234,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           <slur type="start" number="1"/>
           </notations>
         </note>
-      <note default-x="117.83" default-y="-40.00">
+      <note default-x="108.78" default-y="-40.00">
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -5268,7 +5246,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">end</beam>
         </note>
-      <note default-x="160.08" default-y="-45.00">
+      <note default-x="161.15" default-y="-45.00">
         <pitch>
           <step>D</step>
           <octave>4</octave>
@@ -5280,7 +5258,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <stem>up</stem>
         <beam number="1">begin</beam>
         </note>
-      <note default-x="239.31" default-y="-35.00">
+      <note default-x="225.01" default-y="-35.00">
         <pitch>
           <step>F</step>
           <octave>4</octave>
@@ -5292,7 +5270,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
         </note>
-      <note default-x="267.83" default-y="-40.00">
+      <note default-x="257.74" default-y="-40.00">
         <pitch>
           <step>E</step>
           <octave>4</octave>
@@ -5305,7 +5283,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
         <beam number="1">end</beam>
         </note>
       </measure>
-    <measure number="85" width="209.61">
+    <measure number="85" width="217.13">
       <note default-x="12.00" default-y="-45.00">
         <pitch>
           <step>D</step>
@@ -5322,7 +5300,7 @@ Mike Magatagan (magataganm@cox.net or Mike Magatagan on http:\\www.MuseScore.com
           </notations>
         </note>
       </measure>
-    <measure number="86" width="251.94">
+    <measure number="86" width="257.46">
       <note default-x="12.00" default-y="-45.00">
         <pitch>
           <step>D</step>

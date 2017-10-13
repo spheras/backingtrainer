@@ -24,13 +24,24 @@
     },
     {
         "id": "00002",
-        "name": "Chopin Collection",
+        "name": "Flute Chopin Collection",
         "author": "spheras",
         "description": "Chopin Collection Compositions",
         "level": 1,
         "instrument": "Flute",
         "compositionIds": [
             "00008","00009"
+        ]
+    },
+    {
+        "id": "00003",
+        "name": "Flute J.S. Bach Collection",
+        "author": "spheras",
+        "description": "Bach Collection Compositions",
+        "level": 1,
+        "instrument": "Flute",
+        "compositionIds": [
+            "00011","00015","00016","00017","00018","00019"
         ]
     }
 ]
