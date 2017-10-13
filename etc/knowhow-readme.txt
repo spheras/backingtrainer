@@ -63,17 +63,16 @@ compiling a new version:
 Just to be sure remove everything first:
 - remove the www folder
 - remove the folders inside the platforms folder (don't remove the platform.json)
+- ionic serve to recreate wwww
 - add the platforms again: 
-ionic platform add android
-ionic platform add browser
+    ionic platform add android
+    ionic platform add browser
 
-and start compiling everything, first generate the base ionic www folder
-ionic serve
-after compile the browser
+and start compiling everything
 ionic build browser --prod --release
 and everything you need
 ionic build android --prod --release
-ionic run electron-dist-all
+npm run electron-dist-all
 
 creating gh-pages
 ·················

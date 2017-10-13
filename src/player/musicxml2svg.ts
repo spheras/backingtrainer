@@ -210,7 +210,6 @@ export class MusicXML2SVG {
     //sometimes it reports an inexistent note before the first one, which is overlapping the cleff
     //the only way to detect it is that it is overlapping the cleff
     private clefDetected: boolean = false;
-    private firstFigureLeft: number = -1;
 
     /**
      * @name annoStart
