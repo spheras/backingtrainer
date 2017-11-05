@@ -662,7 +662,19 @@ class CircularSoundPool {
             this.trackList[track][index].stop();
         }
 
-        this.trackList[track][index] = instrument.play(event.noteName, MidiPlayer.audioContext.currentTime, { gain: event.velocity / 100 });
+
+        var options:any={ gain: 0 };
+        if(event.velocity>0){
+            //console.log("velocity:"+event.velocity);
+            //trying to maximize volume
+            event.velocity=1127;
+            options={
+                gain:5
+            };
+        }
+
+
+        this.trackList[track][index] = instrument.play(event.noteName, MidiPlayer.audioContext.currentTime, options );
 
         index++;
         if (index == max) {

@@ -23,6 +23,8 @@
   "MENU-TRAINER-OPTIONS-TITLE": "Options",
   "MENU-TRAINER-HIGHQUALITY-TITLE": "High Quality",
   "MENU-TRAINER-HIGHQUALITY-DESC": "High Quality Sound. Attention: Enabling this will require much more bandwidth",
+  "MENU-TRAINER-BLUETOOTHDELAY-TITLE": "Bluetooth Latency",
+  "MENU-TRAINER-BLUETOOTHDELAY-DESC": "It is possible that if you are playing the music through a bluetooth device, you show the cursor delayed respect the music. This is caused by the delay produced since the sound is sent to the bluetooth device and the output of the speaker.  To compensate this delay, adjust here the latency time needed to sync both.",
   "MAIN-TITLE": "Main Screen",
   "MAIN-RECENT": "Recent",
   "MAIN-DOWNLOADED": "Downloaded",

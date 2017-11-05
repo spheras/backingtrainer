@@ -23,6 +23,8 @@
   "MENU-TRAINER-OPTIONS-TITLE": "Opciones",
   "MENU-TRAINER-HIGHQUALITY-TITLE": "Alta Calidad",
   "MENU-TRAINER-HIGHQUALITY-DESC": "Sonido de Alta Calidad. Atención: Habilitar esta opción requerirá mucho más ancho de banda",
+  "MENU-TRAINER-BLUETOOTHDELAY-TITLE": "Latencia Bluetooth",
+  "MENU-TRAINER-BLUETOOTHDELAY-DESC": "Es posible que si está reproduciendo por bluetooth el sonido, aparezca descoordinado con el cursor de la aplicación. Esto es así por el retraso que se produce entre que se envía el audio a su reproductor y sale por los altavoces.  Para compensar ese retardo, ajuste aquí el tiempo de latencia que necesite para sincronizar ambos.",
   "MAIN-TITLE": "Pantalla Principal",
   "MAIN-RECENT": "Recientes",
   "MAIN-DOWNLOADED": "Descargadas",

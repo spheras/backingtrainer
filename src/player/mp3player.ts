@@ -98,7 +98,9 @@ export class MP3Player {
      * @description stop the current sound track
      */
     public stop() {
-        this.soundTrack.stop();
+        if (this.soundTrack != null) {
+            this.soundTrack.stop();
+        }
     }
 
     /**

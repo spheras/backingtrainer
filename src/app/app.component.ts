@@ -188,4 +188,17 @@ export class MyApp {
     });
   }
 
+  /**
+   * @name settingBluetoothDelay
+   * @description set/unset the bluetooth delay
+   * @param {number} value the value to set
+   */
+  settingBluetoothDelay(value:number){
+    this.dao.getSettings().then((settings) => {
+      this.settings.playerSettings.bluetoothDelay = value;
+      settings.playerSettings.bluetoothDelay = value;
+      this.dao.setSettings(settings);
+    });
+  }
+
 }

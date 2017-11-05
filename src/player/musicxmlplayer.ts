@@ -66,6 +66,12 @@ export class MusicXMLPlayer implements MidiPlayerListener {
     /** the current midi info */
     private midiInfo: MidiInfo = null;
 
+    /** current status */
+    private flagStatus: number = MusicXMLPlayer.STATUS_STOPPED;
+    private static STATUS_STOPPED: number = 0;
+    private static STATUS_PAUSED: number = 1;
+    private static STATUS_RUNNING: number = 2;
+
     constructor(private service: PlayerService, private platform: Platform,
         private loadingCtrl: LoadingController, private translate: TranslateService) {
         this.midiPlayer = new MidiPlayer(service, platform);
@@ -451,6 +457,7 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @description play the music, start the show!
      */
     public play() {
+        this.flagStatus = MusicXMLPlayer.STATUS_RUNNING;
         this.midiPlayer.resume();
         if (this.isMP3BackingTrack()) {
             this.mp3Player.play();
@@ -471,6 +478,8 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @description pause the music
      */
     public pause() {
+        this.flagStatus = MusicXMLPlayer.STATUS_PAUSED;
+
         this.midiPlayer.pause();
         if (this.isMP3BackingTrack()) {
             this.mp3Player.pause();
@@ -482,6 +491,8 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @description stop the music
      */
     public stop(dontScroll?: boolean) {
+        this.flagStatus = MusicXMLPlayer.STATUS_STOPPED;
+
         this.currentBarline = 0;
         this.currentNote = 0;
         if (this.$wijzer != null) {
@@ -502,6 +513,8 @@ export class MusicXMLPlayer implements MidiPlayerListener {
      * @description resume the music
      */
     public resume() {
+        this.flagStatus = MusicXMLPlayer.STATUS_RUNNING;
+
         this.midiPlayer.resume();
         if (this.isMP3BackingTrack()) {
             this.mp3Player.resume();
@@ -580,32 +593,47 @@ export class MusicXMLPlayer implements MidiPlayerListener {
                     }
                 }
 
-                //next we create the focus rectangle 
-                if (this.$wijzer == null || this.currentBarline != figure.barline) {
-                    this.currentBarline = figure.barline;
-                    if (this.$wijzer != null) {
-                        this.$wijzer.remove();
+                var self = this;
+                var delay_func = function (varFigure) {
+                    //next we create the focus rectangle 
+                    if (self.$wijzer == null || self.currentBarline != varFigure.barline) {
+                        self.currentBarline = figure.barline;
+
+                        if (self.$wijzer != null) {
+                            self.$wijzer.remove();
+                        }
+                        self.$wijzer = $(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
+                        self.$wijzer.attr({ "fill": "#387ef5", "fill-opacity": (self.settings.playerSettings.cursor ? "0.5" : "0") });
+                        $("svg > g").eq(self.currentBarline).prepend(self.$wijzer);
+                        self.scrollToCursor(varFigure);
+
                     }
-                    this.$wijzer = $(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
-                    this.$wijzer.attr({ "fill": "#387ef5", "fill-opacity": (this.settings.playerSettings.cursor ? "0.5" : "0") });
-                    $("svg > g").eq(this.currentBarline).prepend(this.$wijzer);
-                    this.scrollToCursor(figure);
+
+                    //we position correctly the focus rectangle
+                    self.$wijzer.attr({
+                        "x": "" + (varFigure.x),
+                        "y": "" + (varFigure.y),
+                        "width": "" + varFigure.w,
+                        "height": "" + varFigure.h
+                    });
+
+                    //lets prepare next cursor
+                    let nextFigure: FigureBox = self.getNextFigure(self.currentNote, 1);
+                    if (nextFigure != null && self.currentBarline != nextFigure.barline) {
+                        self.scrollToCursor(figure, nextFigure);
+                    }
                 }
 
-                //lets prepare next cursor
-                let nextFigure: FigureBox = this.getNextFigure(this.currentNote, 1);
-                if (nextFigure != null && this.currentBarline != nextFigure.barline) {
-                    this.scrollToCursor(figure, nextFigure);
+                var delay = this.settings.playerSettings.bluetoothDelay;
+                if (delay > 0) {
+                    setTimeout(() => {
+                        if (self.flagStatus != MusicXMLPlayer.STATUS_STOPPED) {
+                            delay_func(figure);
+                        }
+                    }, delay);
+                } else {
+                    delay_func(figure);
                 }
-
-                //we position correctly the focus rectangle
-                this.$wijzer.attr({
-                    "x": "" + (figure.x),
-                    "y": "" + (figure.y),
-                    "width": "" + figure.w,
-                    "height": "" + figure.h
-                });
-
 
                 this.currentNote++;
                 if (this.converter.startParts.length > 1 && this.converter.timeLineMap.length > this.currentNote) {
@@ -655,7 +683,12 @@ export class MusicXMLPlayer implements MidiPlayerListener {
 
         //FIXME, calculate the absolute position not working, why!?
         for (var isvg = 0; isvg < toFigure.barline; isvg++) {
-            y = y + svgs[isvg].getBoundingClientRect().height;
+            var svg = svgs[isvg];
+            if (svg) {
+                y = y + svg.getBoundingClientRect().height;
+            } else {
+                return;
+            }
         }
         let svgHeight = svgs[currentFigure.barline].getBoundingClientRect().height;
         if (this.settings.playerSettings.cursorAnimation) {

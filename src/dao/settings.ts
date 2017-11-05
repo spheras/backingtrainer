@@ -46,4 +46,9 @@ export class PlayerSettings {
      * settings to indicate that we want the high quality instruments
      */
     public highQuality:boolean = false;
+
+    /**
+     * the bluetooth delay to sync visual and sound
+     */
+    public bluetoothDelay:number = 0;
 }

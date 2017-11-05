@@ -33,6 +33,8 @@ compile android:
   2. make sure your android home is setting the nadroid-sdk folder (or add it)
           export ANDROID_HOME=/whateverfolderisyourAndroid-sdk
 
+(if necessary modify from config.xml the android-versionCode and version parameters)
+
 ionic build android --prod --release
 
   3. if you get an error like this:
@@ -67,6 +69,8 @@ Just to be sure remove everything first:
 - add the platforms again: 
     ionic platform add android
     ionic platform add browser
+
+(if necessary modify from config.xml the android-versionCode and version parameters)
 
 and start compiling everything
 ionic build browser --prod --release

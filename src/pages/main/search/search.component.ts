@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SearchService } from './search.service';
 import { Composition, Collection } from '../../../player/composition';
 import { MidiPlayer } from '../../../player/midiplayer';
+import { MP3Player } from '../../../player/mp3player';
 import { PlayerService } from '../../../player/player.service';
 import { DAO } from '../../../dao/dao';
 import { LoadingController, AlertController } from 'ionic-angular';
@@ -12,7 +13,7 @@ import { Settings } from '../../../dao/settings';
 
 @Component({
     templateUrl: './search.component.html',
-    providers: [SearchService, MidiPlayer, PlayerService]
+    providers: [SearchService, MidiPlayer, PlayerService, MP3Player]
 })
 export class SearchPage {
 
@@ -27,7 +28,7 @@ export class SearchPage {
     private lastCompositionsSearch: string = "";
 
     constructor(private app: App, public alertCtrl: AlertController, private service: SearchService,
-        private player: MidiPlayer, private dao: DAO, private loadingCtrl: LoadingController) {
+        private midiPlayer: MidiPlayer, private mp3Player: MP3Player, private dao: DAO, private loadingCtrl: LoadingController) {
 
         this.dao.getSettings().then((settings) => {
             this.settings = settings;
@@ -174,7 +175,9 @@ export class SearchPage {
             comp = this.filteredComp[indexComposition];
         }
         comp.flagPlaying = false;
-        this.player.stop();
+        this.mp3Player.stop();
+        this.mp3Player.reset();
+        this.midiPlayer.stop();
     }
 
     /**
@@ -191,11 +194,24 @@ export class SearchPage {
         } else {
             comp = this.filteredComp[indexComposition];
         }
-        this.player.stop();
+        this.mp3Player.stop();
+        this.mp3Player.reset();        
+        this.midiPlayer.stop();
         comp.flagPlaying = true;
-        this.player.load(comp).then(() => {
-            this.player.play();
-        });
+
+        if (comp.mp3URL && comp.mp3URL.length > 0) {
+            let url = PlayerService.dataUrl1 + '/[' + comp.id + ']-' + comp.mp3URL;
+            this.mp3Player.init(url).then(() => {
+                this.midiPlayer.load(comp).then(() => {
+                    this.mp3Player.play();
+                    this.midiPlayer.play();
+                });
+            });
+        } else {
+            this.midiPlayer.load(comp).then(() => {
+                this.midiPlayer.play();
+            });
+        }
     }
 
     /**

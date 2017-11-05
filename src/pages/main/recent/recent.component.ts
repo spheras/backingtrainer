@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Composition } from '../../../player/composition';
 import { MidiPlayer } from '../../../player/midiplayer';
+import { MP3Player } from '../../../player/mp3player';
 import { PlayerService } from '../../../player/player.service';
 import { DAO } from '../../../dao/dao';
 import { LoadingController } from 'ionic-angular';
@@ -9,7 +10,7 @@ import { App } from 'ionic-angular';
 
 @Component({
     templateUrl: './recent.component.html',
-    providers: [MidiPlayer, PlayerService]
+    providers: [MidiPlayer, PlayerService, MP3Player]
 })
 export class RecentPage {
 
@@ -17,7 +18,8 @@ export class RecentPage {
     private filteredComp: Composition[] = [];
 
     constructor(private app: App,
-        private player: MidiPlayer,
+        private midiPlayer: MidiPlayer,
+        private mp3Player: MP3Player,
         private dao: DAO, private loadingCtrl: LoadingController) {
     }
 
@@ -53,7 +55,9 @@ export class RecentPage {
     stopMidi(index: number) {
         let comp = this.filteredComp[index];
         comp.flagPlaying = false;
-        this.player.stop();
+        this.mp3Player.stop();
+        this.mp3Player.reset();
+        this.midiPlayer.stop();
     }
 
     /**
@@ -63,11 +67,25 @@ export class RecentPage {
      */
     playMidi(index: number) {
         let comp = this.filteredComp[index];
-        this.player.stop();
+
+        this.mp3Player.stop();
+        this.mp3Player.reset();
+        this.midiPlayer.stop();
         comp.flagPlaying = true;
-        this.player.load(comp).then(() => {
-            this.player.play();
-        });
+
+        if (comp.mp3URL && comp.mp3URL.length > 0) {
+            let url = PlayerService.dataUrl1 + '/[' + comp.id + ']-' + comp.mp3URL;
+            this.mp3Player.init(url).then(() => {
+                this.midiPlayer.load(comp).then(() => {
+                    this.mp3Player.play();
+                    this.midiPlayer.play();
+                });
+            });
+        } else {
+            this.midiPlayer.load(comp).then(() => {
+                this.midiPlayer.play();
+            });
+        }
     }
 
     removeComposition(index: number) {
