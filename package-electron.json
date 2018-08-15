@@ -1,6 +1,6 @@
 {
   "name": "backingtrainer",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "author": "spheras",
   "homepage": "https://github.com/spheras",
   "private": false,
@@ -9,7 +9,7 @@
     "url": "git://github.com/spheras/backingtrainer.git"
   },
   "devDependencies": {
-    "electron": "1.6.5"
+    "electron": "2.0.6"
   },
   "license": "GPL-3.0",
   "description": "Train with your favourite soloist instrument thru backing tracks",

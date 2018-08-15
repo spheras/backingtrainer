@@ -1,7 +1,7 @@
 cd ..
-ionic platform add android
-ionic platform add browser
-ionic build browser --prod --release
-ionic build android --prod --release
+ionic cordova platform add android
+ionic cordova platform add browser
+ionic cordova build browser --prod --release
+ionic cordova build android --prod --release
 npm run electron-dist-all
 

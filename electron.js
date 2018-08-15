@@ -23,7 +23,7 @@ function createWindow () {
   }));
  
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   /* forcing close of DevTools
   mainWindow.webContents.on("devtools-opened", () => {

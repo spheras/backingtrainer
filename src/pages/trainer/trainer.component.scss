@@ -1,3 +1,11 @@
+tempo{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 9999;
+    background: rgba(255,255,255,0.9);
+}
+
 #overlay{
     -webkit-backface-visibility: hidden;
     position: fixed;
@@ -101,6 +109,19 @@
     
     knob.skin1 .knob{
         background:url('../assets/skins/skin1_front.svg');
+        background-size: contain;    
+        width:35px;
+        height:35px;
+    }
+    knob.skin3{
+        background:url('../assets/skins/skin3_back.svg');
+        background-size: contain;    
+        width:35px;
+        height:35px;
+    }
+    
+    knob.skin3 .knob{
+        background:url('../assets/skins/skin3_front.svg');
         background-size: contain;    
         width:35px;
         height:35px;

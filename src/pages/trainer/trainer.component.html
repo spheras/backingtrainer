@@ -16,8 +16,8 @@
             <ion-icon name="menu"></ion-icon>
         </button>
 
-        <div class="container-knob">
-            <knob class="skin1" #myknob1 [min]="20" [max]="300" [value]="60" [startDegree]="5" [intensive]="true" [endDegree]="355" (change)="setTempo($event)"></knob>
+        <div class="container-knob" (click)="onKnobClick()">
+            <knob class="skin1" #myknob1  [min]="20" [max]="300" [value]="60" [startDegree]="5" [intensive]="true" [endDegree]="355" (change)="setTempo($event)"></knob>
             <div class="info">{{tempo}} bpm</div>
         </div>
 
@@ -40,3 +40,5 @@
 <ion-content no-padding>
     <div id="svg" [innerHTML]="svgContent"></div>
 </ion-content>
+
+<tempo *ngIf="tempoIsVisible" (save)="tempoIsVisible=false;setTempo($event);knob.writeValue($event);" (cancel)="tempoIsVisible=false"></tempo>

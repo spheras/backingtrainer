@@ -1,7 +1,7 @@
 .instrument-icon {
-    background: rgb(255, 255, 255);
+    background: #ffffff;
     border-radius: 7px;
-    border: 1px solid #e6e6e6;
+    border: 1px dashed #387ef5;
     padding: 4px;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.12);
 }
@@ -66,4 +66,11 @@ ion-icon.composition-add:before{
     margin-left: 1px;
     position: absolute;
     margin-top: -10px;
+}
+
+button.bt_sort{
+    right: 0px !important;
+    position: absolute;
+    top: 0px;
+    box-shadow: none;
 }

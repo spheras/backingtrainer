@@ -3,13 +3,14 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MusicXMLPlayer, PlayerListener } from '../../player/musicxmlplayer';
 import { Composition } from '../../player/composition';
 import { PlayerService } from '../../player/player.service';
-import { NavParams } from 'ionic-angular';
+import { NavParams, App } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
 import { Insomnia } from '@ionic-native/insomnia';
 import { MenuController } from 'ionic-angular';
 import { DAO } from '../../dao/dao';
 import { KnobComponent } from 'ng2-knob';
 import { Observable, Subscription } from 'rxjs/Rx';
+import { TempoPage } from '../tempo/tempo.component';
 declare var $: any;
 
 @Component({
@@ -39,10 +40,11 @@ export class TrainerPage implements PlayerListener {
     private resizeSubscription: Subscription = null;
 
     private loadingComponent: string = "";
+    private tempoIsVisible=false;
 
     @ViewChild('myknob1') knob: KnobComponent;
 
-    constructor(private appref: ApplicationRef, private menu: MenuController, private insomnia: Insomnia,
+    constructor(private app: App, private appref: ApplicationRef, private menu: MenuController, private insomnia: Insomnia,
         navParams: NavParams, private player: MusicXMLPlayer, private _sanitizer: DomSanitizer, private dao: DAO,
         private translate: TranslateService) {
 
@@ -74,6 +76,8 @@ export class TrainerPage implements PlayerListener {
         if (this.resizeSubscription != null) {
             this.resizeSubscription.unsubscribe();
         }
+
+        this.dao.saveComposition(this.composition);
     }
 
     /**
@@ -180,13 +184,21 @@ export class TrainerPage implements PlayerListener {
      */
     playerInitialized() {
         let bpm = this.player.getTempo();
+        if (this.composition.originalTempo && this.composition.originalTempo != 0) {
+            bpm = this.composition.currentTempo;
+        } else {
+            this.composition.originalTempo = bpm;
+            this.composition.currentTempo = bpm;
+            this.dao.saveComposition(this.composition);
+        }
+
         this.tempo = bpm;
         //----------------------------------------
         //don't know why this is needed in android
         this.appref.tick();
         //----------------------------------------
 
-        this.knob.setInitialValue(bpm);
+        this.knob.writeValue(bpm);
         this.loadingComponent = "";
         //this.loader.dismiss();
         this.flagRendering = false;
@@ -222,6 +234,7 @@ export class TrainerPage implements PlayerListener {
         this.appref.tick();
         //----------------------------------------
 
+        this.composition.currentTempo = bpm;
         this.player.setTempo(bpm);
     }
 
@@ -273,6 +286,10 @@ export class TrainerPage implements PlayerListener {
         this.showPrepare().then(() => {
             this.player.resume();
         });
+    }
+
+    onKnobClick() {
+        this.tempoIsVisible=true;
     }
 
     private prepare = -1;

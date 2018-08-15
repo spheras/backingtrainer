@@ -1,0 +1,29 @@
+<ion-list radio-group>
+  <ion-list-header>{{'SORT-TITLE' | translate}}</ion-list-header>
+
+  <!--
+  <ion-item>
+    <ion-label>By Most Played</ion-label>
+    <ion-radio [checked]="sortby=='MostPlayed'" (click)="sort('MOSTPLAYED')"></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>By Less Played</ion-label>
+    <ion-radio [checked]="sortby=='MostPlayed'" (click)="sort('MOSTPLAYED')"></ion-radio>
+  </ion-item>
+  -->
+  <ion-item>
+    <ion-label>{{'SORT-BYNAME' | translate}}</ion-label>
+    <ion-radio [checked]="sortby=='NAME'" (click)="sort('NAME')"></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>{{'SORT-BYAUTHOR' | translate}}</ion-label>
+    <ion-radio [checked]="sortby=='AUTHOR'" (click)="sort('AUTHOR')"></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>{{'SORT-BYLEVEL' | translate}}</ion-label>
+    <ion-radio [checked]="sortby=='LEVEL'" (click)="sort('LEVEL')"></ion-radio>
+  </ion-item>
+</ion-list>

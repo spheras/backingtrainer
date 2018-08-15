@@ -1,0 +1,18 @@
+<div class="tempo-container">
+
+    <div class="tempo-header">
+        <h2>{{composition.name}}</h2>
+        <h3>{{composition.author}}</h3>
+    </div>
+
+
+    <div class="tempo-knob container-knob">
+        <div class="tempo-middle">{{tempo}} bpm</div>
+        <knob class="skin3" #myknob1 [min]="20" [max]="300" (change)="setTempo($event)" [startDegree]="5" [intensive]="true" [endDegree]="355"></knob>
+    </div>
+
+    <button class="default" ion-button full (click)="reset()">{{'TEMPO-RESETTODEFAULT' | translate}}</button>
+    <button class="save" ion-button color="secondary" (click)="save()">{{'TEMPO-SAVE' | translate}}</button>
+    <button class="cancel" ion-button color="danger" (click)="cancel()">{{'TEMPO-CANCEL' | translate}}</button>
+
+</div>

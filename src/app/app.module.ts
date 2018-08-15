@@ -12,6 +12,7 @@ import { TunerPage } from '../pages/tuner/tuner.component';
 import { TrainerPage } from '../pages/trainer/trainer.component';
 import { CreditsPage } from '../pages/credits/credits.component';
 import { DownloadsPage } from '../pages/downloads/downloads.component';
+import { TempoPage } from '../pages/tempo/tempo.component';
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { Http } from "@angular/http";
@@ -19,6 +20,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { KnobModule } from 'ng2-knob';
+import { SortPage } from '../pages/main/sort/sort.component';
 
 @NgModule({
 
@@ -30,7 +32,9 @@ import { KnobModule } from 'ng2-knob';
     InfoPage,
     CreditsPage,
     DownloadsPage,
-    SearchPage, DownloadedPage, RecentPage
+    SearchPage, DownloadedPage, RecentPage,
+    TempoPage,
+    SortPage
   ],
 
   imports: [
@@ -55,7 +59,9 @@ import { KnobModule } from 'ng2-knob';
     TunerPage,
     CreditsPage,
     DownloadsPage,
-    SearchPage, DownloadedPage, RecentPage
+    SearchPage, DownloadedPage, RecentPage,
+    TempoPage,
+    SortPage
   ],
 
   providers: [

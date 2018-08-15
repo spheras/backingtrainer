@@ -1,0 +1,65 @@
+.tempo-container {
+    width: 100%;
+    height: 100%;
+}
+
+.tempo-header {
+    background: #222222;
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    width: 100%;
+    height: auto;
+}
+
+.tempo-header h2 {
+    text-align: center;
+    color: white;
+}
+
+.tempo-header h3 {
+    text-align: center;
+    color: #888888;
+}
+
+.tempo-foot {
+    bottom: 0px;
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    background: #222222;
+    color: white;
+    font-size: 22px;
+    text-align: center;
+}
+
+.tempo-middle {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    margin-top: calc(50% - 20px);
+    z-index: 99999;
+    font-size: 27px;
+    font-weight: bold;
+    color: #222222;
+}
+
+.tempo-container button.default {
+    bottom: 0px;
+    position: absolute;
+}
+
+.tempo-container button.save {
+    bottom: 50px;
+    position: absolute;
+    left: 10px;
+    width: 40%;
+    background-color: #4de07a !important;
+}
+
+.tempo-container button.cancel {
+    bottom: 50px;
+    position: absolute;
+    width: 40%;
+    right: 10px;
+}

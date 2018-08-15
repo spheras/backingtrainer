@@ -1,13 +1,13 @@
 
 create platforms:
 ·················
-ionic platform add browser
-ionic platform add android
+ionic cordova platform add browser
+ionic cordova platform add android
 
 add plugins:
 ···········
-ionic plugin add https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git
-ionic plugin add cordova-plugin-crosswalk-webview
+ionic cordova plugin add https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git
+ionic cordova plugin add cordova-plugin-crosswalk-webview
 
 debug browser:
 ·············
@@ -40,13 +40,14 @@ ionic build android --prod --release
   3. if you get an error like this:
 Error: Could not find gradle wrapper within Android SDK. Might need to update your Android SDK.
 Looked here: /whateverfolderisyourAndroiSDKFolder/tools/templates/gradle/wrapper
-    we need to wait a cordova bugfix for this and recent android sdk versions.. until then I've copied an old sdk 'templates' folder onto the new tools folder
+    we need to wait a cordova bugfix for this and recent android sdk versions.. 
+    until then I've copied an old sdk 'templates' folder onto the new tools folder
 
 the unsigned apk will be at the /platforms/android/build/outputs/apk/ folder
 
 deploy & debug in android:
 ·························
-ionic run android
+ionic cordova run android
 
 
 problem running in android
@@ -67,8 +68,8 @@ Just to be sure remove everything first:
 - remove the folders inside the platforms folder (don't remove the platform.json)
 - ionic serve to recreate wwww
 - add the platforms again: 
-    ionic platform add android
-    ionic platform add browser
+    ionic cordova platform add android
+    ionic cordova platform add browser
 
 (if necessary modify from config.xml the android-versionCode and version parameters)
 

@@ -19,10 +19,8 @@ export class Player {
 	private originalTempo: number = -1;
 	public startTick: number = 0;
 	private tick = 0;
-	private lastTick = null;
 	private inLoop = false;
 	public totalTicks = 0;
-	private events = [];
 	public eventListeners = {};
 
 	constructor(eventHandler, buffer?) {
@@ -36,10 +34,8 @@ export class Player {
 		this.tempo = 120;
 		this.startTick = 0;
 		this.tick = 0;
-		this.lastTick = null;
 		this.inLoop = false;
 		this.totalTicks = 0;
-		this.events = [];
 		this.eventListeners = {};
 
 		if (typeof (eventHandler) === 'function') this.on('midiEvent', eventHandler);
@@ -273,15 +269,14 @@ export class Player {
 	seek(tempo: number, tick: number, trackInfos: any[]) {
 
 		this.pause();
-		this.lastTick = tick;
-		var diff = this.forcedTempo - this.originalTempo;
-		var newTempo = tempo + diff;
-		this.tempo=newTempo;
+		let diff = this.forcedTempo - this.originalTempo;
+		let newTempo = tempo + diff;
+		this.tempo = newTempo;
 		this.startTick = tick;
-		this.tick=tick;
+		this.tick = tick;
 		for (let i = 0; i < trackInfos.length; i++) {
-			var diff = this.tracks[i].forcedTempo - this.tracks[i].originalTempo;
-			var newTempo = tempo + diff;
+			diff = this.tracks[i].forcedTempo - this.tracks[i].originalTempo;
+			newTempo = tempo + diff;
 			this.tracks[i].tempo = newTempo;
 
 			this.tracks[i].pointer = trackInfos[i].pointer;
@@ -335,7 +330,7 @@ export class Player {
 		// Reset tracks first
 		this.resetTracks();
 		while (!this.endOfFile()) this.playLoop(true);
-		this.events = this.getEvents();
+		this.getEvents();
 		this.totalTicks = this.getTotalTicks();
 		this.startTick = 0;
 		this.startTime = 0;

@@ -4,9 +4,10 @@ import { MidiPlayer } from '../../../player/midiplayer';
 import { MP3Player } from '../../../player/mp3player';
 import { PlayerService } from '../../../player/player.service';
 import { DAO } from '../../../dao/dao';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, PopoverController } from 'ionic-angular';
 import { TrainerPage } from '../../trainer/trainer.component';
 import { App } from 'ionic-angular';
+import { SortPage } from '../sort/sort.component';
 
 @Component({
     templateUrl: './recent.component.html',
@@ -16,10 +17,13 @@ export class RecentPage {
 
     private compositions: Composition[] = [];
     private filteredComp: Composition[] = [];
+    private lastCompositionsSearch: string = "";
+    private sortby: string = SortPage.SORT_BY_NAME;
 
     constructor(private app: App,
         private midiPlayer: MidiPlayer,
         private mp3Player: MP3Player,
+        public popoverCtrl: PopoverController,
         private dao: DAO, private loadingCtrl: LoadingController) {
     }
 
@@ -31,6 +35,20 @@ export class RecentPage {
 
     ionViewDidEnter() {
         this.loadCompositions();
+    }
+
+    onSortPopup(myEvent) {
+        let popover = this.popoverCtrl.create(SortPage, { data: this.sortby });
+        popover.present({
+            ev: myEvent
+        }).then((value) => {
+            //nothing
+        });
+
+        popover.onWillDismiss((data) => {
+            this.sortby = data;
+            this.filterCompositions(this.lastCompositionsSearch);
+        });
     }
 
     /**
@@ -113,11 +131,24 @@ export class RecentPage {
     }
 
     /**
+     * @name sortCompositions
+     * @description sort the compositions by name, author, level and instrument
+     */
+    sortCompositions() {
+        this.filteredComp = SortPage.sort(this.sortby, this.filteredComp);
+    }
+
+    /**
      * @name searchCompositions
      * @description filter the compositions by a value
      * @param <string> val the value to filter
      */
     filterCompositions(val: string) {
+        this.lastCompositionsSearch = val;
+
+        //before continue, sorting the compositions properly
+        this.sortCompositions();
+
         // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
             val = val.toLowerCase();

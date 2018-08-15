@@ -23,7 +23,7 @@ export class SearchService {
             })
             .catch((error) => {
                 console.error(error);
-                throw error;
+                return [];
             });
     }
 
@@ -40,7 +40,7 @@ export class SearchService {
             })
             .catch((error) => {
                 console.error(error);
-                throw error;
+                return [];
             });
     }
 
@@ -50,7 +50,7 @@ export class SearchService {
      * @param {Composition} comp the composition info to download
      * @return {Observable<string>} the observable to get the b64 string
      */
-    public downloadMidiB64(comp: Composition): Observable<string> {
+    public downloadMidiB64(comp: Composition): Observable<{} | string> {
         let url = PlayerService.dataUrl1 + '/[' + comp.id + ']-' + comp.midiURL;
         var basicOptions: RequestOptionsArgs = {
             url: url,
@@ -81,7 +81,7 @@ export class SearchService {
      * @param {Composition} comp the composition info to download
      * @return {Observable<string>} the observable to get the XML score string
      */
-    public downloadScore(comp: Composition): Observable<string> {
+    public downloadScore(comp: Composition): Observable<{} | string> {
         let url = PlayerService.dataUrl1 + '/[' + comp.id + ']-' + comp.scoreURL;
         return this.http
             .get(url)

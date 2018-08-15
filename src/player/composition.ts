@@ -103,6 +103,15 @@ export class Composition {
      */
     public version: number;
 
+    /**
+     * This is the tempo of the composition. By default it is not saved, it should be readed from the midi... 
+     * but the user can modificate this tempo to set a user defined tempo
+     */
+    public currentTempo: number;
+    /**
+     * The original tempo of the composition
+     */
+    public originalTempo:number;
 
 
 

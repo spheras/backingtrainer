@@ -10,6 +10,8 @@ import { TrainerPage } from '../../trainer/trainer.component';
 import { App } from 'ionic-angular';
 import { Subscription } from 'rxjs/Rx';
 import { Settings } from '../../../dao/settings';
+import { PopoverController } from 'ionic-angular';
+import { SortPage } from '../sort/sort.component';
 
 @Component({
     templateUrl: './search.component.html',
@@ -26,9 +28,12 @@ export class SearchPage {
     private daoSubscription: Subscription = null;
     private settings: Settings;
     private lastCompositionsSearch: string = "";
+    private sortby: string = SortPage.SORT_BY_NAME;
 
     constructor(private app: App, public alertCtrl: AlertController, private service: SearchService,
-        private midiPlayer: MidiPlayer, private mp3Player: MP3Player, private dao: DAO, private loadingCtrl: LoadingController) {
+        private midiPlayer: MidiPlayer, private mp3Player: MP3Player, private dao: DAO,
+        public popoverCtrl: PopoverController,
+        private loadingCtrl: LoadingController) {
 
         this.dao.getSettings().then((settings) => {
             this.settings = settings;
@@ -180,6 +185,20 @@ export class SearchPage {
         this.midiPlayer.stop();
     }
 
+    onSortPopup(myEvent) {
+        let popover = this.popoverCtrl.create(SortPage, { data: this.sortby });
+        popover.present({
+            ev: myEvent
+        }).then((value) => {
+            //nothing
+        });
+
+        popover.onWillDismiss((data) => {
+            this.sortby = data;
+            this.filterCompositions(this.lastCompositionsSearch);
+        });
+    }
+
     /**
      * @name playMidi
      * @description play the midi file linked with the composition
@@ -195,7 +214,7 @@ export class SearchPage {
             comp = this.filteredComp[indexComposition];
         }
         this.mp3Player.stop();
-        this.mp3Player.reset();        
+        this.mp3Player.reset();
         this.midiPlayer.stop();
         comp.flagPlaying = true;
 
@@ -236,6 +255,7 @@ export class SearchPage {
             }
         })
 
+        //before continue, sorting the compositions properly
         this.sortCompositions();
 
         // if the value is an empty string don't filter the items
@@ -291,31 +311,7 @@ export class SearchPage {
      * @description sort the compositions by name, author, level and instrument
      */
     sortCompositions() {
-        //por nombre del tema
-        //por nombre del autor
-        //por nivel
-        //por instrumento
-        this.filteredComp = this.filteredComp.sort(function (a: Composition, b: Composition): number {
-            if (a.name === b.name) {
-                if (a.author == b.author) {
-                    if (a.level == b.level) {
-                        if (a.frontInstrument.name == b.frontInstrument.name) return 0;
-                        if (a.frontInstrument.name < b.frontInstrument.name) return -1;
-                        if (a.frontInstrument.name > b.frontInstrument.name) return 1;
-                    } else {
-                        if (a.level < b.level) return -1;
-                        if (a.level > b.level) return 1;
-                    }
-                } else {
-                    if (a.author < b.author) return -1;
-                    if (a.author > b.author) return 1;
-                }
-            } else {
-                if (a.name < b.name) return -1;
-                if (a.name > b.name) return 1;
-            }
-            return 1;
-        });
+        this.filteredComp = SortPage.sort(this.sortby, this.filteredComp);
     }
 
     expandCollection(index: number) {

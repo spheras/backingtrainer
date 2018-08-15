@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Composition } from '../player/composition';
-import { Settings } from './settings';
+import { Settings, PlayerSettings, FilterSettings } from './settings';
 import { Subject } from 'rxjs';
 
 @Injectable()
@@ -43,6 +43,14 @@ export class DAO {
                         if (settings == null) {
                             settings = new Settings();
                         }
+
+                        if (!settings.filterSettings) {
+                            settings.filterSettings = new FilterSettings();
+                        }
+                        if (!settings.playerSettings) {
+                            settings.playerSettings = new PlayerSettings();
+                        }
+
                         this.settingsCache = settings;
                         resolve(settings);
                     })
