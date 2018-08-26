@@ -209,6 +209,29 @@ export class DAO {
     }
 
     /**
+     * @name updateComposition
+     * @description update a certain composition with new info
+     * @param {Composition} composition the composition to update
+     * @return {Promise<void>} the promise to save the composition
+     */
+    public updateComposition(composition: Composition): Promise<void> {
+        return new Promise<void>(resolve => {
+            this.getCompositions().then((comps) => {
+                for (let i = 0; i < comps.length; i++) {
+                    if (comps[i].id == composition.id) {
+                        comps[i] = composition;
+                        break;
+                    }
+                }
+
+                this.setCompositions(comps).then(() => {
+                    resolve();
+                });
+            });
+        });
+    }
+
+    /**
      * @name setCompositions
      * @description set the compositions to the db (this method doesn't add, only set)
      * @param {Composition[]} comps the compositions to set

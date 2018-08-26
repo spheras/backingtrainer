@@ -40,7 +40,7 @@ export class TrainerPage implements PlayerListener {
     private resizeSubscription: Subscription = null;
 
     private loadingComponent: string = "";
-    private tempoIsVisible=false;
+    private tempoIsVisible = false;
 
     @ViewChild('myknob1') knob: KnobComponent;
 
@@ -77,7 +77,7 @@ export class TrainerPage implements PlayerListener {
             this.resizeSubscription.unsubscribe();
         }
 
-        this.dao.saveComposition(this.composition);
+        this.dao.updateComposition(this.composition);
     }
 
     /**
@@ -189,7 +189,7 @@ export class TrainerPage implements PlayerListener {
         } else {
             this.composition.originalTempo = bpm;
             this.composition.currentTempo = bpm;
-            this.dao.saveComposition(this.composition);
+            this.dao.updateComposition(this.composition);
         }
 
         this.tempo = bpm;
@@ -289,7 +289,7 @@ export class TrainerPage implements PlayerListener {
     }
 
     onKnobClick() {
-        this.tempoIsVisible=true;
+        this.tempoIsVisible = true;
     }
 
     private prepare = -1;
