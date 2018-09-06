@@ -9,7 +9,7 @@
     "url": "git://github.com/spheras/backingtrainer.git"
   },
   "devDependencies": {
-    "electron": "2.0.6"
+    "electron": "2.0.8"
   },
   "license": "GPL-3.0",
   "description": "Train with your favourite soloist instrument thru backing tracks",

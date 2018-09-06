@@ -20,7 +20,7 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="30000" />
     <preference name="AutoHideSplashScreen" value="true" />
-    <preference name="android-minSdkVersion" value="2" />
+    <preference name="android-minSdkVersion" value="16" />
     <preference name="android-targetSdkVersion" value="26" />
     <platform name="android">
         <allow-intent href="market:*" />
