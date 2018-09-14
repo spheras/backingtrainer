@@ -43,7 +43,7 @@ Looked here: /whateverfolderisyourAndroiSDKFolder/tools/templates/gradle/wrapper
     we need to wait a cordova bugfix for this and recent android sdk versions.. 
     until then I've copied an old sdk 'templates' folder onto the new tools folder
 
-the unsigned apk will be at the /platforms/android/build/outputs/apk/ folder
+the unsigned apk will be at the /platforms/android/app/build/outputs/apk/ folder
 
 deploy & debug in android:
 ·························

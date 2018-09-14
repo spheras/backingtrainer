@@ -200,6 +200,7 @@ export class TrainerPage implements PlayerListener {
 
         this.knob.writeValue(bpm);
         this.loadingComponent = "";
+        this.player.setTempo(bpm);
         //this.loader.dismiss();
         this.flagRendering = false;
     }
